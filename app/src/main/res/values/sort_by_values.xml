@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_by_values">
+        <item>Select Filter Method</item>
+        <item>Most Popular</item>
+        <item>Least Popular</item>
+        <item>Newest</item>
+        <item>Oldest</item>
+        <item>Revenue</item>
+    </string-array>
+</resources>

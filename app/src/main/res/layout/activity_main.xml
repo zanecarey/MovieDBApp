@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+
+    <Button
+        android:id="@+id/search_by_title_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Search for a movie by Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:stateListAnimator="@null"
+        android:elevation="10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/search_by_genre_Btn"
+        android:text="Search for a movie by Genre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_by_title_Btn"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:stateListAnimator="@null"
+        android:elevation="10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/watch_list_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Watchlist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_by_genre_Btn"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:stateListAnimator="@null"
+        android:elevation="10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        />
+
+</android.support.constraint.ConstraintLayout>

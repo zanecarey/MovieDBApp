@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ratings">
+        <item>Select Rating</item>
+        <item>G</item>
+        <item>PG</item>
+        <item>PG-13</item>
+        <item>R</item>
+        <item>NC-17</item>
+    </string-array>
+</resources>

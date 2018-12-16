@@ -1,36 +1,26 @@
 package com.example.zane.moviedbapp;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.nfc.Tag;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class WatchListDisplay extends AppCompatActivity {
 
     private static final String TAG = "WatchListDisplay";
-
-
-
-    TextView watchlist_textView;
-    RecyclerViewAdapter adapter;
 
     DataBaseAdapter dbHelper;
 
@@ -38,26 +28,31 @@ public class WatchListDisplay extends AppCompatActivity {
     ArrayList<String> posters = new ArrayList<>();
     ArrayList<Integer> movieIDs = new ArrayList<>();
 
+    @BindView(R.id.watch_list_toolbar)
     Toolbar myToolbar;
+    @BindView(R.id.watchlist_textView)
+    TextView watchlistTextView;
+    @BindView(R.id.watch_list_recyclerView)
+    RecyclerView watchListRecyclerView;
+
+    RecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_list_display);
+        ButterKnife.bind(this);
 
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Watchlist");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        watchlist_textView = (TextView) findViewById(R.id.watchlist_textView);
-
         dbHelper = new DataBaseAdapter(this);
         //get the watchlist data
         Cursor results = dbHelper.getAllData("movies");
-        if(results.getCount() == 0){
+        if (results.getCount() == 0) {
             Toast.makeText(this, "Watchlist Empty!", Toast.LENGTH_SHORT).show();
-        } else{
-            while(results.moveToNext()){
+        } else {
+            while (results.moveToNext()) {
                 Log.d(TAG, "DATABASE ENTRY IDS: " + results.getInt(0));
                 movieIDs.add(results.getInt(1));
                 titles.add(results.getString(2));
@@ -67,16 +62,15 @@ public class WatchListDisplay extends AppCompatActivity {
         initRecyclerView();
     }
 
-    public void initRecyclerView(){
-        //Create our recyclerView
-        RecyclerView recyclerView = findViewById(R.id.watch_list_recyclerView);
+    public void initRecyclerView() {
+
         //Create an adapter for our recyclerview
         adapter = new RecyclerViewAdapter(movieIDs, titles, posters, this);
 
         //set adapter to recyclerview
-        recyclerView.setAdapter(adapter);
+        watchListRecyclerView.setAdapter(adapter);
         //set the layout mode to LinearLayout
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        watchListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

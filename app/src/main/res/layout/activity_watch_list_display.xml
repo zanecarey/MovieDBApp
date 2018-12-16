@@ -7,7 +7,9 @@
     tools:context=".WatchListDisplay"
     android:orientation="vertical">
 
-    <include layout="@layout/my_toolbar"/>
+    <include
+        android:id="@+id/watch_list_toolbar"
+        layout="@layout/my_toolbar"/>
 
     <TextView
         android:id="@+id/watchlist_textView"

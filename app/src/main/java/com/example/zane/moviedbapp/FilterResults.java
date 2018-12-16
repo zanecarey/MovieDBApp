@@ -103,7 +103,6 @@ public class FilterResults extends AppCompatActivity {
                 .build();
 
         String url = MainActivity.DISCOVER_BASE_URL + createUrl();
-        Log.d(TAG, "filter results url2 : " + url);
 
         MovieDBInterface movieDBAPI = retrofit.create(MovieDBInterface.class);
         Call<Feed> call = movieDBAPI.getData(url);
@@ -323,15 +322,13 @@ public class FilterResults extends AppCompatActivity {
     private void initRecyclerView() {
         recyclerViewStarted = true;
 
-        //Create our recyclerView
-        RecyclerView recyclerView = findViewById(R.id.filterRecyclerView);
         //Create an adapter for our recyclerview
         adapter = new RecyclerViewAdapter(movieIDs, titles, posters, this);
 
         //set adapter to recyclerview
-        recyclerView.setAdapter(adapter);
+        filterRecyclerView.setAdapter(adapter);
         //set the layout mode to LinearLayout
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        filterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
@@ -367,7 +364,4 @@ public class FilterResults extends AppCompatActivity {
 
         }
     }
-
-
-
 }

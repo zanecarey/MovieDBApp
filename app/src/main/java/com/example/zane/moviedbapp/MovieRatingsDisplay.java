@@ -2,23 +2,22 @@ package com.example.zane.moviedbapp;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieRatingsDisplay extends AppCompatActivity {
 
-    TextView watchlist_textView;
-    RecyclerViewAdapter adapter;
 
     DataBaseAdapter dbHelper;
 
@@ -27,11 +26,18 @@ public class MovieRatingsDisplay extends AppCompatActivity {
     ArrayList<Integer> movieIDs = new ArrayList<>();
     ArrayList<Integer> movieRatings = new ArrayList<>();
 
+    @BindView(R.id.ratings_toolbar)
     Toolbar myToolbar;
+    @BindView(R.id.rating_recyclerview)
+    RecyclerView ratingRecyclerview;
+
+    RecyclerViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_ratings_display);
+        ButterKnife.bind(this);
 
         myToolbar = (Toolbar) findViewById(R.id.ratings_toolbar);
         setSupportActionBar(myToolbar);
@@ -42,10 +48,10 @@ public class MovieRatingsDisplay extends AppCompatActivity {
 
         //get the ratings data from database
         Cursor results = dbHelper.getAllData("movies_rated");
-        if(results.getCount() == 0){
+        if (results.getCount() == 0) {
             Toast.makeText(this, "Ratings List Empty!", Toast.LENGTH_SHORT).show();
-        } else{
-            while(results.moveToNext()){
+        } else {
+            while (results.moveToNext()) {
                 movieIDs.add(results.getInt(1));
                 titles.add(results.getString(2) + " " + results.getInt(4) + "/10");
                 posters.add(MainActivity.IMAGE_URL + results.getString(3));
@@ -55,16 +61,15 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         initRecyclerView();
     }
 
-    public void initRecyclerView(){
-        //Create our recyclerView
-        RecyclerView recyclerView = findViewById(R.id.rating_recyclerview);
+    public void initRecyclerView() {
+
         //Create an adapter for our recyclerview
         adapter = new RecyclerViewAdapter(movieIDs, titles, posters, this);
 
         //set adapter to recyclerview
-        recyclerView.setAdapter(adapter);
+        ratingRecyclerview.setAdapter(adapter);
         //set the layout mode to LinearLayout
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ratingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

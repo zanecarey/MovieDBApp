@@ -1,32 +1,30 @@
 package com.example.zane.moviedbapp;
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.preference.PreferenceManager;
-import android.support.design.widget.CoordinatorLayout;
+import android.graphics.Movie;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.model.Details;
-import com.example.zane.moviedbapp.model.Feed;
-import com.example.zane.moviedbapp.model.Results;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,28 +38,52 @@ public class MovieDetails extends AppCompatActivity {
     private static final String KEY = "?api_key=06ebf26c054d40dfaecf1f1b0e0965f8";
 
     String title, tagline, overview, genre, poster_path, release_date;
-    int runtime, budget, movieID, revenue;
+    int runtime, budget, movieID, revenue, rating;
     DataBaseAdapter dbHelper;
-    Button watchlist_btn;
+    Button rate_btn;
     TextView movieTitle, movieInfo;
     LinearLayout detailsLayout;
+    FloatingActionButton fab;
+    Toolbar myToolbar;
+    NumberPicker numberPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        watchlist_btn = (Button) findViewById(R.id.watchlist_btn);
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Movie Info");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        numberPicker = (NumberPicker) findViewById(R.id.number_picker);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(10);
+        numberPicker.setWrapSelectorWheel(true);
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+        rate_btn = (Button) findViewById(R.id.rate_btn);
+        fab = (FloatingActionButton) findViewById(R.id.FAButton);
         movieTitle = findViewById(R.id.movieTitle);
         movieInfo = findViewById(R.id.movieInfo);
         //make our info text view scrollable
         movieInfo.setMovementMethod(new ScrollingMovementMethod());
 
         //listener for button to add to watchlist
-        watchlist_btn.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveToWatchList();
+            }
+        });
+        //listener for rate button
+        rate_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rating = numberPicker.getValue();
+                saveToRatings();
             }
         });
 
@@ -115,13 +137,36 @@ public class MovieDetails extends AppCompatActivity {
         movieTitle.setText(content);
 
         //Use all the movie info and put into textview
-        movieInfo.append("Tagline: " + tagline + "\n" +
-                "Runtime: " + runtime + " min" + "\n" +
-                "Budget: $" + budget +   "\n" +
-                "Revenue: $" + revenue + "\n" +
-                "Release Date: " + release_date + "\n" +
-                "Genre: " + genre + "\n" +
-                "Overview: " + overview);
+        SpannableString mTagline = new SpannableString("Tagline:");
+        mTagline.setSpan(new UnderlineSpan(), 0, mTagline.length(), 0);
+
+        SpannableString mRuntime = underlineString("Runtime:");
+        SpannableString mBudget = underlineString("Budget:");
+        SpannableString mRevenue = underlineString("Revenue:");
+        SpannableString mReleaseDate = underlineString("Release Date:");
+        SpannableString mGenre = underlineString("Genre:");
+        SpannableString mOverview = underlineString("Overview:");
+
+        movieInfo.append(mTagline);
+        movieInfo.append(" " + tagline + "\n");
+
+        movieInfo.append(mRuntime);
+        movieInfo.append(" " + runtime + " min"+ "\n");
+
+        movieInfo.append(mBudget);
+        movieInfo.append(" $" + budget + "\n");
+
+        movieInfo.append(mRevenue);
+        movieInfo.append(" $" + revenue + "\n");
+
+        movieInfo.append(mReleaseDate);
+        movieInfo.append(" " + release_date + "\n");
+
+        movieInfo.append(mGenre);
+        movieInfo.append(" " + genre + "\n");
+
+        movieInfo.append(mOverview);
+        movieInfo.append(" " + overview + "\n");
 
         ImageView poster = findViewById(R.id.poster);
         RequestOptions options = new RequestOptions()
@@ -134,6 +179,13 @@ public class MovieDetails extends AppCompatActivity {
                 .load(MainActivity.IMAGE_URL + poster_path)
                 .apply(options)
                 .into(poster);
+    }
+
+    //make our strings underlined
+    private SpannableString underlineString(String input){
+        SpannableString content = new SpannableString(input);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        return content;
     }
 
     //check if our intent data exists before trying to retrieve it
@@ -151,7 +203,7 @@ public class MovieDetails extends AppCompatActivity {
 
         dbHelper = new DataBaseAdapter(this);
 
-        if(dbHelper.alreadyInDatabase(movieID)){
+        if(dbHelper.alreadyInDatabase(movieID, "movies")){
             Snackbar.make(detailsLayout, "ALREADY IN WATCHLIST", Snackbar.LENGTH_LONG)
                     .setAction("GO TO", snackbarListener)
                     .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
@@ -165,13 +217,66 @@ public class MovieDetails extends AppCompatActivity {
         }
     }
 
+    //save a movie rating to our database
+    public void saveToRatings(){
+        dbHelper = new DataBaseAdapter(this);
+
+        if(dbHelper.alreadyInDatabase(movieID, "movies_rated")){
+            Snackbar.make(detailsLayout, "ALREADY RATED", Snackbar.LENGTH_LONG)
+                    .setAction("GO TO", snackbarListener)
+                    .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
+                    .show();
+        } else {
+            dbHelper.addRating(movieID, title, poster_path, rating);
+            Snackbar.make(detailsLayout, "ADDED MOVIE", Snackbar.LENGTH_LONG)
+                    .setAction("GO TO", snackbarListener)
+                    .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
+                    .show();
+        }
+    }
+
     // Listener for our snackbar
     View.OnClickListener snackbarListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(MovieDetails.this, WatchListDisplay.class);
-            startActivity(intent);
+
+                Intent intent = new Intent(MovieDetails.this, WatchListDisplay.class);
+                startActivity(intent);
+
         }
     };
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //Toast.makeText(this, "Menu created", Toast.LENGTH_SHORT).show();
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent intent1 = new Intent(MovieDetails.this, DisplayResults.class);
+                startActivity(intent1);
+                return true;
+
+            case R.id.action_discover:
+                Intent intent2 = new Intent(MovieDetails.this, FilterResults.class);
+                startActivity(intent2);
+                return true;
+
+            case R.id.action_watchlist:
+                Intent intent3 = new Intent(MovieDetails.this, WatchListDisplay.class);
+                startActivity(intent3);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 }

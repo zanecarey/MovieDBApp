@@ -5,54 +5,96 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    >
+    tools:layout_editor_absoluteY="25dp">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:background="@color/colorMovieDBgreen"
+        android:elevation="6dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/search_by_title_Btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/RobotoTextViewStyle"
+
+        >
+
+    </android.support.v7.widget.Toolbar>
 
     <Button
         android:id="@+id/search_by_title_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Search for a movie by Title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:stateListAnimator="@null"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:elevation="10dp"
         android:fontFamily="sans-serif-condensed"
+        android:stateListAnimator="@null"
+        android:text="Search for a movie by Title"
         android:textStyle="bold"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/search_by_genre_Btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
     <Button
         android:id="@+id/search_by_genre_Btn"
-        android:text="Search for a movie by Genre"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_by_title_Btn"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:stateListAnimator="@null"
         android:elevation="10dp"
         android:fontFamily="sans-serif-condensed"
+        android:stateListAnimator="@null"
+        android:text="Discover a new Movie"
         android:textStyle="bold"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/watch_list_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_by_title_Btn" />
 
     <Button
         android:id="@+id/watch_list_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginBottom="28dp"
+        android:elevation="10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:stateListAnimator="@null"
         android:text="Watchlist"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_by_genre_Btn"
+        app:layout_constraintTop_toBottomOf="@+id/search_by_genre_Btn" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="138dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/watch_list_btn"
+        app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/ratings_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ratings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/watch_list_btn"
         style="@style/Widget.AppCompat.Button.Colored"
+        android:textStyle="bold"
         android:stateListAnimator="@null"
         android:elevation="10dp"
         android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold"
         />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,17 +1,22 @@
 package com.example.zane.moviedbapp;
 
+import android.content.Intent;
 import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -39,7 +44,7 @@ public class FilterResults  extends AppCompatActivity {
     Spinner rating_spinner;
     Spinner genre_spinner;
     Button searchBtn, findID_btn, empty_btn;
-    EditText search_edit_text;
+    EditText search_edit_text, year_edit_text;
     String sortBy_value, rating_value;
     int with_genre_value = 0;
     int searchNameID;
@@ -52,10 +57,19 @@ public class FilterResults  extends AppCompatActivity {
 
     Boolean recyclerViewStarted = false;
 
+    Toolbar myToolbar;
+
+    RadioButton before_radio, after_radio;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_results);
+
+        myToolbar = (Toolbar) findViewById(R.id.filter_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Discover");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sortBy_spinner = (Spinner) findViewById(R.id.sortBy_spinner);
         rating_spinner = (Spinner) findViewById(R.id.rating_spinner);
@@ -63,7 +77,10 @@ public class FilterResults  extends AppCompatActivity {
         searchBtn = (Button) findViewById(R.id.filterSearch_btn);
         findID_btn = (Button) findViewById(R.id.findID);
         search_edit_text = (EditText) findViewById(R.id.search_edit_text);
+        year_edit_text = (EditText) findViewById(R.id.year_edit_text);
         empty_btn = (Button) findViewById(R.id.empty_btn);
+        after_radio = (RadioButton) findViewById(R.id.after_radio);
+        before_radio = (RadioButton) findViewById(R.id.before_radio);
 
         addItemsToSpinners();
         addListenerToSpinners();
@@ -287,7 +304,14 @@ public class FilterResults  extends AppCompatActivity {
         if(!rating_value.equals("Select Rating")) url+= "&certification=" + rating_value;
         if(with_genre_value != 0) url += "&with_genres=" + with_genre_value;
         if(searchNameID!=0) url += "&with_people=" + searchNameID;
-
+        if(!year_edit_text.getText().toString().equals("")){
+            //check radio buttons
+            if(after_radio.isChecked()){
+                url += "&release_date.gte=" + year_edit_text.getText().toString();
+            } else {
+                url += "&release_date.lte=" + year_edit_text.getText().toString();
+            }
+        }
         return url;
     }
 
@@ -305,4 +329,37 @@ public class FilterResults  extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //Toast.makeText(this, "Menu created", Toast.LENGTH_SHORT).show();
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent intent1 = new Intent(FilterResults.this, DisplayResults.class);
+                startActivity(intent1);
+                return true;
+
+            case R.id.action_discover:
+
+                return true;
+
+            case R.id.action_watchlist:
+                Intent intent3 = new Intent(FilterResults.this, WatchListDisplay.class);
+                startActivity(intent3);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 }

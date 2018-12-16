@@ -1,97 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DisplayResults">
+    tools:context=".DisplayResults"
+    tools:layout_editor_absoluteY="25dp">
+
+    <include
+        android:id="@+id/filter_toolbar"
+        layout="@layout/my_toolbar"
+         />
 
     <Spinner
         android:id="@+id/sortBy_spinner"
-        android:layout_width="370dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="6dp"
-
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="387dp"
+        android:layout_height="46dp"
+        android:layout_below="@id/filter_toolbar"
+         />
 
     <Spinner
         android:id="@+id/rating_spinner"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sortBy_spinner" />
+        android:layout_below="@id/sortBy_spinner"
+         />
 
     <Spinner
         android:id="@+id/genre_spinner"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rating_spinner" />
+        android:layout_below="@id/rating_spinner"
+         />
 
 
     <Button
         android:id="@+id/filterSearch_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="82dp"
+        android:layout_height="51dp"
+        android:layout_below="@+id/year_edit_text"
+        android:layout_centerHorizontal="true"
         android:text="Search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text" />
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/filterRecyclerView"
         android:layout_width="370dp"
         android:layout_height="279dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filterSearch_btn" />
+        android:layout_below="@id/filterSearch_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-1dp"
+        android:layout_marginBottom="0dp" />
 
     <Button
         android:id="@+id/empty_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="51dp"
+        android:layout_alignTop="@+id/filterSearch_btn"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="0dp"
         android:text="Reset"
-        app:layout_constraintStart_toStartOf="@+id/search_edit_text"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text" />
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <Button
         android:id="@+id/findID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="328dp"
+        android:layout_alignBottom="@+id/search_edit_text"
+        android:layout_marginLeft="1dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@id/search_edit_text"
         android:text="Get actor id"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/genre_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/sortBy_spinner"
-        app:layout_constraintVertical_bias="0.807" />
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <EditText
         android:id="@+id/search_edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
+        android:layout_width="222dp"
+        android:layout_height="54dp"
         android:ems="10"
         android:hint="Enter Actor name"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/findID"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genre_spinner" />
+        android:layout_below="@+id/genre_spinner"
+        />
+
+    <EditText
+        android:id="@+id/year_edit_text"
+        android:layout_width="222dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/search_edit_text"
+        android:ems="10"
+        android:hint="Enter Year" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/year_edit_text"
+        android:layout_below="@id/findID">
+
+        <RadioButton
+            android:id="@+id/before_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_edit_text"
+            android:layout_alignStart="@+id/findID"
+            android:text="Before" />
+
+        <RadioButton
+            android:id="@+id/after_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/before_radio"
+            android:layout_alignParentEnd="true"
+            android:text="After" />
+    </RadioGroup>
 
 
-</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>

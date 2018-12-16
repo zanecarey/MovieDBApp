@@ -1,11 +1,17 @@
 package com.example.zane.moviedbapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,6 +41,8 @@ public class DisplayResults extends AppCompatActivity {
 
     RecyclerViewAdapter adapter;
 
+    Toolbar myToolbar;
+
     //boolean to make sure we don't empty the recycler view before it has been initialized
     boolean recyclerViewStarted = false;
 
@@ -42,6 +50,11 @@ public class DisplayResults extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_results);
+
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Search");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         searchEditText = (EditText) findViewById(R.id.movie_search_editText);
         search_Btn = (Button) findViewById(R.id.search_Btn);
@@ -58,6 +71,8 @@ public class DisplayResults extends AppCompatActivity {
                     movieIDs.clear();
                     adapter.notifyDataSetChanged();
                 } else {
+                    Animation shake = AnimationUtils.loadAnimation(DisplayResults.this, R.anim.shake);
+                    empty_Btn.startAnimation(shake);
                     Toast.makeText(DisplayResults.this, "Movie list already empty!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -69,6 +84,11 @@ public class DisplayResults extends AppCompatActivity {
 
                 //Make sure the search field is empty or not
                 if(searchEditText.getText().toString().equals("")){
+
+                    //load our animation
+                    Animation shake = AnimationUtils.loadAnimation(DisplayResults.this, R.anim.shake);
+                    search_Btn.startAnimation(shake);
+
                     Toast.makeText(DisplayResults.this, "No title entered!", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -132,4 +152,37 @@ public class DisplayResults extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //Toast.makeText(this, "Menu created", Toast.LENGTH_SHORT).show();
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+
+                return true;
+
+            case R.id.action_discover:
+                Intent intent2 = new Intent(DisplayResults.this, FilterResults.class);
+                startActivity(intent2);
+                return true;
+
+            case R.id.action_watchlist:
+                Intent intent3 = new Intent(DisplayResults.this, WatchListDisplay.class);
+                startActivity(intent3);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 }

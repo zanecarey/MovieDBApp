@@ -1,6 +1,8 @@
 package com.example.zane.moviedbapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<Integer> movieIDs = new ArrayList<>();
     private Context context;
 
+    DataBaseAdapter dbHelper;
+
     public RecyclerViewAdapter(ArrayList<Integer> movieIDs, ArrayList<String> titles, ArrayList<String> posters, Context context) {
         this.movieIDs = movieIDs;
         this.titles = titles;
@@ -35,13 +39,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.context = context;
     }
 
-    //empty the recyclerview
-//    public void clear(){
-//        titles.clear();
-//        posters.clear();
-//        movieIDs.clear();
-//        this.notifyDataSetChanged();
-//    }
 
     @NonNull
     @Override
@@ -56,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Log.d(TAG, "onBindViewHolder: called");
-
+        final int value = i;
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo);
@@ -86,6 +83,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public boolean onLongClick(View view) {
 
                 //launch alert dialog, ask if want to remove from watchlist
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+
+                builder.setMessage("Do you want to remove this movie from your watchlist?");
+
+
+                //if yes, movie removed from database, deleted from recycler view, then updated
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dbHelper = new DataBaseAdapter(context);
+                        dbHelper.deleteMovie(movieIDs.get(value));
+                        movieIDs.remove(value);
+                        titles.remove(value);
+                        posters.remove(value);
+                        notifyItemRemoved(value);
+                        notifyItemRangeChanged(value, titles.size());
+                    }
+                });
+
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 return true;
             }
         });

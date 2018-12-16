@@ -8,6 +8,8 @@
     android:orientation="vertical"
     >
 
+    <include layout="@layout/my_toolbar"/>
+
     <EditText
         android:id="@+id/movie_search_editText"
         android:layout_width="match_parent"
@@ -25,6 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
         android:text="Search"
+        style="@style/Widget.AppCompat.Button.Colored"
         />
 
     <Button
@@ -32,7 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Reset" />
+        android:text="Reset"
+        style="@style/Widget.AppCompat.Button.Colored"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

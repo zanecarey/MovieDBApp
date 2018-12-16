@@ -14,8 +14,8 @@
 
     <Spinner
         android:id="@+id/sortBy_spinner"
-        android:layout_width="387dp"
-        android:layout_height="46dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:layout_below="@id/filter_toolbar"
          />
 

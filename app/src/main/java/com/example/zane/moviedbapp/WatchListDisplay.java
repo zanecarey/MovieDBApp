@@ -64,8 +64,6 @@ public class WatchListDisplay extends AppCompatActivity {
                 posters.add(MainActivity.IMAGE_URL + results.getString(3));
             }
         }
-
-
         initRecyclerView();
     }
 

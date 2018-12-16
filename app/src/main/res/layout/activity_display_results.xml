@@ -18,6 +18,7 @@
         android:ems="10"
         android:inputType=""
         android:hint="Enter Movie Title to Search"
+        android:maxLines="1"
         />
 
     <Button

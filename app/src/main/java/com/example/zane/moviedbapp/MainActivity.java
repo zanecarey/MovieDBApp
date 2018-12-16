@@ -1,20 +1,18 @@
 package com.example.zane.moviedbapp;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,63 +28,60 @@ public class MainActivity extends AppCompatActivity {
     public static final String IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
     public static final String KEY = "06ebf26c054d40dfaecf1f1b0e0965f8";
 
-    Button searchByTitleBtn, searchByFiltersBtn, watchlist_btn, ratings_btn;
-
+    @BindView(R.id.search_by_title_Btn)
+    Button searchByTitleBtn;
+    @BindView(R.id.my_toolbar)
     Toolbar myToolbar;
+    @BindView(R.id.search_by_genre_Btn)
+    Button searchByGenreBtn;
+    @BindView(R.id.watch_list_btn)
+    Button watchListBtn;
+    @BindView(R.id.imageView2)
+    ImageView imageView2;
+    @BindView(R.id.ratings_btn)
+    Button ratingsBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-
         setSupportActionBar(myToolbar);
 
+    }
 
-        searchByTitleBtn = (Button) findViewById(R.id.search_by_title_Btn);
-        searchByFiltersBtn = (Button) findViewById(R.id.search_by_genre_Btn);
-        watchlist_btn = (Button) findViewById(R.id.watch_list_btn);
-        ratings_btn = (Button) findViewById(R.id.ratings_btn);
+    @OnClick({R.id.search_by_title_Btn, R.id.search_by_genre_Btn, R.id.watch_list_btn, R.id.ratings_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.search_by_title_Btn:
+                Intent intent1 = new Intent(MainActivity.this, DisplayResults.class);
+                startActivity(intent1);
 
+                break;
+            case R.id.search_by_genre_Btn:
+                Intent intent2 = new Intent(MainActivity.this, FilterResults.class);
+                startActivity(intent2);
 
-        searchByTitleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, DisplayResults.class);
-                startActivity(intent);
-            }
-        });
+                break;
+            case R.id.watch_list_btn:
+                Intent intent3 = new Intent(MainActivity.this, WatchListDisplay.class);
+                startActivity(intent3);
 
-        searchByFiltersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FilterResults.class);
-                startActivity(intent);
-            }
-        });
+                break;
+            case R.id.ratings_btn:
+                Intent intent4 = new Intent(MainActivity.this, MovieRatingsDisplay.class);
+                startActivity(intent4);
 
-        watchlist_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, WatchListDisplay.class);
-                startActivity(intent);
-            }
-        });
-
-        ratings_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, MovieRatingsDisplay.class);
-                startActivity(intent);
-            }
-        });
+                break;
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //Toast.makeText(this, "Menu created", Toast.LENGTH_SHORT).show();
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         return true;
     }
@@ -116,5 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 
 }

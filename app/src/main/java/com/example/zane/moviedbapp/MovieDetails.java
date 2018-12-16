@@ -1,13 +1,10 @@
 package com.example.zane.moviedbapp;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Movie;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.method.ScrollingMovementMethod;
@@ -26,6 +23,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.model.Details;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,23 +40,34 @@ public class MovieDetails extends AppCompatActivity {
     String title, tagline, overview, genre, poster_path, release_date;
     int runtime, budget, movieID, revenue, rating;
     DataBaseAdapter dbHelper;
-    Button rate_btn;
-    TextView movieTitle, movieInfo;
-    LinearLayout detailsLayout;
-    FloatingActionButton fab;
+
+
+    @BindView(R.id.details_toolbar)
     Toolbar myToolbar;
+    @BindView(R.id.poster)
+    ImageView poster;
+    @BindView(R.id.movieTitle)
+    TextView movieTitle;
+    @BindView(R.id.FAButton)
+    FloatingActionButton FAButton;
+    @BindView(R.id.rate_btn)
+    Button rateBtn;
+    @BindView(R.id.number_picker)
     NumberPicker numberPicker;
+    @BindView(R.id.movieInfo)
+    TextView movieInfo;
+    @BindView(R.id.detailsLayout)
+    LinearLayout detailsLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
+        ButterKnife.bind(this);
 
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Movie Info");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         numberPicker = (NumberPicker) findViewById(R.id.number_picker);
         numberPicker.setMinValue(1);
@@ -64,30 +75,8 @@ public class MovieDetails extends AppCompatActivity {
         numberPicker.setWrapSelectorWheel(true);
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
-        rate_btn = (Button) findViewById(R.id.rate_btn);
-        fab = (FloatingActionButton) findViewById(R.id.FAButton);
-        movieTitle = findViewById(R.id.movieTitle);
-        movieInfo = findViewById(R.id.movieInfo);
         //make our info text view scrollable
         movieInfo.setMovementMethod(new ScrollingMovementMethod());
-
-        //listener for button to add to watchlist
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveToWatchList();
-            }
-        });
-        //listener for rate button
-        rate_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rating = numberPicker.getValue();
-                saveToRatings();
-            }
-        });
-
-        detailsLayout = (LinearLayout) findViewById(R.id.detailsLayout);
 
         int movieID = getID();
 
@@ -111,9 +100,9 @@ public class MovieDetails extends AppCompatActivity {
                 budget = response.body().getBudget();
                 revenue = response.body().getRevenue();
                 release_date = response.body().getRelease_date();
-                if(response.body().getGenre().size() == 0){
+                if (response.body().getGenre().size() == 0) {
                     genre = "";
-                }else{
+                } else {
                     genre = response.body().getGenre().get(0).getName();
                 }
                 poster_path = response.body().getPoster_path();
@@ -128,9 +117,7 @@ public class MovieDetails extends AppCompatActivity {
         });
     }
 
-    private void setInfo(String title, String tagline, String overview, int runtime, int budget, int revenue, String release_date, String genre, String poster_path){
-
-
+    private void setInfo(String title, String tagline, String overview, int runtime, int budget, int revenue, String release_date, String genre, String poster_path) {
         //Make the movie title underlined
         SpannableString content = new SpannableString(title);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -151,7 +138,7 @@ public class MovieDetails extends AppCompatActivity {
         movieInfo.append(" " + tagline + "\n");
 
         movieInfo.append(mRuntime);
-        movieInfo.append(" " + runtime + " min"+ "\n");
+        movieInfo.append(" " + runtime + " min" + "\n");
 
         movieInfo.append(mBudget);
         movieInfo.append(" $" + budget + "\n");
@@ -182,16 +169,16 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     //make our strings underlined
-    private SpannableString underlineString(String input){
+    private SpannableString underlineString(String input) {
         SpannableString content = new SpannableString(input);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         return content;
     }
 
     //check if our intent data exists before trying to retrieve it
-    private int getID(){
+    private int getID() {
 
-        if(getIntent().hasExtra("movie_id")){
+        if (getIntent().hasExtra("movie_id")) {
             movieID = getIntent().getIntExtra("movie_id", 0);
             return movieID;
         } else return 0;
@@ -199,11 +186,11 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     //check if movie is already in watchlist, if not, add it, then display snackbar message
-    public void saveToWatchList(){
+    public void saveToWatchList() {
 
         dbHelper = new DataBaseAdapter(this);
 
-        if(dbHelper.alreadyInDatabase(movieID, "movies")){
+        if (dbHelper.alreadyInDatabase(movieID, "movies")) {
             Snackbar.make(detailsLayout, "ALREADY IN WATCHLIST", Snackbar.LENGTH_LONG)
                     .setAction("GO TO", snackbarListener)
                     .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
@@ -218,10 +205,10 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     //save a movie rating to our database
-    public void saveToRatings(){
+    public void saveToRatings() {
         dbHelper = new DataBaseAdapter(this);
 
-        if(dbHelper.alreadyInDatabase(movieID, "movies_rated")){
+        if (dbHelper.alreadyInDatabase(movieID, "movies_rated")) {
             Snackbar.make(detailsLayout, "ALREADY RATED", Snackbar.LENGTH_LONG)
                     .setAction("GO TO", snackbarListener)
                     .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
@@ -239,10 +226,8 @@ public class MovieDetails extends AppCompatActivity {
     View.OnClickListener snackbarListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-                Intent intent = new Intent(MovieDetails.this, WatchListDisplay.class);
-                startActivity(intent);
-
+            Intent intent = new Intent(MovieDetails.this, WatchListDisplay.class);
+            startActivity(intent);
         }
     };
 
@@ -277,6 +262,19 @@ public class MovieDetails extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @OnClick({R.id.FAButton, R.id.rate_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.FAButton:
+                saveToWatchList();
+                break;
+            case R.id.rate_btn:
+                rating = numberPicker.getValue();
+                saveToRatings();
+                break;
         }
     }
 }

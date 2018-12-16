@@ -8,7 +8,9 @@
     android:orientation="vertical"
     android:id="@+id/detailsLayout">
 
-    <include layout="@layout/my_toolbar"/>
+    <include
+        android:id="@+id/details_toolbar"
+        layout="@layout/my_toolbar"/>
 
     <ImageView
         android:id="@+id/poster"

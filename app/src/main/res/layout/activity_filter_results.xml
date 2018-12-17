@@ -80,6 +80,7 @@
             android:layout_marginBottom="5dp"
             android:layout_toRightOf="@id/search_edit_text"
             android:text="Get actor id"
+            android:inputType="textPersonName"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <EditText
@@ -124,8 +125,6 @@
         </RadioGroup>
 
     </RelativeLayout>
-
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navView"

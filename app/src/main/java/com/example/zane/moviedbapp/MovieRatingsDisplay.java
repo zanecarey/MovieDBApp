@@ -61,6 +61,11 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
 
                         switch (menuItem.getItemId()) {
+                            case R.id.nav_home:
+                                Intent intent = new Intent(MovieRatingsDisplay.this, MainActivity.class);
+                                startActivity(intent);
+                                return true;
+
                             case R.id.nav_search:
                                 Intent intent1 = new Intent(MovieRatingsDisplay.this, DisplayResults.class);
                                 startActivity(intent1);
@@ -126,6 +131,11 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+            case R.id.action_home:
+                Intent intent = new Intent(MovieRatingsDisplay.this, MainActivity.class);
+                startActivity(intent);
                 return true;
 
             case R.id.action_search:

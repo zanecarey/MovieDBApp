@@ -106,6 +106,11 @@ public class FilterResults extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
 
                         switch (menuItem.getItemId()) {
+                            case R.id.nav_home:
+                                Intent intent = new Intent(FilterResults.this, MainActivity.class);
+                                startActivity(intent);
+                                return true;
+
                             case R.id.nav_search:
                                 Intent intent1 = new Intent(FilterResults.this, DisplayResults.class);
                                 startActivity(intent1);
@@ -385,6 +390,11 @@ public class FilterResults extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+            case R.id.action_home:
+                Intent intent = new Intent(FilterResults.this, MainActivity.class);
+                startActivity(intent);
                 return true;
 
             case R.id.action_search:

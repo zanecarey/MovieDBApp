@@ -84,6 +84,11 @@ public class DisplayResults extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
 
                         switch (menuItem.getItemId()) {
+                            case R.id.nav_home:
+                                Intent intent = new Intent(DisplayResults.this, MainActivity.class);
+                                startActivity(intent);
+                                return true;
+
                             case R.id.nav_search:
 
                                 return true;
@@ -210,6 +215,12 @@ public class DisplayResults extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+
+            case R.id.action_home:
+                Intent intent = new Intent(DisplayResults.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+
             case R.id.action_search:
 
                 return true;

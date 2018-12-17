@@ -8,6 +8,13 @@
         app:showAsAction="always">
         <menu>
             <item
+                android:id="@+id/action_home"
+                android:icon="@drawable/home2"
+                android:title="Home"
+                app:showAsAction="ifRoom"
+                />
+
+            <item
                 android:id="@+id/action_search"
                 android:icon="@drawable/search"
                 android:title="Search"
@@ -34,6 +41,7 @@
                 android:title="Ratings"
                 app:showAsAction="ifRoom"
                 />
+
         </menu>
     </item>
 </menu>

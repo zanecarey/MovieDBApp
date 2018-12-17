@@ -2,6 +2,9 @@ package com.example.zane.moviedbapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.ratings_btn)
     Button ratingsBtn;
 
+    DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,45 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        mDrawerLayout = findViewById(R.id.main_drawer_layout);
 
+        NavigationView navigationView = findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_search:
+                                Intent intent1 = new Intent(MainActivity.this, DisplayResults.class);
+                                startActivity(intent1);
+                                return true;
+
+                            case R.id.nav_discover:
+                                Intent intent2 = new Intent(MainActivity.this, FilterResults.class);
+                                startActivity(intent2);
+                                return true;
+
+                            case R.id.nav_watchlist:
+                                Intent intent3 = new Intent(MainActivity.this, WatchListDisplay.class);
+                                startActivity(intent3);
+                                return true;
+
+                            case R.id.nav_ratings:
+                                Intent intent4 = new Intent(MainActivity.this, MovieRatingsDisplay.class);
+                                startActivity(intent4);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
     }
 
     @OnClick({R.id.search_by_title_Btn, R.id.search_by_genre_Btn, R.id.watch_list_btn, R.id.ratings_btn})
@@ -88,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
             case R.id.action_search:
                 Intent intent1 = new Intent(MainActivity.this, DisplayResults.class);
                 startActivity(intent1);

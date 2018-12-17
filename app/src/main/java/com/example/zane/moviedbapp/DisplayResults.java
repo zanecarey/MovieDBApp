@@ -2,6 +2,9 @@ package com.example.zane.moviedbapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +60,7 @@ public class DisplayResults extends AppCompatActivity {
     //boolean to make sure we don't empty the recycler view before it has been initialized
     boolean recyclerViewStarted = false;
 
+    DrawerLayout mDrawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,43 @@ public class DisplayResults extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Search");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        mDrawerLayout = findViewById(R.id.display_drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_search:
+
+                                return true;
+
+                            case R.id.nav_discover:
+                                Intent intent2 = new Intent(DisplayResults.this, FilterResults.class);
+                                startActivity(intent2);
+                                return true;
+
+                            case R.id.nav_watchlist:
+                                Intent intent3 = new Intent(DisplayResults.this, WatchListDisplay.class);
+                                startActivity(intent3);
+                                return true;
+
+                            case R.id.nav_ratings:
+                                Intent intent4 = new Intent(DisplayResults.this, MovieRatingsDisplay.class);
+                                startActivity(intent4);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
 
     }
 
@@ -166,6 +207,9 @@ public class DisplayResults extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
             case R.id.action_search:
 
                 return true;
@@ -192,4 +236,5 @@ public class DisplayResults extends AppCompatActivity {
 
         }
     }
+
 }

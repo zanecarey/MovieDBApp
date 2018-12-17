@@ -1,120 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DisplayResults"
-    tools:layout_editor_absoluteY="25dp">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/filter_drawer_layout"
+    android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/filter_toolbar"
-        layout="@layout/my_toolbar"
-         />
-
-    <Spinner
-        android:id="@+id/sortBy_spinner"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/filter_toolbar"
-         />
+        android:layout_height="match_parent"
+        tools:context=".DisplayResults"
+        tools:layout_editor_absoluteY="25dp">
 
-    <Spinner
-        android:id="@+id/rating_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/sortBy_spinner"
-         />
+        <include
+            android:id="@+id/filter_toolbar"
+            layout="@layout/my_toolbar"
+            />
 
-    <Spinner
-        android:id="@+id/genre_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/rating_spinner"
-         />
+        <Spinner
+            android:id="@+id/sortBy_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/filter_toolbar"
+            />
+
+        <Spinner
+            android:id="@+id/rating_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/sortBy_spinner"
+            />
+
+        <Spinner
+            android:id="@+id/genre_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/rating_spinner"
+            />
 
 
-    <Button
-        android:id="@+id/filterSearch_btn"
-        android:layout_width="82dp"
-        android:layout_height="51dp"
-        android:layout_below="@+id/year_edit_text"
-        android:layout_centerHorizontal="true"
-        android:text="Search"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        <Button
+            android:id="@+id/filterSearch_btn"
+            android:layout_width="82dp"
+            android:layout_height="51dp"
+            android:layout_below="@+id/year_edit_text"
+            android:layout_centerHorizontal="true"
+            android:text="Search"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/filterRecyclerView"
-        android:layout_width="370dp"
-        android:layout_height="279dp"
-        android:layout_below="@id/filterSearch_btn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-1dp"
-        android:layout_marginBottom="0dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/filterRecyclerView"
+            android:layout_width="370dp"
+            android:layout_height="279dp"
+            android:layout_below="@id/filterSearch_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-1dp"
+            android:layout_marginBottom="0dp" />
 
-    <Button
-        android:id="@+id/empty_btn"
-        android:layout_width="72dp"
-        android:layout_height="51dp"
-        android:layout_alignTop="@+id/filterSearch_btn"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="0dp"
-        android:text="Reset"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        <Button
+            android:id="@+id/empty_btn"
+            android:layout_width="72dp"
+            android:layout_height="51dp"
+            android:layout_alignTop="@+id/filterSearch_btn"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0dp"
+            android:text="Reset"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
-    <Button
-        android:id="@+id/findID"
+        <Button
+            android:id="@+id/findID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/search_edit_text"
+            android:layout_marginLeft="1dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@id/search_edit_text"
+            android:text="Get actor id"
+            style="@style/Widget.AppCompat.Button.Colored"/>
+
+        <EditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="222dp"
+            android:layout_height="54dp"
+            android:ems="10"
+            android:hint="Enter Actor name"
+            android:inputType="textPersonName"
+            android:layout_below="@+id/genre_spinner"
+            />
+
+        <EditText
+            android:id="@+id/year_edit_text"
+            android:layout_width="222dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/search_edit_text"
+            android:ems="10"
+            android:hint="Enter Year" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/year_edit_text"
+            android:layout_below="@id/findID">
+
+            <RadioButton
+                android:id="@+id/before_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/search_edit_text"
+                android:layout_alignStart="@+id/findID"
+                android:text="Before" />
+
+            <RadioButton
+                android:id="@+id/after_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/before_radio"
+                android:layout_alignParentEnd="true"
+                android:text="After" />
+        </RadioGroup>
+
+    </RelativeLayout>
+
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/search_edit_text"
-        android:layout_marginLeft="1dp"
-        android:layout_marginBottom="5dp"
-        android:layout_toRightOf="@id/search_edit_text"
-        android:text="Get actor id"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_view"
+        app:headerLayout="@layout/nav_header"/>
 
-    <EditText
-        android:id="@+id/search_edit_text"
-        android:layout_width="222dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Enter Actor name"
-        android:inputType="textPersonName"
-        android:layout_below="@+id/genre_spinner"
-        />
-
-    <EditText
-        android:id="@+id/year_edit_text"
-        android:layout_width="222dp"
-        android:layout_height="45dp"
-        android:layout_below="@id/search_edit_text"
-        android:ems="10"
-        android:hint="Enter Year" />
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_toRightOf="@id/year_edit_text"
-        android:layout_below="@id/findID">
-
-        <RadioButton
-            android:id="@+id/before_radio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/search_edit_text"
-            android:layout_alignStart="@+id/findID"
-            android:text="Before" />
-
-        <RadioButton
-            android:id="@+id/after_radio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/before_radio"
-            android:layout_alignParentEnd="true"
-            android:text="After" />
-    </RadioGroup>
-
-
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

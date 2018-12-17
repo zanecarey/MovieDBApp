@@ -3,6 +3,9 @@ package com.example.zane.moviedbapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +52,6 @@ public class FilterResults extends AppCompatActivity {
 
     Boolean recyclerViewStarted = false;
 
-    RadioButton before_radio, after_radio;
     @BindView(R.id.filter_toolbar)
     Toolbar myToolbar;
     @BindView(R.id.sortBy_spinner)
@@ -79,6 +81,8 @@ public class FilterResults extends AppCompatActivity {
     private ArrayList<String> posters = new ArrayList<>();
     private ArrayList<Integer> movieIDs = new ArrayList<>();
 
+    DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +92,43 @@ public class FilterResults extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Discover");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        mDrawerLayout = findViewById(R.id.filter_drawer_layout);
 
+        NavigationView navigationView = findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_search:
+                                Intent intent1 = new Intent(FilterResults.this, DisplayResults.class);
+                                startActivity(intent1);
+                                return true;
+
+                            case R.id.nav_discover:
+
+                                return true;
+
+                            case R.id.nav_watchlist:
+                                Intent intent3 = new Intent(FilterResults.this, WatchListDisplay.class);
+                                startActivity(intent3);
+                                return true;
+
+                            case R.id.nav_ratings:
+                                Intent intent4 = new Intent(FilterResults.this, MovieRatingsDisplay.class);
+                                startActivity(intent4);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
         addItemsToSpinners();
         addListenerToSpinners();
 
@@ -310,7 +350,7 @@ public class FilterResults extends AppCompatActivity {
         if (searchNameID != 0) url += "&with_people=" + searchNameID;
         if (!yearEditText.getText().toString().equals("")) {
             //check radio buttons
-            if (after_radio.isChecked()) {
+            if (afterRadio.isChecked()) {
                 url += "&release_date.gte=" + yearEditText.getText().toString();
             } else {
                 url += "&release_date.lte=" + yearEditText.getText().toString();
@@ -343,6 +383,10 @@ public class FilterResults extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
             case R.id.action_search:
                 Intent intent1 = new Intent(FilterResults.this, DisplayResults.class);
                 startActivity(intent1);

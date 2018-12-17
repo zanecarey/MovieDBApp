@@ -3,6 +3,9 @@ package com.example.zane.moviedbapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +39,8 @@ public class WatchListDisplay extends AppCompatActivity {
     RecyclerView watchListRecyclerView;
 
     RecyclerViewAdapter adapter;
+    DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,43 @@ public class WatchListDisplay extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Watchlist");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        mDrawerLayout = findViewById(R.id.watch_list_drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_search:
+                                Intent intent1 = new Intent(WatchListDisplay.this, DisplayResults.class);
+                                startActivity(intent1);
+                                return true;
+
+                            case R.id.nav_discover:
+                                Intent intent2 = new Intent(WatchListDisplay.this, WatchListDisplay.class);
+                                startActivity(intent2);
+                                return true;
+
+                            case R.id.nav_watchlist:
+
+                                return true;
+
+                            case R.id.nav_ratings:
+                                Intent intent4 = new Intent(WatchListDisplay.this, MovieRatingsDisplay.class);
+                                startActivity(intent4);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
 
         dbHelper = new DataBaseAdapter(this);
         //get the watchlist data
@@ -84,6 +126,10 @@ public class WatchListDisplay extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
             case R.id.action_search:
                 Intent intent1 = new Intent(WatchListDisplay.this, DisplayResults.class);
                 startActivity(intent1);

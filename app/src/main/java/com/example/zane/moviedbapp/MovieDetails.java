@@ -3,7 +3,10 @@ package com.example.zane.moviedbapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -59,6 +62,8 @@ public class MovieDetails extends AppCompatActivity {
     @BindView(R.id.detailsLayout)
     LinearLayout detailsLayout;
 
+    DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,44 @@ public class MovieDetails extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Movie Info");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        mDrawerLayout = findViewById(R.id.details_drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_search:
+                                Intent intent1 = new Intent(MovieDetails.this, DisplayResults.class);
+                                startActivity(intent1);
+                                return true;
+
+                            case R.id.nav_discover:
+                                Intent intent2 = new Intent(MovieDetails.this, FilterResults.class);
+                                startActivity(intent2);
+                                return true;
+
+                            case R.id.nav_watchlist:
+                                Intent intent3 = new Intent(MovieDetails.this, WatchListDisplay.class);
+                                startActivity(intent3);
+                                return true;
+
+                            case R.id.nav_ratings:
+                                Intent intent4 = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
+                                startActivity(intent4);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
 
         numberPicker = (NumberPicker) findViewById(R.id.number_picker);
         numberPicker.setMinValue(1);
@@ -251,6 +294,10 @@ public class MovieDetails extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
             case R.id.action_search:
                 Intent intent1 = new Intent(MovieDetails.this, DisplayResults.class);
                 startActivity(intent1);
@@ -266,6 +313,10 @@ public class MovieDetails extends AppCompatActivity {
                 startActivity(intent3);
                 return true;
 
+            case R.id.action_ratings:
+                Intent intent4 = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
+                startActivity(intent4);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

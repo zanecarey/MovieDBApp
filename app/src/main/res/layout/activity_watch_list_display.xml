@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WatchListDisplay"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/watch_list_drawer_layout"
+    android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/watch_list_toolbar"
-        layout="@layout/my_toolbar"/>
-
-    <TextView
-        android:id="@+id/watchlist_textView"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Watchlist"
-        android:gravity="center"
-        android:textSize="32sp"/>
+        android:layout_height="match_parent"
+        tools:context=".WatchListDisplay"
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/watch_list_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        <include
+            android:id="@+id/watch_list_toolbar"
+            layout="@layout/my_toolbar"/>
+
+        <TextView
+            android:id="@+id/watchlist_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Watchlist"
+            android:gravity="center"
+            android:textSize="32sp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/watch_list_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_view"
+        app:headerLayout="@layout/nav_header"/>
+
+</android.support.v4.widget.DrawerLayout>

@@ -357,6 +357,11 @@ public class FilterResults extends AppCompatActivity {
                 startActivity(intent3);
                 return true;
 
+            case R.id.action_ratings:
+                Intent intent4 = new Intent(FilterResults.this, MovieRatingsDisplay.class);
+                startActivity(intent4);
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

@@ -192,13 +192,13 @@ public class MovieDetails extends AppCompatActivity {
 
         if (dbHelper.alreadyInDatabase(movieID, "movies")) {
             Snackbar.make(detailsLayout, "ALREADY IN WATCHLIST", Snackbar.LENGTH_LONG)
-                    .setAction("GO TO", snackbarListener)
+                    .setAction("GO TO", snackbarListenerWatchList)
                     .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
                     .show();
         } else {
             dbHelper.addMovie(movieID, title, poster_path);
             Snackbar.make(detailsLayout, "ADDED MOVIE", Snackbar.LENGTH_LONG)
-                    .setAction("GO TO", snackbarListener)
+                    .setAction("GO TO", snackbarListenerWatchList)
                     .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
                     .show();
         }
@@ -210,23 +210,32 @@ public class MovieDetails extends AppCompatActivity {
 
         if (dbHelper.alreadyInDatabase(movieID, "movies_rated")) {
             Snackbar.make(detailsLayout, "ALREADY RATED", Snackbar.LENGTH_LONG)
-                    .setAction("GO TO", snackbarListener)
+                    .setAction("GO TO", snackbarListenerRating)
                     .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
                     .show();
         } else {
             dbHelper.addRating(movieID, title, poster_path, rating);
             Snackbar.make(detailsLayout, "ADDED MOVIE", Snackbar.LENGTH_LONG)
-                    .setAction("GO TO", snackbarListener)
+                    .setAction("GO TO", snackbarListenerRating)
                     .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
                     .show();
         }
     }
 
     // Listener for our snackbar
-    View.OnClickListener snackbarListener = new View.OnClickListener() {
+    View.OnClickListener snackbarListenerWatchList = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(MovieDetails.this, WatchListDisplay.class);
+            startActivity(intent);
+        }
+    };
+
+    // Listener for our snackbar
+    View.OnClickListener snackbarListenerRating = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
             startActivity(intent);
         }
     };

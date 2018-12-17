@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
     }
@@ -104,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent3);
                 return true;
 
+            case R.id.action_ratings:
+                Intent intent4 = new Intent(MainActivity.this, MovieRatingsDisplay.class);
+                startActivity(intent4);
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -111,6 +115,4 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
-
 }

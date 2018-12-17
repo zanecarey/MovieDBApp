@@ -94,7 +94,11 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                 return true;
 
             case R.id.action_watchlist:
+                Intent intent3 = new Intent(MovieRatingsDisplay.this, FilterResults.class);
+                startActivity(intent3);
+                return true;
 
+            case R.id.action_ratings:
                 return true;
 
             default:

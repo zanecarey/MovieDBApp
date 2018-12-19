@@ -26,15 +26,25 @@ import com.example.zane.moviedbapp.model.Feed;
 import com.example.zane.moviedbapp.model.NameResults;
 import com.example.zane.moviedbapp.model.Results;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FilterResults extends AppCompatActivity {
@@ -66,8 +76,6 @@ public class FilterResults extends AppCompatActivity {
     RecyclerView filterRecyclerView;
     @BindView(R.id.empty_btn)
     Button emptyBtn;
-    @BindView(R.id.findID)
-    Button findID;
     @BindView(R.id.search_edit_text)
     EditText searchEditText;
     @BindView(R.id.year_edit_text)
@@ -140,11 +148,57 @@ public class FilterResults extends AppCompatActivity {
     }
 
     @OnClick(R.id.filterSearch_btn)
-    public void onFilterSearchBtnClicked() {
+    public void onFindIDClicked() {
+        if(!searchEditText.getText().toString().equals("")){
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.themoviedb.org/3/search/person/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
 
+            String name = searchEditText.getText().toString();
+            name = name.replaceAll("\\s+", "%20");
+            String url_name = MainActivity.SEARCH_NAME_BASE_URL + name;
+
+            NameSearchInterface nameSearchInterface = retrofit.create(NameSearchInterface.class);
+
+            //Call<NameResults> call = nameSearchInterface.getData(url);
+            Observable<NameResults> call = nameSearchInterface.getData(url_name);
+
+            call.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<NameResults>() {
+
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(NameResults nameResults) {
+                            searchNameID = nameResults.getResults().get(0).getId();
+                        }
+
+                        @Override
+                        public void onError(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            getMovies();
+                        }
+                    });
+        } else {
+            getMovies();
+        }
+    }
+
+    public void getMovies(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/discover/movie/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         String url = MainActivity.DISCOVER_BASE_URL + createUrl();
@@ -185,39 +239,6 @@ public class FilterResults extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         } else {
             Toast.makeText(FilterResults.this, "Movie list already empty!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @OnClick(R.id.findID)
-    public void onFindIDClicked() {
-        //make sure a name has been entered before searching for the id
-        if (searchEditText.getText().toString().equals("")) {
-            Toast.makeText(FilterResults.this, "No name entered.", Toast.LENGTH_SHORT).show();
-        } else {
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.themoviedb.org/3/search/person/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            String name = searchEditText.getText().toString();
-            name = name.replaceAll("\\s+", "%20");
-            String url = MainActivity.SEARCH_NAME_BASE_URL + name;
-
-            NameSearchInterface nameSearchInterface = retrofit.create(NameSearchInterface.class);
-            Call<NameResults> call = nameSearchInterface.getData(url);
-
-            call.enqueue(new Callback<NameResults>() {
-                @Override
-                public void onResponse(Call<NameResults> call, Response<NameResults> response) {
-                    searchNameID = response.body().getResults().get(0).getId();
-                }
-
-                @Override
-                public void onFailure(Call<NameResults> call, Throwable t) {
-
-                }
-            });
         }
     }
 

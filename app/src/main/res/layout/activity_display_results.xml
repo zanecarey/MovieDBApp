@@ -28,6 +28,7 @@
             android:inputType=""
             android:hint="Enter Movie Title to Search"
             android:maxLines="1"
+            android:layout_margin="8dp"
             />
 
         <Button
@@ -38,6 +39,7 @@
             android:layout_marginTop="18dp"
             android:text="@string/search"
             style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_margin="8dp"
             />
 
         <Button
@@ -47,6 +49,7 @@
             android:layout_marginLeft="16dp"
             android:text="@string/reset"
             style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_margin="8dp"
             />
 
         <android.support.v7.widget.RecyclerView
@@ -54,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_margin="8dp"
             >
 
         </android.support.v7.widget.RecyclerView>

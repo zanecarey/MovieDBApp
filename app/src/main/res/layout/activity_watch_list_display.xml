@@ -24,7 +24,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/watch_list_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            >
+        </android.support.v7.widget.RecyclerView>
+
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
@@ -35,6 +39,7 @@
         android:background="@android:color/white"
         android:fitsSystemWindows="true"
         app:menu="@menu/drawer_view"
-        app:headerLayout="@layout/nav_header"/>
+        app:headerLayout="@layout/nav_header"
+        />
 
 </android.support.v4.widget.DrawerLayout>

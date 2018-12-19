@@ -37,7 +37,7 @@
                 android:id="@+id/movieTitle"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="test"
+                android:text="@string/test"
                 android:textColor="#000"
                 android:textSize="24sp"
                 android:layout_marginLeft="3dp"/>
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="Rate" />
+                android:text="@string/rate" />
 
             <NumberPicker
                 android:id="@+id/number_picker"

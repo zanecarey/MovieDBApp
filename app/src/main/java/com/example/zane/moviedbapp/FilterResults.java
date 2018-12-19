@@ -375,8 +375,7 @@ public class FilterResults extends AppCompatActivity {
         //set the layout mode to LinearLayout
         filterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

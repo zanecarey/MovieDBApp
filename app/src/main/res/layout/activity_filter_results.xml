@@ -48,7 +48,7 @@
             android:layout_height="51dp"
             android:layout_below="@+id/year_edit_text"
             android:layout_centerHorizontal="true"
-            android:text="Search"
+            android:text="@string/search"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <android.support.v7.widget.RecyclerView
@@ -68,7 +68,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="4dp"
             android:layout_marginTop="0dp"
-            android:text="Reset"
+            android:text="@string/reset"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
         <Button
@@ -79,7 +79,7 @@
             android:layout_marginLeft="1dp"
             android:layout_marginBottom="5dp"
             android:layout_toRightOf="@id/search_edit_text"
-            android:text="Get actor id"
+            android:text="@string/get_actor_id"
             android:inputType="textPersonName"
             style="@style/Widget.AppCompat.Button.Colored"/>
 
@@ -88,7 +88,7 @@
             android:layout_width="222dp"
             android:layout_height="54dp"
             android:ems="10"
-            android:hint="Enter Actor name"
+            android:hint="@string/enter_actor_name"
             android:inputType="textPersonName"
             android:layout_below="@+id/genre_spinner"
             />
@@ -99,7 +99,7 @@
             android:layout_height="45dp"
             android:layout_below="@id/search_edit_text"
             android:ems="10"
-            android:hint="Enter Year" />
+            android:hint="@string/enter_year" />
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/search_edit_text"
                 android:layout_alignStart="@+id/findID"
-                android:text="Before" />
+                android:text="@string/before" />
 
             <RadioButton
                 android:id="@+id/after_radio"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/before_radio"
                 android:layout_alignParentEnd="true"
-                android:text="After" />
+                android:text="@string/after" />
         </RadioGroup>
 
     </RelativeLayout>

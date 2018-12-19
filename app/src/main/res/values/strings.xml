@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MovieDBApp</string>
+    <string name="search">Search</string>
+
+    <string name="get_actor_id">Get actor id</string>
+    <string name="enter_actor_name">Enter Actor name</string>
+    <string name="enter_year">Enter Year</string>
+    <string name="before">Before</string>
+    <string name="after">After</string>
+    <string name="search_for_a_movie_by_title">Search for a movie by Title</string>
+    <string name="discover_a_new_movie">Discover a new Movie</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="ratings">Ratings</string>
+    <string name="reset">Reset</string>
+    <string name="test">test</string>
+    <string name="rate">Rate</string>
+    <string name="home">Home</string>
+    <string name="discover">Discover</string>
 </resources>

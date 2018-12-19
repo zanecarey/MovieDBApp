@@ -10,35 +10,35 @@
             <item
                 android:id="@+id/action_home"
                 android:icon="@drawable/home2"
-                android:title="Home"
+                android:title="@string/home"
                 app:showAsAction="ifRoom"
                 />
 
             <item
                 android:id="@+id/action_search"
                 android:icon="@drawable/search"
-                android:title="Search"
+                android:title="@string/search"
                 app:showAsAction="ifRoom"
                 />
 
             <item
                 android:id="@+id/action_discover"
                 android:icon="@drawable/discover"
-                android:title="Discover"
+                android:title="@string/discover"
                 app:showAsAction="ifRoom"
                 />
 
             <item
                 android:id="@+id/action_watchlist"
                 android:icon="@drawable/watchlist"
-                android:title="Watchlist"
+                android:title="@string/watchlist"
                 app:showAsAction="ifRoom"
                 />
 
             <item
                 android:id="@+id/action_ratings"
                 android:icon="@drawable/rate"
-                android:title="Ratings"
+                android:title="@string/ratings"
                 app:showAsAction="ifRoom"
                 />
 

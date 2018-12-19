@@ -33,8 +33,6 @@ public class WatchListDisplay extends AppCompatActivity {
 
     @BindView(R.id.watch_list_toolbar)
     Toolbar myToolbar;
-    @BindView(R.id.watchlist_textView)
-    TextView watchlistTextView;
     @BindView(R.id.watch_list_recyclerView)
     RecyclerView watchListRecyclerView;
 

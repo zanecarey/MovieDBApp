@@ -38,7 +38,7 @@
                 android:layout_marginLeft="29dp"
                 android:layout_marginTop="29dp"
                 android:layout_toRightOf="@id/circluarImageView"
-                android:text="Test"
+                android:text="@string/test"
                 android:textColor="#000"
                 android:textSize="16sp" />
         </RelativeLayout>

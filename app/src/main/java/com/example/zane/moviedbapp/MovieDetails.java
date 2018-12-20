@@ -27,6 +27,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.model.Details;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -190,11 +192,14 @@ public class MovieDetails extends AppCompatActivity {
         movieInfo.append(mRuntime);
         movieInfo.append(" " + runtime + " min" + "\n");
 
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+        String budgetAsString = numberFormat.format(budget);
         movieInfo.append(mBudget);
-        movieInfo.append(" $" + budget + "\n");
+        movieInfo.append(" $" + budgetAsString + "\n");
 
+        String revenueAsString = numberFormat.format(revenue);
         movieInfo.append(mRevenue);
-        movieInfo.append(" $" + revenue + "\n");
+        movieInfo.append(" $" + revenueAsString + "\n");
 
         movieInfo.append(mReleaseDate);
         movieInfo.append(" " + release_date + "\n");

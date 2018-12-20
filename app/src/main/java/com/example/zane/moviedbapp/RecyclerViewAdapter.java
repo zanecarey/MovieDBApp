@@ -4,7 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,10 +88,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 //launch alert dialog, ask if want to remove from watchlist
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-
+                builder = new AlertDialog.Builder(context, R.style.AlertDialog);
+                builder.setTitle("Remove movie");
                 builder.setMessage("Do you want to remove this movie from your watchlist?");
-
 
                 //if yes, movie removed from database, deleted from recycler view, then updated
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -112,6 +115,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.colorMovieDBgreen));
+                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.colorMovieDBgreen));
                 return true;
             }
         });

@@ -6,6 +6,9 @@
         <item>Adventure</item>
         <item>Animation</item>
         <item>Comedy</item>
+        <item>Drama</item>
+        <item>Documentary</item>
         <item>Horror</item>
+        <item>Science Fiction</item>
     </string-array>
 </resources>

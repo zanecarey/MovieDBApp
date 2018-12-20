@@ -28,8 +28,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:titleTextAppearance="@style/RobotoTextViewStyle"
-
             >
 
         </android.support.v7.widget.Toolbar>

@@ -46,7 +46,6 @@ public class MovieDetails extends AppCompatActivity {
     String title, tagline, overview, genre, poster_path, release_date;
     int runtime, budget, movieID, revenue, rating;
     DataBaseAdapter dbHelper;
-    DrawerLayout mDrawerLayout;
 
     @BindView(R.id.details_toolbar)
     Toolbar myToolbar;
@@ -76,8 +75,10 @@ public class MovieDetails extends AppCompatActivity {
     TextView genreTextView;
     @BindView(R.id.overview_textView)
     TextView overviewTextView;
-
-
+    @BindView(R.id.details_drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.navView)
+    NavigationView navView;
 
 
     @Override
@@ -89,57 +90,13 @@ public class MovieDetails extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        mDrawerLayout = findViewById(R.id.details_drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.navView);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
+        enableNavView();
 
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_home:
-                                Intent intent = new Intent(MovieDetails.this, MainActivity.class);
-                                startActivity(intent);
-                                return true;
-
-                            case R.id.nav_search:
-                                Intent intent1 = new Intent(MovieDetails.this, DisplayResults.class);
-                                startActivity(intent1);
-                                return true;
-
-                            case R.id.nav_discover:
-                                Intent intent2 = new Intent(MovieDetails.this, FilterResults.class);
-                                startActivity(intent2);
-                                return true;
-
-                            case R.id.nav_watchlist:
-                                Intent intent3 = new Intent(MovieDetails.this, WatchListDisplay.class);
-                                startActivity(intent3);
-                                return true;
-
-                            case R.id.nav_ratings:
-                                Intent intent4 = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
-                                startActivity(intent4);
-                                return true;
-                            default:
-                                return true;
-                        }
-                    }
-                });
-
-        numberPicker = (NumberPicker) findViewById(R.id.number_picker);
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(10);
         numberPicker.setWrapSelectorWheel(true);
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-
-        //make our info text view scrollable
-        // movieInfo.setMovementMethod(new ScrollingMovementMethod());
 
         int movieID = getID();
 
@@ -180,6 +137,7 @@ public class MovieDetails extends AppCompatActivity {
         });
     }
 
+    //Input all the info into the textviews
     private void setInfo(String title, String tagline, String overview, int runtime, int budget, int revenue, String release_date, String genre, String poster_path) {
 
         //Use all the movie info and put into textview
@@ -284,7 +242,7 @@ public class MovieDetails extends AppCompatActivity {
         }
     }
 
-    // Listener for our snackbar
+    // Listener for our watchlist snackbar
     View.OnClickListener snackbarListenerWatchList = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -293,7 +251,7 @@ public class MovieDetails extends AppCompatActivity {
         }
     };
 
-    // Listener for our snackbar
+    // Listener for our movie rating snackbar
     View.OnClickListener snackbarListenerRating = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -360,5 +318,48 @@ public class MovieDetails extends AppCompatActivity {
                 saveToRatings();
                 break;
         }
+    }
+
+    //enable navview
+    private void enableNavView(){
+        navView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_home:
+                                Intent intent = new Intent(MovieDetails.this, MainActivity.class);
+                                startActivity(intent);
+                                return true;
+
+                            case R.id.nav_search:
+                                Intent intent1 = new Intent(MovieDetails.this, DisplayResults.class);
+                                startActivity(intent1);
+                                return true;
+
+                            case R.id.nav_discover:
+                                Intent intent2 = new Intent(MovieDetails.this, FilterResults.class);
+                                startActivity(intent2);
+                                return true;
+
+                            case R.id.nav_watchlist:
+                                Intent intent3 = new Intent(MovieDetails.this, WatchListDisplay.class);
+                                startActivity(intent3);
+                                return true;
+
+                            case R.id.nav_ratings:
+                                Intent intent4 = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
+                                startActivity(intent4);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
     }
 }

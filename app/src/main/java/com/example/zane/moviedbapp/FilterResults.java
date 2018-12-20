@@ -359,8 +359,17 @@ public class FilterResults extends AppCompatActivity {
             case "Comedy":
                 genreID = 35;
                 break;
+            case "Drama":
+                genreID = 18;
+                break;
+            case "Documentary":
+                genreID = 99;
+                break;
             case "Horror":
                 genreID = 27;
+                break;
+            case "Science Fiction":
+                genreID = 878;
                 break;
         }
         return genreID;

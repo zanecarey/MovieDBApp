@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
-import android.text.method.ScrollingMovementMethod;
 import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +26,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.model.Details;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -47,26 +46,39 @@ public class MovieDetails extends AppCompatActivity {
     String title, tagline, overview, genre, poster_path, release_date;
     int runtime, budget, movieID, revenue, rating;
     DataBaseAdapter dbHelper;
-
+    DrawerLayout mDrawerLayout;
 
     @BindView(R.id.details_toolbar)
     Toolbar myToolbar;
+    @BindView(R.id.details_scrollview)
+    ScrollView detailsScrollview;
     @BindView(R.id.poster)
     ImageView poster;
-    @BindView(R.id.movieTitle)
-    TextView movieTitle;
     @BindView(R.id.FAButton)
     FloatingActionButton FAButton;
     @BindView(R.id.rate_btn)
     Button rateBtn;
     @BindView(R.id.number_picker)
     NumberPicker numberPicker;
-    @BindView(R.id.movieInfo)
-    TextView movieInfo;
     @BindView(R.id.detailsLayout)
     LinearLayout detailsLayout;
+    @BindView(R.id.tagline_textView)
+    TextView taglineTextView;
+    @BindView(R.id.runtime_textView)
+    TextView runtimeTextView;
+    @BindView(R.id.budget_textView)
+    TextView budgetTextView;
+    @BindView(R.id.revenue_textView)
+    TextView revenueTextView;
+    @BindView(R.id.date_textView)
+    TextView dateTextView;
+    @BindView(R.id.genre_textView)
+    TextView genreTextView;
+    @BindView(R.id.overview_textView)
+    TextView overviewTextView;
 
-    DrawerLayout mDrawerLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +87,6 @@ public class MovieDetails extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Movie Info");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.details_drawer_layout);
@@ -128,7 +139,7 @@ public class MovieDetails extends AppCompatActivity {
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         //make our info text view scrollable
-        movieInfo.setMovementMethod(new ScrollingMovementMethod());
+        // movieInfo.setMovementMethod(new ScrollingMovementMethod());
 
         int movieID = getID();
 
@@ -158,7 +169,7 @@ public class MovieDetails extends AppCompatActivity {
                     genre = response.body().getGenre().get(0).getName();
                 }
                 poster_path = response.body().getPoster_path();
-
+                getSupportActionBar().setTitle(title);
                 setInfo(title, tagline, overview, runtime, budget, revenue, release_date, genre, poster_path);
             }
 
@@ -170,10 +181,6 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     private void setInfo(String title, String tagline, String overview, int runtime, int budget, int revenue, String release_date, String genre, String poster_path) {
-        //Make the movie title underlined
-        SpannableString content = new SpannableString(title);
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        movieTitle.setText(content);
 
         //Use all the movie info and put into textview
         SpannableString mTagline = new SpannableString("Tagline:");
@@ -186,29 +193,29 @@ public class MovieDetails extends AppCompatActivity {
         SpannableString mGenre = underlineString("Genre:");
         SpannableString mOverview = underlineString("Overview:");
 
-        movieInfo.append(mTagline);
-        movieInfo.append(" " + tagline + "\n");
+        taglineTextView.append(mTagline);
+        taglineTextView.append(" " + tagline + "\n");
 
-        movieInfo.append(mRuntime);
-        movieInfo.append(" " + runtime + " min" + "\n");
+        runtimeTextView.append(mRuntime);
+        runtimeTextView.append(" " + runtime + " min" + "\n");
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
         String budgetAsString = numberFormat.format(budget);
-        movieInfo.append(mBudget);
-        movieInfo.append(" $" + budgetAsString + "\n");
+        budgetTextView.append(mBudget);
+        budgetTextView.append(" $" + budgetAsString + "\n");
 
         String revenueAsString = numberFormat.format(revenue);
-        movieInfo.append(mRevenue);
-        movieInfo.append(" $" + revenueAsString + "\n");
+        revenueTextView.append(mRevenue);
+        revenueTextView.append(" $" + revenueAsString + "\n");
 
-        movieInfo.append(mReleaseDate);
-        movieInfo.append(" " + release_date + "\n");
+        dateTextView.append(mReleaseDate);
+        dateTextView.append(" " + release_date + "\n");
 
-        movieInfo.append(mGenre);
-        movieInfo.append(" " + genre + "\n");
+        genreTextView.append(mGenre);
+        genreTextView.append(" " + genre + "\n");
 
-        movieInfo.append(mOverview);
-        movieInfo.append(" " + overview + "\n");
+        overviewTextView.append(mOverview);
+        overviewTextView.append(" " + overview + "\n");
 
         ImageView poster = findViewById(R.id.poster);
         RequestOptions options = new RequestOptions()

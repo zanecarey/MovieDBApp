@@ -29,6 +29,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.model.Cast;
 import com.example.zane.moviedbapp.model.CastResults;
 import com.example.zane.moviedbapp.model.Details;
+import com.example.zane.moviedbapp.model.TrailerResults;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -43,10 +48,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MovieDetails extends AppCompatActivity {
+public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
 
     private static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
     private static final String KEY = "?api_key=06ebf26c054d40dfaecf1f1b0e0965f8";
+    private static final String YOUTUBE_KEY = "AIzaSyBpl-8D7BLWaBV6wqKoa6Y08lKdXBKeKUE";
 
     String title, tagline, overview, genre, poster_path, release_date;
     int runtime, budget, movieID, revenue, rating;
@@ -54,9 +60,11 @@ public class MovieDetails extends AppCompatActivity {
     ArrayList<String> actors = new ArrayList<>();
     ArrayList<String> characters = new ArrayList<>();
     ArrayList<String> profile_pics = new ArrayList<>();
-
+    String youtubeVideo;
     CastRecyclerView adapter;
 
+    YouTubePlayerSupportFragment youtubeFragment;
+    YouTubePlayer.OnInitializedListener mOnInitializedListener;
 
     @BindView(R.id.details_toolbar)
     Toolbar myToolbar;
@@ -92,6 +100,8 @@ public class MovieDetails extends AppCompatActivity {
     NavigationView navView;
     @BindView(R.id.cast_textView)
     TextView castTextView;
+    @BindView(R.id.trailer_button)
+    Button trailerButton;
 
 
     @Override
@@ -114,10 +124,39 @@ public class MovieDetails extends AppCompatActivity {
         int movieID = getID();
         getCastInfo(movieID);
         getMovieInfo(movieID);
+        getVideo(movieID);
+
+        youtubeFragment = (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
+        youtubeFragment.initialize(YOUTUBE_KEY, this);
+
 
     }
 
-    private void getCastInfo(int movieID){
+    private void getVideo(int movieID) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        String url = BASE_URL + movieID + "/videos" + KEY;
+        TrailerInterface trailerInterface = retrofit.create(TrailerInterface.class);
+        Call<TrailerResults> call = trailerInterface.getData(url);
+
+        call.enqueue(new Callback<TrailerResults>() {
+            @Override
+            public void onResponse(Call<TrailerResults> call, Response<TrailerResults> response) {
+                Toast.makeText(MovieDetails.this, response.body().getResults().get(0).getKey(), Toast.LENGTH_SHORT).show();
+                youtubeVideo = response.body().getResults().get(0).getKey();
+            }
+
+            @Override
+            public void onFailure(Call<TrailerResults> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getCastInfo(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -130,11 +169,11 @@ public class MovieDetails extends AppCompatActivity {
             @Override
             public void onResponse(Call<CastResults> call, Response<CastResults> response) {
                 ArrayList<Cast> results = response.body().getCast();
-                if(results.size() == 0){
+                if (results.size() == 0) {
                     Toast.makeText(MovieDetails.this, "No results", Toast.LENGTH_SHORT).show();
                 } else {
                     //Toast.makeText(MovieDetails.this, results.get(0).getName() + results.get(0).getCharacter() + results.get(0).getProfile_path(), Toast.LENGTH_SHORT).show();
-                    for(int i = 0; i < 10; i++){
+                    for (int i = 0; i < 12; i++) {
                         actors.add(results.get(i).getName());
                         characters.add(results.get(i).getCharacter());
                         profile_pics.add(MainActivity.IMAGE_URL + results.get(i).getProfile_path());
@@ -148,11 +187,9 @@ public class MovieDetails extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-    private void getMovieInfo(int movieID){
+    private void getMovieInfo(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -189,6 +226,7 @@ public class MovieDetails extends AppCompatActivity {
             }
         });
     }
+
     //Input all the info into the textviews
     private void setInfo(String title, String tagline, String overview, int runtime, int budget, int revenue, String release_date, String genre, String poster_path) {
 
@@ -373,7 +411,7 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     //enable navview
-    private void enableNavView(){
+    private void enableNavView() {
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -423,5 +461,17 @@ public class MovieDetails extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+        if(!b){
+            youTubePlayer.cueVideo(youtubeVideo);
+        }
+    }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
     }
 }

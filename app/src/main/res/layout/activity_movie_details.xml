@@ -24,20 +24,44 @@
                 android:id="@+id/details_toolbar"
                 layout="@layout/my_toolbar" />
 
+            <fragment
+                android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+                android:id="@+id/youtube_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <ImageView
                 android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="258dp"
                 />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/FAButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:layout_gravity="right"
-                android:elevation="6dp"
-                android:src="@drawable/watchlist" />
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/trailer_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/play_trailer" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/FAButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toRightOf="@id/trailer_button"
+                    android:elevation="6dp"
+                    android:src="@drawable/watchlist" />
+            </LinearLayout>
+
 
 
             <RelativeLayout

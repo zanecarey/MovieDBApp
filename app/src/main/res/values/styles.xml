@@ -9,6 +9,7 @@
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="buttonStyle">@style/RobotoButtonStyle</item>
         <item name="editTextStyle">@style/RobotoEditTextStyle</item>
+        <item name="radioButtonStyle">@style/RobotoRadioButtonStyle</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -20,6 +21,10 @@
     </style>
 
     <style name="RobotoEditTextStyle" parent="android:Widget.EditText">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="RobotoRadioButtonStyle" parent="android:Widget.CompoundButton.RadioButton">
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 

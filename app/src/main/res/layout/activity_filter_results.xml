@@ -25,31 +25,34 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@id/filter_toolbar"
-            />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
 
         <Spinner
             android:id="@+id/rating_spinner"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@id/sortBy_spinner"
-            />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
 
         <Spinner
             android:id="@+id/genre_spinner"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@id/rating_spinner"
-            />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
 
 
         <Button
             android:id="@+id/filterSearch_btn"
-            android:layout_width="82dp"
-            android:layout_height="51dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/search_edit_text"
             android:layout_centerHorizontal="true"
-            android:text="@string/search"
-            style="@style/Widget.AppCompat.Button.Colored"/>
+            android:text="@string/search" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/filterRecyclerView"
@@ -57,36 +60,36 @@
             android:layout_height="279dp"
             android:layout_below="@id/filterSearch_btn"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="-1dp"
-            android:layout_marginBottom="0dp" />
+            android:layout_margin="8dp" />
 
         <Button
             android:id="@+id/empty_btn"
-            android:layout_width="72dp"
-            android:layout_height="51dp"
-            android:layout_alignTop="@+id/filterSearch_btn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/search_edit_text"
+            android:layout_alignTop="@+id/filterSearch_btn"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="4dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="0dp"
-            android:text="@string/reset"
-            style="@style/Widget.AppCompat.Button.Colored"/>
+            android:text="@string/reset" />
 
         <EditText
             android:id="@+id/search_edit_text"
             android:layout_width="222dp"
             android:layout_height="54dp"
+            android:layout_below="@+id/year_edit_text"
+            android:layout_marginLeft="8dp"
             android:ems="10"
             android:hint="@string/enter_actor_name"
-            android:inputType="textPersonName"
-            android:layout_below="@+id/year_edit_text"
-            />
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/year_edit_text"
-            android:layout_width="222dp"
+            android:layout_width="120dp"
             android:layout_height="45dp"
             android:layout_below="@id/genre_spinner"
+            android:layout_marginLeft="8dp"
             android:ems="10"
             android:hint="@string/enter_year" />
         <RadioGroup
@@ -109,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/before_radio"
                 android:layout_alignParentEnd="true"
+                android:layout_marginRight="8dp"
                 android:text="@string/after" />
         </RadioGroup>
 

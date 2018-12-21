@@ -8,6 +8,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -24,9 +26,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.zane.moviedbapp.model.Cast;
+import com.example.zane.moviedbapp.model.CastResults;
 import com.example.zane.moviedbapp.model.Details;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -46,6 +51,12 @@ public class MovieDetails extends AppCompatActivity {
     String title, tagline, overview, genre, poster_path, release_date;
     int runtime, budget, movieID, revenue, rating;
     DataBaseAdapter dbHelper;
+    ArrayList<String> actors = new ArrayList<>();
+    ArrayList<String> characters = new ArrayList<>();
+    ArrayList<String> profile_pics = new ArrayList<>();
+
+    CastRecyclerView adapter;
+
 
     @BindView(R.id.details_toolbar)
     Toolbar myToolbar;
@@ -79,6 +90,8 @@ public class MovieDetails extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
     @BindView(R.id.navView)
     NavigationView navView;
+    @BindView(R.id.cast_textView)
+    TextView castTextView;
 
 
     @Override
@@ -99,7 +112,47 @@ public class MovieDetails extends AppCompatActivity {
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         int movieID = getID();
+        getCastInfo(movieID);
+        getMovieInfo(movieID);
 
+    }
+
+    private void getCastInfo(int movieID){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        String url = BASE_URL + movieID + "/credits" + KEY;
+        CastInterface castInterface = retrofit.create(CastInterface.class);
+        Call<CastResults> call = castInterface.getData(url);
+
+        call.enqueue(new Callback<CastResults>() {
+            @Override
+            public void onResponse(Call<CastResults> call, Response<CastResults> response) {
+                ArrayList<Cast> results = response.body().getCast();
+                if(results.size() == 0){
+                    Toast.makeText(MovieDetails.this, "No results", Toast.LENGTH_SHORT).show();
+                } else {
+                    //Toast.makeText(MovieDetails.this, results.get(0).getName() + results.get(0).getCharacter() + results.get(0).getProfile_path(), Toast.LENGTH_SHORT).show();
+                    for(int i = 0; i < 10; i++){
+                        actors.add(results.get(i).getName());
+                        characters.add(results.get(i).getCharacter());
+                        profile_pics.add(MainActivity.IMAGE_URL + results.get(i).getProfile_path());
+                    }
+                    initRecyclerView();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CastResults> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    private void getMovieInfo(int movieID){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -136,7 +189,6 @@ public class MovieDetails extends AppCompatActivity {
             }
         });
     }
-
     //Input all the info into the textviews
     private void setInfo(String title, String tagline, String overview, int runtime, int budget, int revenue, String release_date, String genre, String poster_path) {
 
@@ -361,5 +413,15 @@ public class MovieDetails extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.details_recyclerView);
+
+        adapter = new CastRecyclerView(actors, characters, profile_pics, this);
+
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

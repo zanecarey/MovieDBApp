@@ -65,14 +65,14 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/movieInfo"
+                android:id="@+id/cast_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:textColor="#000"
-                android:textSize="24sp" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="24sp"
+                android:text="Cast: "/>
 
             <TextView
                 android:id="@+id/tagline_textView"
@@ -137,6 +137,14 @@
                 android:layout_marginBottom="8dp"
                 android:textSize="24sp"/>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/details_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="8dp"
+                >
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
 

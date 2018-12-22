@@ -75,41 +75,38 @@ public class DisplayResults extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
+                menuItem -> {
+                    // set item as selected to persist highlight
+                    menuItem.setChecked(true);
+                    // close drawer when item is tapped
+                    mDrawerLayout.closeDrawers();
 
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_home:
-                                Intent intent = new Intent(DisplayResults.this, MainActivity.class);
-                                startActivity(intent);
-                                return true;
+                    switch (menuItem.getItemId()) {
+                        case R.id.nav_home:
+                            Intent intent = new Intent(DisplayResults.this, MainActivity.class);
+                            startActivity(intent);
+                            return true;
 
-                            case R.id.nav_search:
+                        case R.id.nav_search:
 
-                                return true;
+                            return true;
 
-                            case R.id.nav_discover:
-                                Intent intent2 = new Intent(DisplayResults.this, FilterResults.class);
-                                startActivity(intent2);
-                                return true;
+                        case R.id.nav_discover:
+                            Intent intent2 = new Intent(DisplayResults.this, FilterResults.class);
+                            startActivity(intent2);
+                            return true;
 
-                            case R.id.nav_watchlist:
-                                Intent intent3 = new Intent(DisplayResults.this, WatchListDisplay.class);
-                                startActivity(intent3);
-                                return true;
+                        case R.id.nav_watchlist:
+                            Intent intent3 = new Intent(DisplayResults.this, WatchListDisplay.class);
+                            startActivity(intent3);
+                            return true;
 
-                            case R.id.nav_ratings:
-                                Intent intent4 = new Intent(DisplayResults.this, MovieRatingsDisplay.class);
-                                startActivity(intent4);
-                                return true;
-                            default:
-                                return true;
-                        }
+                        case R.id.nav_ratings:
+                            Intent intent4 = new Intent(DisplayResults.this, MovieRatingsDisplay.class);
+                            startActivity(intent4);
+                            return true;
+                        default:
+                            return true;
                     }
                 });
 

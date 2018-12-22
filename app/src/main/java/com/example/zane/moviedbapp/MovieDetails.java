@@ -1,5 +1,6 @@
 package com.example.zane.moviedbapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -62,7 +63,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     ArrayList<String> profile_pics = new ArrayList<>();
     String youtubeVideo;
     CastRecyclerView adapter;
-
+    Context context;
     YouTubePlayerSupportFragment youtubeFragment;
     YouTubePlayer.OnInitializedListener mOnInitializedListener;
 
@@ -127,7 +128,6 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         getVideo(movieID);
 
         youtubeFragment = (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
-        youtubeFragment.initialize(YOUTUBE_KEY, this);
 
 
     }
@@ -147,6 +147,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
             public void onResponse(Call<TrailerResults> call, Response<TrailerResults> response) {
                 Toast.makeText(MovieDetails.this, response.body().getResults().get(0).getKey(), Toast.LENGTH_SHORT).show();
                 youtubeVideo = response.body().getResults().get(0).getKey();
+                youtubeFragment.initialize(YOUTUBE_KEY, MovieDetails.this);
             }
 
             @Override
@@ -413,42 +414,39 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     //enable navview
     private void enableNavView() {
         navView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
+                menuItem -> {
+                    // set item as selected to persist highlight
+                    menuItem.setChecked(true);
+                    // close drawer when item is tapped
+                    mDrawerLayout.closeDrawers();
 
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_home:
-                                Intent intent = new Intent(MovieDetails.this, MainActivity.class);
-                                startActivity(intent);
-                                return true;
+                    switch (menuItem.getItemId()) {
+                        case R.id.nav_home:
+                            Intent intent = new Intent(MovieDetails.this, MainActivity.class);
+                            startActivity(intent);
+                            return true;
 
-                            case R.id.nav_search:
-                                Intent intent1 = new Intent(MovieDetails.this, DisplayResults.class);
-                                startActivity(intent1);
-                                return true;
+                        case R.id.nav_search:
+                            Intent intent1 = new Intent(MovieDetails.this, DisplayResults.class);
+                            startActivity(intent1);
+                            return true;
 
-                            case R.id.nav_discover:
-                                Intent intent2 = new Intent(MovieDetails.this, FilterResults.class);
-                                startActivity(intent2);
-                                return true;
+                        case R.id.nav_discover:
+                            Intent intent2 = new Intent(MovieDetails.this, FilterResults.class);
+                            startActivity(intent2);
+                            return true;
 
-                            case R.id.nav_watchlist:
-                                Intent intent3 = new Intent(MovieDetails.this, WatchListDisplay.class);
-                                startActivity(intent3);
-                                return true;
+                        case R.id.nav_watchlist:
+                            Intent intent3 = new Intent(MovieDetails.this, WatchListDisplay.class);
+                            startActivity(intent3);
+                            return true;
 
-                            case R.id.nav_ratings:
-                                Intent intent4 = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
-                                startActivity(intent4);
-                                return true;
-                            default:
-                                return true;
-                        }
+                        case R.id.nav_ratings:
+                            Intent intent4 = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
+                            startActivity(intent4);
+                            return true;
+                        default:
+                            return true;
                     }
                 });
     }

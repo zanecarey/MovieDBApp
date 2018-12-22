@@ -52,41 +52,38 @@ public class MovieRatingsDisplay extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
+                menuItem -> {
+                    // set item as selected to persist highlight
+                    menuItem.setChecked(true);
+                    // close drawer when item is tapped
+                    mDrawerLayout.closeDrawers();
 
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_home:
-                                Intent intent = new Intent(MovieRatingsDisplay.this, MainActivity.class);
-                                startActivity(intent);
-                                return true;
+                    switch (menuItem.getItemId()) {
+                        case R.id.nav_home:
+                            Intent intent = new Intent(MovieRatingsDisplay.this, MainActivity.class);
+                            startActivity(intent);
+                            return true;
 
-                            case R.id.nav_search:
-                                Intent intent1 = new Intent(MovieRatingsDisplay.this, DisplayResults.class);
-                                startActivity(intent1);
-                                return true;
+                        case R.id.nav_search:
+                            Intent intent1 = new Intent(MovieRatingsDisplay.this, DisplayResults.class);
+                            startActivity(intent1);
+                            return true;
 
-                            case R.id.nav_discover:
-                                Intent intent2 = new Intent(MovieRatingsDisplay.this, FilterResults.class);
-                                startActivity(intent2);
-                                return true;
+                        case R.id.nav_discover:
+                            Intent intent2 = new Intent(MovieRatingsDisplay.this, FilterResults.class);
+                            startActivity(intent2);
+                            return true;
 
-                            case R.id.nav_watchlist:
-                                Intent intent3 = new Intent(MovieRatingsDisplay.this, WatchListDisplay.class);
-                                startActivity(intent3);
-                                return true;
+                        case R.id.nav_watchlist:
+                            Intent intent3 = new Intent(MovieRatingsDisplay.this, WatchListDisplay.class);
+                            startActivity(intent3);
+                            return true;
 
-                            case R.id.nav_ratings:
+                        case R.id.nav_ratings:
 
-                                return true;
-                            default:
-                                return true;
-                        }
+                            return true;
+                        default:
+                            return true;
                     }
                 });
 

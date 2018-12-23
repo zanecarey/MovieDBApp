@@ -395,7 +395,7 @@ public class FilterResults extends AppCompatActivity {
         recyclerViewStarted = true;
 
         //Create an adapter for our recyclerview
-        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, this);
+        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1,this);
 
         //set adapter to recyclerview
         filterRecyclerView.setAdapter(adapter);

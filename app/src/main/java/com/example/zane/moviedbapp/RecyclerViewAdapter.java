@@ -32,23 +32,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> posters = new ArrayList<>();
     private ArrayList<Integer> movieIDs = new ArrayList<>();
+    private int type;
     private Context context;
 
     DataBaseAdapter dbHelper;
 
-    public RecyclerViewAdapter(ArrayList<Integer> movieIDs, ArrayList<String> titles, ArrayList<String> posters, Context context) {
+    public RecyclerViewAdapter(ArrayList<Integer> movieIDs, ArrayList<String> titles, ArrayList<String> posters, int type, Context context) {
         this.movieIDs = movieIDs;
         this.titles = titles;
         this.posters = posters;
         this.context = context;
+        this.type = type;
     }
 
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem,
-                viewGroup, false);
+        View view;
+        if(type == 1){
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem,
+                    viewGroup, false);
+        } else {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recommendation_listitem,
+                    viewGroup, false);
+        }
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
@@ -70,56 +78,45 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         viewHolder.imageName.setText(titles.get(i));
 
-        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + titles.get(i));
+        viewHolder.parentLayout.setOnClickListener(view -> {
+            Log.d(TAG, "onClick: clicked on: " + titles.get(i));
 
-                //Toast.makeText(context, titles.get(i), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, MovieDetails.class);
-                intent.putExtra("movie_id", movieIDs.get(i));
-                context.startActivity(intent);
-            }
+            //Toast.makeText(context, titles.get(i), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MovieDetails.class);
+            intent.putExtra("movie_id", movieIDs.get(i));
+            context.startActivity(intent);
         });
 
-        viewHolder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
+        viewHolder.parentLayout.setOnLongClickListener(view -> {
 
-                //launch alert dialog, ask if want to remove from watchlist
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(context, R.style.AlertDialog);
-                builder.setTitle("Remove movie");
-                builder.setMessage("Do you want to remove this movie from your watchlist?");
+            //launch alert dialog, ask if want to remove from watchlist
+            AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(context, R.style.AlertDialog);
+            builder.setTitle("Remove movie");
+            builder.setMessage("Do you want to remove this movie from your watchlist?");
 
-                //if yes, movie removed from database, deleted from recycler view, then updated
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dbHelper = new DataBaseAdapter(context);
-                        dbHelper.deleteMovie(movieIDs.get(value));
-                        movieIDs.remove(value);
-                        titles.remove(value);
-                        posters.remove(value);
-                        notifyItemRemoved(value);
-                        notifyItemRangeChanged(value, titles.size());
-                    }
-                });
+            //if yes, movie removed from database, deleted from recycler view, then updated
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i12) {
+                    dbHelper = new DataBaseAdapter(context);
+                    dbHelper.deleteMovie(movieIDs.get(value));
+                    movieIDs.remove(value);
+                    titles.remove(value);
+                    posters.remove(value);
+                    notifyItemRemoved(value);
+                    notifyItemRangeChanged(value, titles.size());
+                }
+            });
 
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+            builder.setNegativeButton("NO", (dialogInterface, i1) -> dialogInterface.cancel());
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-                dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.colorMovieDBgreen));
-                dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.colorMovieDBgreen));
-                return true;
-            }
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+            dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.colorMovieDBgreen));
+            dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.colorMovieDBgreen));
+            return true;
         });
     }
 
@@ -137,9 +134,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            image = itemView.findViewById(R.id.circluarImageView);
-            imageName = itemView.findViewById(R.id.imageName);
-            parentLayout = itemView.findViewById(R.id.parentLayout);
+            if(type == 1){
+                image = itemView.findViewById(R.id.circluarImageView);
+                parentLayout = itemView.findViewById(R.id.parentLayout);
+                imageName = itemView.findViewById(R.id.imageName);
+            } else {
+                image = itemView.findViewById(R.id.poster_imageView);
+                parentLayout = itemView.findViewById(R.id.rec_layout);
+                imageName = itemView.findViewById(R.id.rec_textView);
+            }
+
+
         }
     }
 }

@@ -39,6 +39,7 @@
         <activity
             android:name=".MovieRatingsDisplay"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".BaseActivity"/>
     </application>
 
 </manifest>

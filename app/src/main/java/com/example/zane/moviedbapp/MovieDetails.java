@@ -1,5 +1,6 @@
 package com.example.zane.moviedbapp;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +15,18 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +36,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.model.Cast;
 import com.example.zane.moviedbapp.model.CastResults;
 import com.example.zane.moviedbapp.model.Details;
+import com.example.zane.moviedbapp.model.Feed;
+import com.example.zane.moviedbapp.model.Results;
 import com.example.zane.moviedbapp.model.TrailerResults;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -61,11 +69,14 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     ArrayList<String> actors = new ArrayList<>();
     ArrayList<String> characters = new ArrayList<>();
     ArrayList<String> profile_pics = new ArrayList<>();
+    ArrayList<String> recTitles = new ArrayList<>();
+    ArrayList<String> recPosters = new ArrayList<>();
+    ArrayList<Integer> recIDs = new ArrayList<>();
+
     String youtubeVideo;
+    RecyclerViewAdapter recAdapter;
     CastRecyclerView adapter;
-    Context context;
     YouTubePlayerSupportFragment youtubeFragment;
-    YouTubePlayer.OnInitializedListener mOnInitializedListener;
 
     @BindView(R.id.details_toolbar)
     Toolbar myToolbar;
@@ -99,11 +110,8 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     DrawerLayout mDrawerLayout;
     @BindView(R.id.navView)
     NavigationView navView;
-    @BindView(R.id.cast_textView)
-    TextView castTextView;
     @BindView(R.id.trailer_button)
     Button trailerButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,12 +134,41 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         getCastInfo(movieID);
         getMovieInfo(movieID);
         getVideo(movieID);
+        getRecommendations(movieID);
 
-        youtubeFragment = (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment);
-
-
+        youtubeFragment = (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment2);
     }
 
+    private void getRecommendations(int movieID){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        String url = BASE_URL + movieID + "/recommendations" + KEY;
+
+        RecommendationsInterface recommendationsInterface = retrofit.create(RecommendationsInterface.class);
+        Call<Feed> call = recommendationsInterface.getData(url);
+
+        call.enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(Call<Feed> call, Response<Feed> response) {
+                ArrayList<Results> resultsArrayList = response.body().getResults();
+
+                for(int i = 0; i < resultsArrayList.size(); i++){
+                    recTitles.add(resultsArrayList.get(i).getTitle());
+                    recPosters.add(MainActivity.IMAGE_URL + resultsArrayList.get(i).getPoster_path());
+                    recIDs.add(resultsArrayList.get(i).getId());
+                }
+                initRecRecyclerView();
+            }
+
+            @Override
+            public void onFailure(Call<Feed> call, Throwable t) {
+
+            }
+        });
+    }
     private void getVideo(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -146,8 +183,12 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
             @Override
             public void onResponse(Call<TrailerResults> call, Response<TrailerResults> response) {
                 Toast.makeText(MovieDetails.this, response.body().getResults().get(0).getKey(), Toast.LENGTH_SHORT).show();
-                youtubeVideo = response.body().getResults().get(0).getKey();
-                youtubeFragment.initialize(YOUTUBE_KEY, MovieDetails.this);
+                if(!response.body().getResults().get(0).getKey().equals("")){
+
+                    youtubeVideo = response.body().getResults().get(0).getKey();
+                } else {
+                    Toast.makeText(MovieDetails.this, "No trailer found", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -334,21 +375,15 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     }
 
     // Listener for our watchlist snackbar
-    View.OnClickListener snackbarListenerWatchList = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MovieDetails.this, WatchListDisplay.class);
-            startActivity(intent);
-        }
+    View.OnClickListener snackbarListenerWatchList = v -> {
+        Intent intent = new Intent(MovieDetails.this, WatchListDisplay.class);
+        startActivity(intent);
     };
 
     // Listener for our movie rating snackbar
-    View.OnClickListener snackbarListenerRating = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
-            startActivity(intent);
-        }
+    View.OnClickListener snackbarListenerRating = v -> {
+        Intent intent = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
+        startActivity(intent);
     };
 
     @Override
@@ -398,7 +433,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         }
     }
 
-    @OnClick({R.id.FAButton, R.id.rate_btn})
+    @OnClick({R.id.FAButton, R.id.rate_btn, R.id.trailer_button})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.FAButton:
@@ -408,6 +443,12 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 rating = numberPicker.getValue();
                 saveToRatings();
                 break;
+            case R.id.trailer_button:
+                //LayoutInflater layoutInflater = (LayoutInflater) MovieDetails.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                //View customView = layoutInflater.inflate(R.layout.youtube_frame_layout, null);
+                youtubeFragment.initialize(YOUTUBE_KEY, MovieDetails.this);
+
+
         }
     }
 
@@ -461,10 +502,21 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    private void initRecRecyclerView(){
+        RecyclerView recRecyclerView = findViewById(R.id.details_recRecyclerView);
+        recAdapter = new RecyclerViewAdapter(recIDs, recTitles, recPosters, 2,this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recRecyclerView.setLayoutManager(layoutManager);
+        recRecyclerView.setAdapter(recAdapter);
+    }
+
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         if(!b){
-            youTubePlayer.cueVideo(youtubeVideo);
+            //youTubePlayer.setFullscreen(true);
+            youTubePlayer.loadVideo(youtubeVideo);
+            youTubePlayer.play();
+            //youTubePlayer.cueVideo(youtubeVideo);
         }
     }
 
@@ -472,4 +524,5 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
     }
+
 }

@@ -24,17 +24,18 @@
                 android:id="@+id/details_toolbar"
                 layout="@layout/my_toolbar" />
 
-            <fragment
-                android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
-                android:id="@+id/youtube_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="258dp"
                 />
+
+            <fragment android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+                android:id="@+id/youtube_fragment2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                xmlns:android="http://schemas.android.com/apk/res/android" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,15 +89,14 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/cast_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_marginLeft="8dp"
-                android:layout_marginBottom="8dp"
-                android:textSize="24sp"
-                android:text="Cast: "/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/details_recRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="8dp"
+                >
+            </android.support.v7.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/tagline_textView"

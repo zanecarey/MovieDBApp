@@ -20,8 +20,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-
     //The base url of our database we will be querying
     public static final String SEARCH_BASE_URL = "https://api.themoviedb.org/3/search/movie/?api_key=06ebf26c054d40dfaecf1f1b0e0965f8&language=en-US&page=1&include_adult=false&query=";
     public static final String DISCOVER_BASE_URL = "https://api.themoviedb.org/3/discover/movie?api_key=06ebf26c054d40dfaecf1f1b0e0965f8&language=en-US&page=1&include_adult=false&";
@@ -29,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     //The base url of the poster images we will be using
     public static final String IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
-    public static final String KEY = "06ebf26c054d40dfaecf1f1b0e0965f8";
 
     @BindView(R.id.search_by_title_Btn)
     Button searchByTitleBtn;

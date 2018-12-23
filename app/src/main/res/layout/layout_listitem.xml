@@ -23,7 +23,7 @@
             android:padding="3dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circluarImageView"
+                android:id="@+id/circularImageView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/logo"
@@ -37,7 +37,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="29dp"
                 android:layout_marginTop="29dp"
-                android:layout_toRightOf="@id/circluarImageView"
+                android:layout_toRightOf="@id/circularImageView"
                 android:text="@string/test"
                 android:textColor="#000"
                 android:textSize="16sp" />

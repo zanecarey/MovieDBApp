@@ -45,7 +45,8 @@
             app:layout_constraintBottom_toTopOf="@+id/search_by_genre_Btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+            android:drawableLeft="@drawable/search"/>
 
         <Button
             android:id="@+id/search_by_genre_Btn"
@@ -60,7 +61,8 @@
             app:layout_constraintBottom_toTopOf="@+id/watch_list_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_by_title_Btn" />
+            app:layout_constraintTop_toBottomOf="@+id/search_by_title_Btn"
+            android:drawableLeft="@drawable/discover"/>
 
         <Button
             android:id="@+id/watch_list_btn"
@@ -76,7 +78,8 @@
             app:layout_constraintBottom_toTopOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_by_genre_Btn" />
+            app:layout_constraintTop_toBottomOf="@+id/search_by_genre_Btn"
+            android:drawableLeft="@drawable/watchlist"/>
 
         <ImageView
             android:id="@+id/imageView2"
@@ -101,6 +104,7 @@
             android:stateListAnimator="@null"
             android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
+            android:drawableLeft="@drawable/rate"
             />
 
     </android.support.constraint.ConstraintLayout>

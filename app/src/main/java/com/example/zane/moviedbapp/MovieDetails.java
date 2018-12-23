@@ -66,9 +66,15 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     String title, tagline, overview, genre, poster_path, release_date;
     int runtime, budget, movieID, revenue, rating;
     DataBaseAdapter dbHelper;
+
+    //values for cast of movie
     ArrayList<String> actors = new ArrayList<>();
     ArrayList<String> characters = new ArrayList<>();
     ArrayList<String> profile_pics = new ArrayList<>();
+    ArrayList<Integer> actorIDs = new ArrayList<>();
+
+
+    //values for recommended movies
     ArrayList<String> recTitles = new ArrayList<>();
     ArrayList<String> recPosters = new ArrayList<>();
     ArrayList<Integer> recIDs = new ArrayList<>();
@@ -219,8 +225,9 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                         actors.add(results.get(i).getName());
                         characters.add(results.get(i).getCharacter());
                         profile_pics.add(MainActivity.IMAGE_URL + results.get(i).getProfile_path());
+                        actorIDs.add(results.get(i).getId());
                     }
-                    initRecyclerView();
+                    initCastRecyclerView();
                 }
             }
 
@@ -492,10 +499,10 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 });
     }
 
-    private void initRecyclerView() {
+    private void initCastRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.details_recyclerView);
 
-        adapter = new CastRecyclerView(actors, characters, profile_pics, this);
+        adapter = new CastRecyclerView(actors, characters, profile_pics, actorIDs,this);
 
         recyclerView.setAdapter(adapter);
 

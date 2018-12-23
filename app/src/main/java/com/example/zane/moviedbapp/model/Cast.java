@@ -17,6 +17,10 @@ public class Cast {
     @Expose
     private String profile_path;
 
+    @SerializedName("id")
+    @Expose
+    private int id;
+
     public String getName() {
         return name;
     }
@@ -39,5 +43,13 @@ public class Cast {
 
     public void setProfile_path(String profile_path) {
         this.profile_path = profile_path;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

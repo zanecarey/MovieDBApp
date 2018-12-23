@@ -55,10 +55,7 @@
                     android:id="@+id/FAButton"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:layout_alignParentTop="true"
                     android:layout_marginTop="0dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_toRightOf="@id/trailer_button"
                     android:elevation="6dp"
                     android:src="@drawable/watchlist" />
             </LinearLayout>
@@ -88,7 +85,15 @@
                 </NumberPicker>
 
             </RelativeLayout>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/similar_movies"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/details_recRecyclerView"
                 android:layout_width="match_parent"
@@ -99,13 +104,21 @@
             </android.support.v7.widget.RecyclerView>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/movie_info"
+                android:textSize="24sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
                 android:id="@+id/tagline_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="8dp"
-                android:textSize="24sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/runtime_textView"
@@ -114,7 +127,7 @@
                 android:textColor="#000"
                 android:layout_marginLeft="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="24sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/budget_textView"
@@ -123,43 +136,43 @@
                 android:textColor="#000"
                 android:layout_marginLeft="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="24sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/revenue_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="24sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/date_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="24sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/genre_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="24sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/overview_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:layout_marginLeft="8dp"
-                android:layout_marginBottom="8dp"
-                android:textSize="24sp"/>
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="18sp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/details_recyclerView"
@@ -171,7 +184,6 @@
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navView"

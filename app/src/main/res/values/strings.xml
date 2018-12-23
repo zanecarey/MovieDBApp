@@ -17,4 +17,6 @@
     <string name="home">Home</string>
     <string name="discover">Discover</string>
     <string name="play_trailer">Play Trailer</string>
+    <string name="similar_movies">Similar movies</string>
+    <string name="movie_info">Movie Info</string>
 </resources>

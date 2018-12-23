@@ -29,9 +29,9 @@ import static android.support.constraint.Constraints.TAG;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<String> titles = new ArrayList<>();
-    private ArrayList<String> posters = new ArrayList<>();
-    private ArrayList<Integer> movieIDs = new ArrayList<>();
+    private ArrayList<String> titles;
+    private ArrayList<String> posters;
+    private ArrayList<Integer> movieIDs;
     private int type;
     private Context context;
 
@@ -79,9 +79,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.imageName.setText(titles.get(i));
 
         viewHolder.parentLayout.setOnClickListener(view -> {
-            Log.d(TAG, "onClick: clicked on: " + titles.get(i));
-
-            //Toast.makeText(context, titles.get(i), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MovieDetails.class);
             intent.putExtra("movie_id", movieIDs.get(i));
             context.startActivity(intent);
@@ -96,17 +93,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             builder.setMessage("Do you want to remove this movie from your watchlist?");
 
             //if yes, movie removed from database, deleted from recycler view, then updated
-            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i12) {
-                    dbHelper = new DataBaseAdapter(context);
-                    dbHelper.deleteMovie(movieIDs.get(value));
-                    movieIDs.remove(value);
-                    titles.remove(value);
-                    posters.remove(value);
-                    notifyItemRemoved(value);
-                    notifyItemRangeChanged(value, titles.size());
-                }
+            builder.setPositiveButton("YES", (dialogInterface, i12) -> {
+                dbHelper = new DataBaseAdapter(context);
+                dbHelper.deleteMovie(movieIDs.get(value));
+                movieIDs.remove(value);
+                titles.remove(value);
+                posters.remove(value);
+                notifyItemRemoved(value);
+                notifyItemRangeChanged(value, titles.size());
             });
 
             builder.setNegativeButton("NO", (dialogInterface, i1) -> dialogInterface.cancel());
@@ -135,7 +129,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
 
             if(type == 1){
-                image = itemView.findViewById(R.id.circluarImageView);
+                image = itemView.findViewById(R.id.circularImageView);
                 parentLayout = itemView.findViewById(R.id.parentLayout);
                 imageName = itemView.findViewById(R.id.imageName);
             } else {

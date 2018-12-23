@@ -49,7 +49,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FilterResults extends AppCompatActivity {
 
-    private static final String TAG = "FilterResults";
     private final int SORT_BY_SPINNER = 1;
     private final int RATING_SPINNER = 2;
     private final int GENRE_SPINNER = 3;
@@ -339,7 +338,7 @@ public class FilterResults extends AppCompatActivity {
     }
 
     public int getGenreValue(String value) {
-        int genreID = 18;
+        int genreID = 0;
         switch (value) {
             case "Select Genre":
                 genreID = 0;

@@ -1,6 +1,7 @@
 package com.example.zane.moviedbapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,15 +19,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CastRecyclerView extends RecyclerView.Adapter<CastRecyclerView.ViewHolder> {
 
-    private ArrayList<String> actors = new ArrayList<>();
-    private ArrayList<String> characters = new ArrayList<>();
-    private ArrayList<String> profile_pics = new ArrayList<>();
+    private ArrayList<String> actors;
+    private ArrayList<String> characters;
+    private ArrayList<String> profile_pics;
+    private ArrayList<Integer> ids;
     private Context context;
 
-    public CastRecyclerView(ArrayList<String> actors, ArrayList<String> characters, ArrayList<String> profile_pics, Context context) {
+    public CastRecyclerView(ArrayList<String> actors, ArrayList<String> characters, ArrayList<String> profile_pics, ArrayList<Integer> ids, Context context) {
         this.actors = actors;
         this.characters = characters;
         this.profile_pics = profile_pics;
+        this.ids = ids;
         this.context = context;
     }
 
@@ -36,9 +39,8 @@ public class CastRecyclerView extends RecyclerView.Adapter<CastRecyclerView.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem,
                 viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(view);
 
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -57,6 +59,12 @@ public class CastRecyclerView extends RecyclerView.Adapter<CastRecyclerView.View
 
         viewHolder.imageName.setText(actors.get(i) + "\n");
         viewHolder.imageName.append(characters.get(i));
+
+        viewHolder.parentLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ActorInfoActivity.class);
+            intent.putExtra("actor_id", ids.get(i));
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -73,7 +81,7 @@ public class CastRecyclerView extends RecyclerView.Adapter<CastRecyclerView.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            image = itemView.findViewById(R.id.circluarImageView);
+            image = itemView.findViewById(R.id.circularImageView);
             imageName = itemView.findViewById(R.id.imageName);
             parentLayout = itemView.findViewById(R.id.parentLayout);
         }

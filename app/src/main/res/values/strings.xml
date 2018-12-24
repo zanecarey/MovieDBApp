@@ -31,4 +31,5 @@
     <string name="release_date"><u>Release Date:</u></string>
     <string name="genre"><u>Genre:</u></string>
     <string name="overview"><u>Overview:</u></string>
+    <string name="known_for"><u>Known for</u></string>
 </resources>

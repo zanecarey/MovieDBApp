@@ -6,10 +6,9 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -19,6 +18,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.model.ActorInfo;
+import com.example.zane.moviedbapp.model.CreditResults;
+import com.example.zane.moviedbapp.model.Credits;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +38,10 @@ public class ActorInfoActivity extends AppCompatActivity {
 
     int actorID;
     String birth, death, name, birthPlace, profile_path, biography;
+    private ArrayList<String> titles = new ArrayList<>();
+    private ArrayList<String> posters = new ArrayList<>();
+    private ArrayList<Integer> movieIDs = new ArrayList<>();
+
     @BindView(R.id.actorInfo_toolbar)
     Toolbar myToolbar;
     @BindView(R.id.actor_image)
@@ -65,6 +72,8 @@ public class ActorInfoActivity extends AppCompatActivity {
     TextView birthPlaceBaseTextView;
     @BindView(R.id.bioBase_textView)
     TextView bioBaseTextView;
+    @BindView(R.id.knownFor_recyclerView)
+    RecyclerView knownForRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +89,7 @@ public class ActorInfoActivity extends AppCompatActivity {
 
         actorID = getID();
         getActorInfo(actorID);
+        getCredits(actorID);
     }
 
     private void getActorInfo(int id) {
@@ -110,12 +120,40 @@ public class ActorInfoActivity extends AppCompatActivity {
         });
     }
 
+    private void getCredits(int id){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        String url = BASE_URL + id + "/movie_credits" + KEY;
+        CreditsInterface creditsInterface = retrofit.create(CreditsInterface.class);
+        Call<Credits> call = creditsInterface.getData(url);
+
+        call.enqueue(new Callback<Credits>() {
+            @Override
+            public void onResponse(Call<Credits> call, Response<Credits> response) {
+                ArrayList<CreditResults> results = response.body().getCreditResults();
+
+                for(int i = 0; i < results.size(); i++){
+                    titles.add(results.get(i).getTitle());
+                    posters.add(MainActivity.IMAGE_URL + results.get(i).getPoster_path());
+                    movieIDs.add(results.get(i).getId());
+                }
+                initCreditRecyclerView();
+            }
+
+            @Override
+            public void onFailure(Call<Credits> call, Throwable t) {
+
+            }
+        });
+    }
     private void setActorInfo() {
 
 
         actorNameTextView.setText(name);
         birthTextView.setText(birth);
-        if(death == null){
+        if (death == null) {
             deathTextView.setText("N/A");
         } else {
             deathTextView.setText(death);
@@ -143,6 +181,13 @@ public class ActorInfoActivity extends AppCompatActivity {
             actorID = getIntent().getIntExtra("actor_id", 0);
             return actorID;
         } else return 0;
+    }
+
+    private void initCreditRecyclerView(){
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 2, this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        knownForRecyclerView.setLayoutManager(layoutManager);
+        knownForRecyclerView.setAdapter(adapter);
     }
 
     private void enableNavView() {

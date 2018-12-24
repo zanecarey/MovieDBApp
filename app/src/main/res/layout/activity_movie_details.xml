@@ -102,6 +102,7 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp"
                 android:textStyle="bold" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/details_recRecyclerView"
                 android:layout_width="match_parent"

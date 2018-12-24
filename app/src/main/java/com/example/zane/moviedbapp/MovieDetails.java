@@ -193,7 +193,6 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         call.enqueue(new Callback<TrailerResults>() {
             @Override
             public void onResponse(Call<TrailerResults> call, Response<TrailerResults> response) {
-                Toast.makeText(MovieDetails.this, response.body().getResults().get(0).getKey(), Toast.LENGTH_SHORT).show();
                 if (!response.body().getResults().get(0).getKey().equals("")) {
 
                     youtubeVideo = response.body().getResults().get(0).getKey();

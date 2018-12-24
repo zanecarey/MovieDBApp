@@ -29,51 +29,122 @@
                 android:layout_width="match_parent"
                 android:layout_height="258dp"
                 />
-
-            <TextView
-                android:id="@+id/actorName_textView"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_marginLeft="8dp"
-                android:text="nametest"
-                android:textSize="18sp"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/birth_textView"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/nameBase_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="22sp"
+                    android:text="@string/name"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/actorName_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:text="nametest"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_marginLeft="8dp"
-                android:textSize="18sp"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/death_textView"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/birthBase_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="22sp"
+                    android:text="@string/birth"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/birth_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_marginLeft="8dp"
-                android:textSize="18sp"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/birthPlace_textView"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/deathBase_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="22sp"
+                    android:text="@string/death"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/death_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_marginLeft="8dp"
-                android:textSize="18sp"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/biography_textView"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/birthPlaceBase_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="22sp"
+                    android:text="@string/birthplace"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/birthPlace_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_marginLeft="8dp"
-                android:textSize="18sp"/>
+                android:orientation="horizontal">
 
-
-
-
+                <TextView
+                    android:id="@+id/bioBase_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="22sp"
+                    android:text="@string/bio"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/biography_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -17,6 +17,18 @@
     <string name="home">Home</string>
     <string name="discover">Discover</string>
     <string name="play_trailer">Play Trailer</string>
-    <string name="similar_movies">Similar movies</string>
-    <string name="movie_info">Movie Info</string>
+    <string name="similar_movies"><u>Similar movies</u></string>
+    <string name="movie_info"><u>Movie Info</u></string>
+    <string name="name"><u>Name:</u></string>
+    <string name="birth"><u>Birth:</u></string>
+    <string name="death"><u>Death:</u></string>
+    <string name="birthplace"><u>Birthplace:</u></string>
+    <string name="bio"><u>Bio:</u></string>
+    <string name="tagline"><u>Tagline:</u></string>
+    <string name="runtime"><u>Runtime:</u></string>
+    <string name="budget"><u>Budget:</u></string>
+    <string name="revenue"><u>Revenue:</u></string>
+    <string name="release_date"><u>Release Date:</u></string>
+    <string name="genre"><u>Genre:</u></string>
+    <string name="overview"><u>Overview:</u></string>
 </resources>

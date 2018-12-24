@@ -1,7 +1,5 @@
 package com.example.zane.moviedbapp;
 
-import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,20 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +33,6 @@ import com.example.zane.moviedbapp.model.TrailerResults;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -118,6 +108,20 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     NavigationView navView;
     @BindView(R.id.trailer_button)
     Button trailerButton;
+    @BindView(R.id.taglineBase_textView)
+    TextView taglineBaseTextView;
+    @BindView(R.id.runTimeBase_textView)
+    TextView runTimeBaseTextView;
+    @BindView(R.id.budgetBase_textView)
+    TextView budgetBaseTextView;
+    @BindView(R.id.revenueBase_textView)
+    TextView revenueBaseTextView;
+    @BindView(R.id.dateBase_textView)
+    TextView dateBaseTextView;
+    @BindView(R.id.genreBase_textView)
+    TextView genreBaseTextView;
+    @BindView(R.id.overviewBase_textView)
+    TextView overviewBaseTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +149,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         youtubeFragment = (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment2);
     }
 
-    private void getRecommendations(int movieID){
+    private void getRecommendations(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -161,7 +165,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
             public void onResponse(Call<Feed> call, Response<Feed> response) {
                 ArrayList<Results> resultsArrayList = response.body().getResults();
 
-                for(int i = 0; i < resultsArrayList.size(); i++){
+                for (int i = 0; i < resultsArrayList.size(); i++) {
                     recTitles.add(resultsArrayList.get(i).getTitle());
                     recPosters.add(MainActivity.IMAGE_URL + resultsArrayList.get(i).getPoster_path());
                     recIDs.add(resultsArrayList.get(i).getId());
@@ -175,6 +179,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
             }
         });
     }
+
     private void getVideo(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -189,7 +194,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
             @Override
             public void onResponse(Call<TrailerResults> call, Response<TrailerResults> response) {
                 Toast.makeText(MovieDetails.this, response.body().getResults().get(0).getKey(), Toast.LENGTH_SHORT).show();
-                if(!response.body().getResults().get(0).getKey().equals("")){
+                if (!response.body().getResults().get(0).getKey().equals("")) {
 
                     youtubeVideo = response.body().getResults().get(0).getKey();
                 } else {
@@ -266,7 +271,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 }
                 poster_path = response.body().getPoster_path();
                 getSupportActionBar().setTitle(title);
-                setInfo(title, tagline, overview, runtime, budget, revenue, release_date, genre, poster_path);
+                setInfo();
             }
 
             @Override
@@ -277,42 +282,20 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     }
 
     //Input all the info into the textviews
-    private void setInfo(String title, String tagline, String overview, int runtime, int budget, int revenue, String release_date, String genre, String poster_path) {
+    private void setInfo() {
 
-        //Use all the movie info and put into textview
-        SpannableString mTagline = new SpannableString("Tagline:");
-        mTagline.setSpan(new UnderlineSpan(), 0, mTagline.length(), 0);
-
-        SpannableString mRuntime = underlineString("Runtime:");
-        SpannableString mBudget = underlineString("Budget:");
-        SpannableString mRevenue = underlineString("Revenue:");
-        SpannableString mReleaseDate = underlineString("Release Date:");
-        SpannableString mGenre = underlineString("Genre:");
-        SpannableString mOverview = underlineString("Overview:");
-
-        taglineTextView.append(mTagline);
-        taglineTextView.append(" " + tagline + "\n");
-
-        runtimeTextView.append(mRuntime);
-        runtimeTextView.append(" " + runtime + " min" + "\n");
+        taglineTextView.setText(tagline);
+        runtimeTextView.setText(String.valueOf(runtime));
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
         String budgetAsString = numberFormat.format(budget);
-        budgetTextView.append(mBudget);
-        budgetTextView.append(" $" + budgetAsString + "\n");
-
         String revenueAsString = numberFormat.format(revenue);
-        revenueTextView.append(mRevenue);
-        revenueTextView.append(" $" + revenueAsString + "\n");
 
-        dateTextView.append(mReleaseDate);
-        dateTextView.append(" " + release_date + "\n");
-
-        genreTextView.append(mGenre);
-        genreTextView.append(" " + genre + "\n");
-
-        overviewTextView.append(mOverview);
-        overviewTextView.append(" " + overview + "\n");
+        budgetTextView.setText("$" + budgetAsString);
+        dateTextView.setText(release_date);
+        revenueTextView.setText("$" + revenueAsString);
+        genreTextView.setText(genre);
+        overviewTextView.setText(overview);
 
         ImageView poster = findViewById(R.id.poster);
         RequestOptions options = new RequestOptions()
@@ -327,12 +310,6 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 .into(poster);
     }
 
-    //make our strings underlined
-    private SpannableString underlineString(String input) {
-        SpannableString content = new SpannableString(input);
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        return content;
-    }
 
     //check if our intent data exists before trying to retrieve it
     private int getID() {
@@ -502,16 +479,16 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     private void initCastRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.details_recyclerView);
 
-        adapter = new CastRecyclerView(actors, characters, profile_pics, actorIDs,this);
+        adapter = new CastRecyclerView(actors, characters, profile_pics, actorIDs, this);
 
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void initRecRecyclerView(){
+    private void initRecRecyclerView() {
         RecyclerView recRecyclerView = findViewById(R.id.details_recRecyclerView);
-        recAdapter = new RecyclerViewAdapter(recIDs, recTitles, recPosters, 2,this);
+        recAdapter = new RecyclerViewAdapter(recIDs, recTitles, recPosters, 2, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recRecyclerView.setLayoutManager(layoutManager);
         recRecyclerView.setAdapter(recAdapter);
@@ -519,7 +496,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-        if(!b){
+        if (!b) {
             //youTubePlayer.setFullscreen(true);
             youTubePlayer.loadVideo(youtubeVideo);
             youTubePlayer.play();

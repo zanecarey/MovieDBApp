@@ -7,6 +7,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -52,6 +55,16 @@ public class ActorInfoActivity extends AppCompatActivity {
     DrawerLayout actorInfoDrawerLayout;
     @BindView(R.id.actorInfoNavView)
     NavigationView navView;
+    @BindView(R.id.nameBase_textView)
+    TextView nameBaseTextView;
+    @BindView(R.id.birthBase_textView)
+    TextView birthBaseTextView;
+    @BindView(R.id.deathBase_textView)
+    TextView deathBaseTextView;
+    @BindView(R.id.birthPlaceBase_textView)
+    TextView birthPlaceBaseTextView;
+    @BindView(R.id.bioBase_textView)
+    TextView bioBaseTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +82,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         getActorInfo(actorID);
     }
 
-    private void getActorInfo(int id){
+    private void getActorInfo(int id) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -97,13 +110,19 @@ public class ActorInfoActivity extends AppCompatActivity {
         });
     }
 
-    private void setActorInfo(){
+    private void setActorInfo() {
+
+
         actorNameTextView.setText(name);
         birthTextView.setText(birth);
-        deathTextView.setText(death);
+        if(death == null){
+            deathTextView.setText("N/A");
+        } else {
+            deathTextView.setText(death);
+        }
         birthPlaceTextView.setText(birthPlace);
         biographyTextView.setText(biography);
-        actorNameTextView.setText(name);
+
 
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.logo)
@@ -116,6 +135,7 @@ public class ActorInfoActivity extends AppCompatActivity {
                 .apply(options)
                 .into(actorImage);
     }
+
     //check if our intent data exists before trying to retrieve it
     private int getID() {
 

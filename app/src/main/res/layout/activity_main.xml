@@ -37,32 +37,34 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/search"
             android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
             android:stateListAnimator="@null"
             android:text="@string/search_for_a_movie_by_title"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/search_by_genre_Btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
-            android:drawableLeft="@drawable/search"/>
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
         <Button
             android:id="@+id/search_by_genre_Btn"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/discover"
             android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
             android:stateListAnimator="@null"
             android:text="@string/discover_a_new_movie"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/watch_list_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_by_title_Btn"
-            android:drawableLeft="@drawable/discover"/>
+            app:layout_constraintTop_toBottomOf="@+id/search_by_title_Btn" />
 
         <Button
             android:id="@+id/watch_list_btn"
@@ -70,16 +72,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="28dp"
+            android:drawableLeft="@drawable/watchlist"
             android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
             android:stateListAnimator="@null"
             android:text="@string/watchlist"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_by_genre_Btn"
-            android:drawableLeft="@drawable/watchlist"/>
+            app:layout_constraintTop_toBottomOf="@+id/search_by_genre_Btn" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -93,19 +96,19 @@
 
         <Button
             android:id="@+id/ratings_btn"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/ratings"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/watch_list_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:textStyle="bold"
-            android:stateListAnimator="@null"
+            android:drawableLeft="@drawable/rate"
             android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
-            android:drawableLeft="@drawable/rate"
-            />
+            android:stateListAnimator="@null"
+            android:text="@string/ratings"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/watch_list_btn" />
 
     </android.support.constraint.ConstraintLayout>
 

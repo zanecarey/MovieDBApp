@@ -292,6 +292,18 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/cast"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/details_recyclerView"
                 android:layout_width="match_parent"

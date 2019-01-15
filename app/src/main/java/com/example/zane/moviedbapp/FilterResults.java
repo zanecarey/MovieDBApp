@@ -328,6 +328,7 @@ public class FilterResults extends AppCompatActivity {
         }
     }
 
+    //set our filter method
     public String sortByTranslate(String value) {
         if (value.equals("Most Popular")) return "sort_by=popularity.desc";
         if (value.equals("Least Popular")) return "sort_by=popularity.asc";
@@ -337,6 +338,7 @@ public class FilterResults extends AppCompatActivity {
         else return value;
     }
 
+    //set genre value based off option selected
     public int getGenreValue(String value) {
         int genreID = 0;
         switch (value) {
@@ -371,6 +373,7 @@ public class FilterResults extends AppCompatActivity {
         return genreID;
     }
 
+    //Create our URL based all the filter inputs
     public String createUrl() {
 
         String url = "";
@@ -448,5 +451,4 @@ public class FilterResults extends AppCompatActivity {
 
         }
     }
-
 }

@@ -92,6 +92,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         getCredits(actorID);
     }
 
+    //get the actors information using retrofit
     private void getActorInfo(int id) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -120,6 +121,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         });
     }
 
+    //get the actors movie credits
     private void getCredits(int id){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -148,8 +150,9 @@ public class ActorInfoActivity extends AppCompatActivity {
             }
         });
     }
-    private void setActorInfo() {
 
+    //Display all of our info
+    private void setActorInfo() {
 
         actorNameTextView.setText(name);
         birthTextView.setText(birth);

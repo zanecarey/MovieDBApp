@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -84,8 +85,6 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     FloatingActionButton FAButton;
     @BindView(R.id.rate_btn)
     Button rateBtn;
-    @BindView(R.id.number_picker)
-    NumberPicker numberPicker;
     @BindView(R.id.detailsLayout)
     LinearLayout detailsLayout;
     @BindView(R.id.tagline_textView)
@@ -135,10 +134,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
 
         enableNavView();
 
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(10);
-        numberPicker.setWrapSelectorWheel(true);
-        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
 
         int movieID = getID();
         getCastInfo(movieID);
@@ -224,7 +220,6 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 if (results.size() == 0) {
                     Toast.makeText(MovieDetails.this, "No results", Toast.LENGTH_SHORT).show();
                 } else {
-                    //Toast.makeText(MovieDetails.this, results.get(0).getName() + results.get(0).getCharacter() + results.get(0).getProfile_path(), Toast.LENGTH_SHORT).show();
                     for (int i = 0; i < 12; i++) {
                         actors.add(results.get(i).getName());
                         characters.add(results.get(i).getCharacter());
@@ -423,8 +418,27 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 saveToWatchList();
                 break;
             case R.id.rate_btn:
-                rating = numberPicker.getValue();
-                saveToRatings();
+
+//                numberPicker.setMinValue(1);
+//                numberPicker2.setMaxValue(10);
+//                numberPicker2.setWrapSelectorWheel(true);
+//                numberPicker2.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+                final NumberPicker numberPicker = new NumberPicker(this);
+                numberPicker.setMinValue(1);
+                numberPicker.setMaxValue(10);
+                numberPicker.setWrapSelectorWheel(true);
+                numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
+                builder.setView(numberPicker);
+                builder.setTitle("Rate Movie 1-10");
+                builder.setPositiveButton("Rate", (dialogInterface, i) ->{
+
+                    rating = numberPicker.getValue();
+                    saveToRatings();
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
             case R.id.trailer_button:
                 //LayoutInflater layoutInflater = (LayoutInflater) MovieDetails.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -507,5 +521,4 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
     }
-
 }

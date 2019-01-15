@@ -71,7 +71,7 @@ public class WatchListDisplay extends AppCompatActivity {
                             return true;
 
                         case R.id.nav_discover:
-                            Intent intent2 = new Intent(WatchListDisplay.this, WatchListDisplay.class);
+                            Intent intent2 = new Intent(WatchListDisplay.this, FilterResults.class);
                             startActivity(intent2);
                             return true;
 

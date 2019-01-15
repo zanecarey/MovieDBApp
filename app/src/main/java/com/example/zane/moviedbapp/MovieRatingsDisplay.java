@@ -96,9 +96,9 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         } else {
             while (results.moveToNext()) {
                 movieIDs.add(results.getInt(1));
-                titles.add(results.getString(2) + " " + results.getInt(4) + "/10");
+                titles.add(results.getString(2));
                 posters.add(MainActivity.IMAGE_URL + results.getString(3));
-                //movieRatings.add(results.getInt(4));
+                movieRatings.add(results.getInt(4));
             }
         }
         initRecyclerView();
@@ -107,7 +107,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
     public void initRecyclerView() {
 
         //Create an adapter for our recyclerview
-        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1,this);
+        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1,this, movieRatings);
 
         //set adapter to recyclerview
         ratingRecyclerview.setAdapter(adapter);
@@ -146,7 +146,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                 return true;
 
             case R.id.action_watchlist:
-                Intent intent3 = new Intent(MovieRatingsDisplay.this, FilterResults.class);
+                Intent intent3 = new Intent(MovieRatingsDisplay.this, WatchListDisplay.class);
                 startActivity(intent3);
                 return true;
 

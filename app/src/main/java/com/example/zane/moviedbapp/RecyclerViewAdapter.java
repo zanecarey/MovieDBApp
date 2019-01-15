@@ -32,6 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> titles;
     private ArrayList<String> posters;
     private ArrayList<Integer> movieIDs;
+    private ArrayList<Integer> ratings = new ArrayList<>();
     private int type;
     private Context context;
 
@@ -45,6 +46,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.type = type;
     }
 
+    public RecyclerViewAdapter(ArrayList<Integer> movieIDs, ArrayList<String> titles, ArrayList<String> posters, int type, Context context, ArrayList<Integer> ratings) {
+        this.movieIDs = movieIDs;
+        this.titles = titles;
+        this.posters = posters;
+        this.context = context;
+        this.type = type;
+        this.ratings = ratings;
+    }
 
     @NonNull
     @Override
@@ -76,7 +85,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .apply(options)
                 .into(viewHolder.image);
 
-        viewHolder.imageName.setText(titles.get(i));
+        //determine if the adapter is called from ratings activity or not, based off ratings arraylist
+        if(ratings.isEmpty()){
+            viewHolder.imageName.setText(titles.get(i));
+        } else {
+            viewHolder.imageName.setText(titles.get(i) + " " + ratings.get(i) + "/10");
+        }
 
         viewHolder.parentLayout.setOnClickListener(view -> {
             Intent intent = new Intent(context, MovieDetails.class);
@@ -95,7 +109,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             //if yes, movie removed from database, deleted from recycler view, then updated
             builder.setPositiveButton("YES", (dialogInterface, i12) -> {
                 dbHelper = new DataBaseAdapter(context);
-                dbHelper.deleteMovie(movieIDs.get(value));
+                if(ratings.isEmpty()){
+                    dbHelper.deleteMovie(movieIDs.get(value), "movies");
+                } else {
+                    dbHelper.deleteMovie(movieIDs.get(value), "movies_rated");
+                }
                 movieIDs.remove(value);
                 titles.remove(value);
                 posters.remove(value);

@@ -115,6 +115,7 @@ public class DataBaseAdapter extends SQLiteOpenHelper {
         return res;
     }
 
+    //check if movie is already in the database
     public boolean alreadyInDatabase(int fieldValue, String table){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -128,9 +129,10 @@ public class DataBaseAdapter extends SQLiteOpenHelper {
         return true;
     }
 
-    public void deleteMovie(int fieldValue){
+    //remove movie from database
+    public void deleteMovie(int fieldValue, String table){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.delete(TABLE_MOVIES, KEY_MOVIE_ID + "=" + fieldValue, null);
+        db.delete(table, KEY_MOVIE_ID + "=" + fieldValue, null);
     }
 }

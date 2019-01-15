@@ -61,6 +61,7 @@ public class DisplayResults extends AppCompatActivity {
     boolean recyclerViewStarted = false;
 
     DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

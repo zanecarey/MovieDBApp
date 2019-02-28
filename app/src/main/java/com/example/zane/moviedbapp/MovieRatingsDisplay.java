@@ -14,6 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.zane.moviedbapp.adapters.DataBaseAdapter;
+import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;

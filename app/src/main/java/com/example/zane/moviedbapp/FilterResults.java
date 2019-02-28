@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +21,12 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
+import com.example.zane.moviedbapp.interfaces.MovieDBInterface;
+import com.example.zane.moviedbapp.interfaces.NameSearchInterface;
 import com.example.zane.moviedbapp.model.Feed;
 import com.example.zane.moviedbapp.model.NameResults;
 import com.example.zane.moviedbapp.model.Results;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
 
@@ -36,7 +35,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;

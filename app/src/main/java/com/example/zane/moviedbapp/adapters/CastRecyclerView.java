@@ -1,4 +1,4 @@
-package com.example.zane.moviedbapp;
+package com.example.zane.moviedbapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.zane.moviedbapp.ActorInfoActivity;
+import com.example.zane.moviedbapp.R;
 
 import java.util.ArrayList;
 

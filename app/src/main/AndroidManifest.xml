@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
 
-            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".FilterResults"
             android:parentActivityName=".MainActivity" />

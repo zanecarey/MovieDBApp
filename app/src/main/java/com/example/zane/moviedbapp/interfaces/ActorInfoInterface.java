@@ -1,4 +1,4 @@
-package com.example.zane.moviedbapp;
+package com.example.zane.moviedbapp.interfaces;
 
 import com.example.zane.moviedbapp.model.ActorInfo;
 

@@ -12,13 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
+import com.example.zane.moviedbapp.interfaces.MovieDBInterface;
 import com.example.zane.moviedbapp.model.Feed;
 import com.example.zane.moviedbapp.model.Results;
 

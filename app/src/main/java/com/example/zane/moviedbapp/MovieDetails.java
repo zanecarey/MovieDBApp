@@ -25,6 +25,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.zane.moviedbapp.adapters.CastRecyclerView;
+import com.example.zane.moviedbapp.adapters.DataBaseAdapter;
+import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
+import com.example.zane.moviedbapp.interfaces.CastInterface;
+import com.example.zane.moviedbapp.interfaces.MovieInfo;
+import com.example.zane.moviedbapp.interfaces.RecommendationsInterface;
+import com.example.zane.moviedbapp.interfaces.TrailerInterface;
 import com.example.zane.moviedbapp.model.Cast;
 import com.example.zane.moviedbapp.model.CastResults;
 import com.example.zane.moviedbapp.model.Details;
@@ -189,7 +196,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         call.enqueue(new Callback<TrailerResults>() {
             @Override
             public void onResponse(Call<TrailerResults> call, Response<TrailerResults> response) {
-                if (!response.body().getResults().get(0).getKey().equals("")) {
+                if (response.body().getResults().size() > 0) {
 
                     youtubeVideo = response.body().getResults().get(0).getKey();
                 } else {
@@ -220,7 +227,8 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 if (results.size() == 0) {
                     Toast.makeText(MovieDetails.this, "No results", Toast.LENGTH_SHORT).show();
                 } else {
-                    for (int i = 0; i < 12; i++) {
+                    for (int i = 0; i < results.size(); i++) {
+                        if(i > 12) break;
                         actors.add(results.get(i).getName());
                         characters.add(results.get(i).getCharacter());
                         profile_pics.add(MainActivity.IMAGE_URL + results.get(i).getProfile_path());

@@ -17,6 +17,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
+import com.example.zane.moviedbapp.interfaces.ActorInfoInterface;
+import com.example.zane.moviedbapp.interfaces.CreditsInterface;
 import com.example.zane.moviedbapp.model.ActorInfo;
 import com.example.zane.moviedbapp.model.CreditResults;
 import com.example.zane.moviedbapp.model.Credits;

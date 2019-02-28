@@ -26,7 +26,7 @@
             android:layout_marginTop="5dp"
             android:ems="10"
             android:inputType=""
-            android:hint="Enter Movie Title to Search"
+            android:hint="@string/enter_movie_title_to_search"
             android:maxLines="1"
             android:layout_margin="8dp"
             />
@@ -46,7 +46,7 @@
             android:id="@+id/empty_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:text="@string/reset"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_margin="8dp"

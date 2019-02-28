@@ -25,7 +25,8 @@
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="120dp"
-            android:layout_margin="8dp"></android.support.v7.widget.RecyclerView>
+            >
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

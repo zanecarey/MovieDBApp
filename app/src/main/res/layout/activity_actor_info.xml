@@ -16,7 +16,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/actorInfoLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:context=".ActorInfoActivity">
 
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="22sp"
                     android:text="@string/name"
                     android:textStyle="bold"/>
@@ -65,8 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
-                    android:text="nametest"
+                    android:layout_marginStart="8dp"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -80,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="22sp"
                     android:text="@string/birth"
                     android:textStyle="bold"/>
@@ -89,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="18sp"/>
             </LinearLayout>
 
@@ -103,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="22sp"
                     android:text="@string/death"
                     android:textStyle="bold"/>
@@ -112,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="18sp"/>
             </LinearLayout>
 
@@ -126,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="22sp"
                     android:text="@string/birthplace"
                     android:textStyle="bold"/>
@@ -135,21 +134,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="18sp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/bioBase_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:textSize="22sp"
                     android:text="@string/bio"
                     android:textStyle="bold"/>
@@ -158,8 +157,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+
                     android:textSize="18sp"/>
             </LinearLayout>
 

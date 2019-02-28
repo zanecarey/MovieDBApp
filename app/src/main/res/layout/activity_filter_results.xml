@@ -25,24 +25,24 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@id/filter_toolbar"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
 
         <Spinner
             android:id="@+id/rating_spinner"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@id/sortBy_spinner"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
 
         <Spinner
             android:id="@+id/genre_spinner"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@id/rating_spinner"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
 
 
         <Button
@@ -60,7 +60,7 @@
             android:layout_height="279dp"
             android:layout_below="@id/filterSearch_btn"
             android:layout_centerHorizontal="true"
-            android:layout_margin="8dp" />
+            />
 
         <Button
             android:id="@+id/empty_btn"
@@ -70,7 +70,7 @@
             android:layout_below="@id/search_edit_text"
             android:layout_alignTop="@+id/filterSearch_btn"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"
             android:text="@string/reset" />
 
@@ -79,7 +79,7 @@
             android:layout_width="222dp"
             android:layout_height="54dp"
             android:layout_below="@+id/year_edit_text"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:ems="10"
             android:hint="@string/enter_actor_name"
             android:inputType="textPersonName" />
@@ -89,30 +89,29 @@
             android:layout_width="120dp"
             android:layout_height="45dp"
             android:layout_below="@id/genre_spinner"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:ems="10"
             android:hint="@string/enter_year" />
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_toRightOf="@id/year_edit_text"
+            android:layout_toEndOf="@id/year_edit_text"
             android:layout_below="@id/genre_spinner">
 
             <RadioButton
                 android:id="@+id/before_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/search_edit_text"
                 android:text="@string/before" />
 
             <RadioButton
                 android:id="@+id/after_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/before_radio"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="8dp"
+
+
+                android:layout_marginEnd="8dp"
                 android:text="@string/after" />
         </RadioGroup>
 

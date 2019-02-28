@@ -33,4 +33,5 @@
     <string name="overview"><u>Overview:</u></string>
     <string name="known_for"><u>Known for</u></string>
     <string name="cast"><u>Cast</u></string>
+    <string name="enter_movie_title_to_search">Enter Movie Title to Search</string>
 </resources>

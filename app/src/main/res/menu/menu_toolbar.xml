@@ -42,6 +42,12 @@
                 app:showAsAction="ifRoom"
                 />
 
+            <item
+                android:id="@+id/action_playing"
+                android:icon="@drawable/playing"
+                android:title="@string/playing"
+                app:showAsAction="ifRoom"
+                />
         </menu>
     </item>
 </menu>

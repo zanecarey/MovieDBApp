@@ -85,6 +85,12 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                         case R.id.nav_ratings:
 
                             return true;
+
+                        case R.id.nav_playing:
+                            Intent intent4 = new Intent(MovieRatingsDisplay.this, NowPlayingDisplay.class);
+                            startActivity(intent4);
+                            return true;
+
                         default:
                             return true;
                     }
@@ -156,6 +162,10 @@ public class MovieRatingsDisplay extends AppCompatActivity {
             case R.id.action_ratings:
                 return true;
 
+            case R.id.action_playing:
+                Intent intent4 = new Intent(MovieRatingsDisplay.this, NowPlayingDisplay.class);
+                startActivity(intent4);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

@@ -83,13 +83,17 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent4 = new Intent(MainActivity.this, MovieRatingsDisplay.class);
                             startActivity(intent4);
                             return true;
+                        case R.id.nav_playing:
+                            Intent intent5 = new Intent(MainActivity.this, NowPlayingDisplay.class);
+                            startActivity(intent5);
+                            return true;
                         default:
                             return true;
                     }
                 });
     }
 
-    @OnClick({R.id.search_by_title_Btn, R.id.search_by_genre_Btn, R.id.watch_list_btn, R.id.ratings_btn})
+    @OnClick({R.id.search_by_title_Btn, R.id.search_by_genre_Btn, R.id.watch_list_btn, R.id.ratings_btn, R.id.nowPlaying_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.search_by_title_Btn:
@@ -110,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.ratings_btn:
                 Intent intent4 = new Intent(MainActivity.this, MovieRatingsDisplay.class);
                 startActivity(intent4);
+
+                break;
+            case R.id.nowPlaying_btn:
+                Intent intent5 = new Intent(MainActivity.this, NowPlayingDisplay.class);
+                startActivity(intent5);
 
                 break;
         }
@@ -148,6 +157,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent4);
                 return true;
 
+            case R.id.action_playing:
+                Intent intent5 = new Intent(MainActivity.this, NowPlayingDisplay.class);
+                startActivity(intent5);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

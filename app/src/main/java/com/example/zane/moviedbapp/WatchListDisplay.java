@@ -85,6 +85,11 @@ public class WatchListDisplay extends AppCompatActivity {
                             Intent intent4 = new Intent(WatchListDisplay.this, MovieRatingsDisplay.class);
                             startActivity(intent4);
                             return true;
+
+                        case R.id.nav_playing:
+                            Intent intent5 = new Intent(WatchListDisplay.this, NowPlayingDisplay.class);
+                            startActivity(intent5);
+                            return true;
                         default:
                             return true;
                     }
@@ -154,6 +159,11 @@ public class WatchListDisplay extends AppCompatActivity {
             case R.id.action_ratings:
                 Intent intent3 = new Intent(WatchListDisplay.this, MovieRatingsDisplay.class);
                 startActivity(intent3);
+                return true;
+
+            case R.id.action_playing:
+                Intent intent4 = new Intent(WatchListDisplay.this, NowPlayingDisplay.class);
+                startActivity(intent4);
                 return true;
 
             default:

@@ -60,7 +60,7 @@ public class NowPlayingDisplay extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Now Playing");
+        getSupportActionBar().setTitle("MovieDBApp");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
 

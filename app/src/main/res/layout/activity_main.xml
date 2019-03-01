@@ -98,7 +98,7 @@
             android:layout_height="72dp"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="40dp"
             android:background="@color/colorAccent"
             android:drawableStart="@drawable/playing"
             android:elevation="10dp"

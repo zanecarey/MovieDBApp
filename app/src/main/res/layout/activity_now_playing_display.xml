@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Now Playing"
+                android:textColor="@android:color/black"
                 android:textSize="36sp" />
 
             <android.support.v7.widget.RecyclerView
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Upcoming Movies"
+                android:textColor="@android:color/black"
                 android:textSize="36sp" />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/upcoming_recyclerview"

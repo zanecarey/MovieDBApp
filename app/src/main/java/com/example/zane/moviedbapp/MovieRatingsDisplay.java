@@ -48,7 +48,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
 
         myToolbar = (Toolbar) findViewById(R.id.ratings_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Ratings");
+        getSupportActionBar().setTitle("MovieDBApp");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.ratings_drawer_layout);

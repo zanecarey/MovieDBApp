@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<android.support.v4.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,9 +8,7 @@
     android:fitsSystemWindows="true">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".DisplayResults"
@@ -25,40 +23,36 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:ems="10"
-            android:inputType=""
             android:hint="@string/enter_movie_title_to_search"
-            android:maxLines="1"
-            android:layout_margin="8dp"
-            />
+            android:inputType=""
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/search_Btn"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="18dp"
-            android:text="@string/search"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_margin="8dp"
-            />
+            android:background="@color/colorAccent"
+            android:text="@string/search" />
 
         <Button
             android:id="@+id/empty_Btn"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/reset"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_margin="8dp"
-            />
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/colorAccent"
+            android:text="@string/reset" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="8dp"
-            >
+            android:orientation="vertical">
 
         </android.support.v7.widget.RecyclerView>
 

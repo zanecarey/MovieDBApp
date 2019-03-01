@@ -19,6 +19,14 @@
             android:id="@+id/ratings_toolbar"
             layout="@layout/my_toolbar" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Your Ratings"
+            android:textColor="@android:color/black"
+            android:textSize="36sp" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rating_recyclerview"
             android:layout_width="match_parent"

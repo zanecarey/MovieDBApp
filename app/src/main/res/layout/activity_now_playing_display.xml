@@ -7,27 +7,53 @@
     android:id="@+id/playing_drawer_layout"
     android:fitsSystemWindows="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
+        android:id="@+id/playing_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".NowPlayingDisplay"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/playing_toolbar"
-            layout="@layout/my_toolbar" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/playing_recyclerview"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="120dp"
-            >
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+            tools:context=".NowPlayingDisplay"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/playing_toolbar"
+                layout="@layout/my_toolbar" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Now Playing"
+                android:textSize="36sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/playing_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Upcoming Movies"
+                android:textSize="36sp" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/upcoming_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+    </ScrollView>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/playing_navView"

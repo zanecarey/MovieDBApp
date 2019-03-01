@@ -17,7 +17,6 @@ import com.example.zane.moviedbapp.interfaces.MovieDBInterface;
 import com.example.zane.moviedbapp.model.Feed;
 import com.example.zane.moviedbapp.model.Results;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -32,9 +31,13 @@ public class NowPlayingDisplay extends AppCompatActivity {
 
     public static final String NOW_PLAYING = "https://api.themoviedb.org/3/movie/";
 
-    ArrayList<String> titles = new ArrayList<>();
-    ArrayList<String> posters = new ArrayList<>();
-    ArrayList<Integer> movieIDs = new ArrayList<>();
+    ArrayList<String> titlesPlaying = new ArrayList<>();
+    ArrayList<String> postersPlaying = new ArrayList<>();
+    ArrayList<Integer> movieIDsPlaying = new ArrayList<>();
+
+    ArrayList<String> titlesUpcoming = new ArrayList<>();
+    ArrayList<String> postersUpcoming = new ArrayList<>();
+    ArrayList<Integer> movieIDsUpcoming = new ArrayList<>();
 
     @BindView(R.id.playing_recyclerview)
     RecyclerView playingRecyclerview;
@@ -45,7 +48,10 @@ public class NowPlayingDisplay extends AppCompatActivity {
     @BindView(R.id.playing_drawer_layout)
     DrawerLayout playingDrawerLayout;
 
-    RecyclerViewAdapter adapter;
+    RecyclerViewAdapter adapterPlaying;
+    RecyclerViewAdapter adapterUpcoming;
+    @BindView(R.id.upcoming_recyclerview)
+    RecyclerView upcomingRecyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +101,11 @@ public class NowPlayingDisplay extends AppCompatActivity {
         });
 
         getNowPlaying();
+        getUpcoming();
     }
 
     //get movies from now playing url
-    private void getNowPlaying(){
+    private void getNowPlaying() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(NOW_PLAYING)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -112,12 +119,12 @@ public class NowPlayingDisplay extends AppCompatActivity {
             public void onResponse(Call<Feed> call, Response<Feed> response) {
                 ArrayList<Results> resultsArrayList = response.body().getResults();
 
-                for(int i = 0; i < 12; i++){
-                    titles.add(resultsArrayList.get(i).getTitle());
-                    posters.add(MainActivity.IMAGE_URL + resultsArrayList.get(i).getPoster_path());
-                    movieIDs.add(resultsArrayList.get(i).getId());
+                for (int i = 0; i < 12; i++) {
+                    titlesPlaying.add(resultsArrayList.get(i).getTitle());
+                    postersPlaying.add(MainActivity.IMAGE_URL + resultsArrayList.get(i).getPoster_path());
+                    movieIDsPlaying.add(resultsArrayList.get(i).getId());
                 }
-                initRecyclerView();
+                initRecyclerViewPlaying();
             }
 
             @Override
@@ -127,12 +134,50 @@ public class NowPlayingDisplay extends AppCompatActivity {
         });
     }
 
-    public void initRecyclerView() {
-        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1, this);
+    private void getUpcoming() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(NOW_PLAYING)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        playingRecyclerview.setAdapter(adapter);
+        MovieDBInterface movieDBAPI = retrofit.create(MovieDBInterface.class);
+        Call<Feed> call = movieDBAPI.getData(NOW_PLAYING + "upcoming?api_key=06ebf26c054d40dfaecf1f1b0e0965f8&language=en-US&page=1");
+
+        call.enqueue(new Callback<Feed>() {
+            @Override
+            public void onResponse(Call<Feed> call, Response<Feed> response) {
+                ArrayList<Results> resultsArrayList = response.body().getResults();
+
+                for (int i = 0; i < 12; i++) {
+                    titlesUpcoming.add(resultsArrayList.get(i).getTitle());
+                    postersUpcoming.add(MainActivity.IMAGE_URL + resultsArrayList.get(i).getPoster_path());
+                    movieIDsUpcoming.add(resultsArrayList.get(i).getId());
+                }
+                initRecyclerViewUpcoming();
+            }
+
+            @Override
+            public void onFailure(Call<Feed> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void initRecyclerViewPlaying() {
+        adapterPlaying = new RecyclerViewAdapter(movieIDsPlaying, titlesPlaying, postersPlaying, 1, this);
+
+        playingRecyclerview.setAdapter(adapterPlaying);
 
         playingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void initRecyclerViewUpcoming() {
+        adapterUpcoming = new RecyclerViewAdapter(movieIDsUpcoming, titlesUpcoming, postersUpcoming, 1, this);
+
+        upcomingRecyclerview.setAdapter(adapterUpcoming);
+
+        upcomingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

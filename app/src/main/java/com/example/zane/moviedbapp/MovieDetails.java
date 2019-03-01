@@ -1,5 +1,6 @@
 package com.example.zane.moviedbapp;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -41,6 +42,7 @@ import com.example.zane.moviedbapp.model.TrailerResults;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -140,8 +142,6 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
 
         enableNavView();
-
-
 
         int movieID = getID();
         getCastInfo(movieID);
@@ -449,11 +449,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 dialog.show();
                 break;
             case R.id.trailer_button:
-                //LayoutInflater layoutInflater = (LayoutInflater) MovieDetails.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                //View customView = layoutInflater.inflate(R.layout.youtube_frame_layout, null);
                 youtubeFragment.initialize(YOUTUBE_KEY, MovieDetails.this);
-
-
         }
     }
 

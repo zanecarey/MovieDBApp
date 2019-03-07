@@ -19,11 +19,11 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="2dp"
             android:background="@color/colorMovieDBgreen"
-            android:elevation="6dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            >
 
         </android.support.v7.widget.Toolbar>
 
@@ -37,11 +37,12 @@
             android:layout_marginBottom="2dp"
             android:background="@color/colorMovieDBgreen"
             android:drawableStart="@drawable/ic_search_black_48dp"
-            android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center|start"
             android:text="@string/search_for_a_movie_by_title"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
 
         <Button
             android:id="@+id/search_by_genre_Btn"
@@ -53,8 +54,8 @@
             android:layout_marginBottom="2dp"
             android:background="@color/colorMovieDBgreen"
             android:drawableStart="@drawable/ic_explore_black_48dp"
-            android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center|start"
             android:text="@string/discover_a_new_movie"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -69,8 +70,8 @@
             android:layout_marginBottom="2dp"
             android:background="@color/colorMovieDBgreen"
             android:drawableStart="@drawable/ic_bookmark_border_black_48dp"
-            android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center|start"
             android:text="@string/watchlist"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -85,8 +86,8 @@
             android:layout_marginBottom="2dp"
             android:background="@color/colorMovieDBgreen"
             android:drawableStart="@drawable/ic_stars_white_48dp"
-            android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center|start"
             android:text="@string/ratings"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -101,8 +102,8 @@
             android:layout_marginBottom="40dp"
             android:background="@color/colorMovieDBgreen"
             android:drawableStart="@drawable/ic_local_movies_white_48dp"
-            android:elevation="10dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center|start"
             android:text="@string/now_playing"
             android:textSize="30sp"
             android:textStyle="bold" />

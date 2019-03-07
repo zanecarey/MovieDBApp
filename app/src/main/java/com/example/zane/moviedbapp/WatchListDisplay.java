@@ -112,12 +112,12 @@ public class WatchListDisplay extends AppCompatActivity {
     }
 
     public void initRecyclerView() {
-
         //Create an adapter for our recyclerview
         adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1,this);
 
         //set adapter to recyclerview
         watchListRecyclerView.setAdapter(adapter);
+
         //set the layout mode to LinearLayout
         watchListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

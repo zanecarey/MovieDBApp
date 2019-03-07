@@ -54,13 +54,27 @@
             android:layout_centerHorizontal="true"
             android:text="@string/search" />
 
+        <TextView
+            android:id="@+id/border1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorMovieDBgreen"
+            android:layout_below="@+id/filterSearch_btn"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/filterRecyclerView"
             android:layout_width="370dp"
             android:layout_height="279dp"
-            android:layout_below="@id/filterSearch_btn"
+            android:layout_below="@id/border1"
             android:layout_centerHorizontal="true"
             />
+
+        <TextView
+            android:id="@+id/border2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorMovieDBgreen"
+            android:layout_below="@+id/filterRecyclerView"/>
 
         <Button
             android:id="@+id/empty_btn"

@@ -27,14 +27,22 @@
             android:textColor="@android:color/black"
             android:textSize="36sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorMovieDBgreen" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rating_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="120dp"
-            >
-        </android.support.v7.widget.RecyclerView>
+            tools:layout_editor_absoluteY="120dp"></android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorMovieDBgreen" />
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

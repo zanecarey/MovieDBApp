@@ -287,7 +287,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     private void setInfo() {
 
         taglineTextView.setText(tagline);
-        runtimeTextView.setText(String.valueOf(runtime));
+        runtimeTextView.setText(String.valueOf(runtime)+" minutes");
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
         String budgetAsString = numberFormat.format(budget);

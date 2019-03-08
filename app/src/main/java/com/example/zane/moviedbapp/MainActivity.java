@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,18 +29,18 @@ public class MainActivity extends AppCompatActivity {
     //The base url of the poster images we will be using
     public static final String IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
 
-    @BindView(R.id.search_by_title_Btn)
-    Button searchByTitleBtn;
+    @BindView(R.id.search_cardview)
+    CardView searchByTitleBtn;
     @BindView(R.id.my_toolbar)
     Toolbar myToolbar;
-    @BindView(R.id.search_by_genre_Btn)
-    Button searchByGenreBtn;
-    @BindView(R.id.watch_list_btn)
-    Button watchListBtn;
-    @BindView(R.id.imageView2)
-    ImageView imageView2;
-    @BindView(R.id.ratings_btn)
-    Button ratingsBtn;
+    @BindView(R.id.discover_cardview)
+    CardView searchByGenreBtn;
+    @BindView(R.id.watchlist_cardview)
+    CardView watchListBtn;
+    @BindView(R.id.ratings_cardview)
+    CardView ratingsBtn;
+    @BindView(R.id.trending_cardview)
+    CardView trending_cardview;
 
     DrawerLayout mDrawerLayout;
 
@@ -93,30 +94,30 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    @OnClick({R.id.search_by_title_Btn, R.id.search_by_genre_Btn, R.id.watch_list_btn, R.id.ratings_btn, R.id.nowPlaying_btn})
+    @OnClick({R.id.search_cardview, R.id.discover_cardview, R.id.watchlist_cardview, R.id.ratings_cardview, R.id.nowplaying_cardview, R.id.trending_cardview})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.search_by_title_Btn:
+            case R.id.search_cardview:
                 Intent intent1 = new Intent(MainActivity.this, DisplayResults.class);
                 startActivity(intent1);
 
                 break;
-            case R.id.search_by_genre_Btn:
+            case R.id.discover_cardview:
                 Intent intent2 = new Intent(MainActivity.this, FilterResults.class);
                 startActivity(intent2);
 
                 break;
-            case R.id.watch_list_btn:
+            case R.id.watchlist_cardview:
                 Intent intent3 = new Intent(MainActivity.this, WatchListDisplay.class);
                 startActivity(intent3);
 
                 break;
-            case R.id.ratings_btn:
+            case R.id.ratings_cardview:
                 Intent intent4 = new Intent(MainActivity.this, MovieRatingsDisplay.class);
                 startActivity(intent4);
 
                 break;
-            case R.id.nowPlaying_btn:
+            case R.id.nowplaying_cardview:
                 Intent intent5 = new Intent(MainActivity.this, NowPlayingDisplay.class);
                 startActivity(intent5);
 

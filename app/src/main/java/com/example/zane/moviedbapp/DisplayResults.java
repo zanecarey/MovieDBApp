@@ -112,6 +112,11 @@ public class DisplayResults extends AppCompatActivity {
                             Intent intent5 = new Intent(DisplayResults.this, NowPlayingDisplay.class);
                             startActivity(intent5);
                             return true;
+
+                        case R.id.nav_trending:
+                            Intent intent6 = new Intent(DisplayResults.this, TrendingDisplay.class);
+                            startActivity(intent6);
+                            return true;
                         default:
                             return true;
                     }
@@ -248,6 +253,11 @@ public class DisplayResults extends AppCompatActivity {
                 Intent intent5 = new Intent(DisplayResults.this, NowPlayingDisplay.class);
                 startActivity(intent5);
                 return true;
+
+            case R.id.action_trending:
+                Intent intent6 = new Intent(DisplayResults.this, TrendingDisplay.class);
+                startActivity(intent6);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -255,5 +265,4 @@ public class DisplayResults extends AppCompatActivity {
 
         }
     }
-
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieDBApp</string>
+    <string name="app_name">MyMovieApp</string>
     <string name="search">Search</string>
 
     <string name="get_actor_id">Get actor id</string>

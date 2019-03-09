@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("MovieDBApp");
+        getSupportActionBar().setTitle("MyMovieApp");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.main_drawer_layout);

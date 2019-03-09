@@ -229,6 +229,16 @@ public class ActorInfoActivity extends AppCompatActivity {
                             Intent intent4 = new Intent(ActorInfoActivity.this, MovieRatingsDisplay.class);
                             startActivity(intent4);
                             return true;
+
+                        case R.id.nav_playing:
+                            Intent intent5 = new Intent(ActorInfoActivity.this, NowPlayingDisplay.class);
+                            startActivity(intent5);
+                            return true;
+
+                        case R.id.nav_trending:
+                            Intent intent6 = new Intent(ActorInfoActivity.this, TrendingDisplay.class);
+                            startActivity(intent6);
+                            return true;
                         default:
                             return true;
                     }
@@ -273,6 +283,16 @@ public class ActorInfoActivity extends AppCompatActivity {
             case R.id.action_ratings:
                 Intent intent4 = new Intent(ActorInfoActivity.this, MovieRatingsDisplay.class);
                 startActivity(intent4);
+                return true;
+
+            case R.id.action_playing:
+                Intent intent5 = new Intent(ActorInfoActivity.this, NowPlayingDisplay.class);
+                startActivity(intent5);
+                return true;
+
+            case R.id.action_trending:
+                Intent intent6 = new Intent(ActorInfoActivity.this, TrendingDisplay.class);
+                startActivity(intent6);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

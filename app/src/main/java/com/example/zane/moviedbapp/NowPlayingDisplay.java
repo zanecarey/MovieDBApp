@@ -95,6 +95,11 @@ public class NowPlayingDisplay extends AppCompatActivity {
                     Intent intent4 = new Intent(NowPlayingDisplay.this, MovieRatingsDisplay.class);
                     startActivity(intent4);
                     return true;
+
+                case R.id.nav_trending:
+                    Intent intent5 = new Intent(NowPlayingDisplay.this, TrendingDisplay.class);
+                    startActivity(intent5);
+                    return true;
                 default:
                     return true;
             }
@@ -218,6 +223,11 @@ public class NowPlayingDisplay extends AppCompatActivity {
             case R.id.action_ratings:
                 Intent intent4 = new Intent(NowPlayingDisplay.this, MovieRatingsDisplay.class);
                 startActivity(intent4);
+                return true;
+
+            case R.id.action_trending:
+                Intent intent5 = new Intent(NowPlayingDisplay.this, TrendingDisplay.class);
+                startActivity(intent5);
                 return true;
 
             default:

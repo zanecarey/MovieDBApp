@@ -410,6 +410,16 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 Intent intent4 = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
                 startActivity(intent4);
                 return true;
+
+            case R.id.action_playing:
+                Intent intent5 = new Intent(MovieDetails.this, NowPlayingDisplay.class);
+                startActivity(intent5);
+                return true;
+
+            case R.id.action_trending:
+                Intent intent6 = new Intent(MovieDetails.this, TrendingDisplay.class);
+                startActivity(intent6);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -467,6 +477,14 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                         case R.id.nav_ratings:
                             Intent intent4 = new Intent(MovieDetails.this, MovieRatingsDisplay.class);
                             startActivity(intent4);
+                            return true;
+                        case R.id.nav_playing:
+                            Intent intent5 = new Intent(MovieDetails.this, NowPlayingDisplay.class);
+                            startActivity(intent5);
+                            return true;
+                        case R.id.nav_trending:
+                            Intent intent6 = new Intent(MovieDetails.this, TrendingDisplay.class);
+                            startActivity(intent6);
                             return true;
                         default:
                             return true;

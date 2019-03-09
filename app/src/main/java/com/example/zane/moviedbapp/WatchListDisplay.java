@@ -90,6 +90,11 @@ public class WatchListDisplay extends AppCompatActivity {
                             Intent intent5 = new Intent(WatchListDisplay.this, NowPlayingDisplay.class);
                             startActivity(intent5);
                             return true;
+
+                        case R.id.nav_trending:
+                            Intent intent6 = new Intent(WatchListDisplay.this, TrendingDisplay.class);
+                            startActivity(intent6);
+                            return true;
                         default:
                             return true;
                     }
@@ -164,6 +169,11 @@ public class WatchListDisplay extends AppCompatActivity {
             case R.id.action_playing:
                 Intent intent4 = new Intent(WatchListDisplay.this, NowPlayingDisplay.class);
                 startActivity(intent4);
+                return true;
+
+            case R.id.action_trending:
+                Intent intent5 = new Intent(WatchListDisplay.this, TrendingDisplay.class);
+                startActivity(intent5);
                 return true;
 
             default:

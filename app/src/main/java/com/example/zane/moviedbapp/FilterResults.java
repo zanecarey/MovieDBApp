@@ -137,6 +137,11 @@ public class FilterResults extends AppCompatActivity {
                             Intent intent5 = new Intent(FilterResults.this, NowPlayingDisplay.class);
                             startActivity(intent5);
                             return true;
+
+                        case R.id.nav_trending:
+                            Intent intent6 = new Intent(FilterResults.this, TrendingDisplay.class);
+                            startActivity(intent6);
+                            return true;
                         default:
                             return true;
                     }
@@ -450,6 +455,11 @@ public class FilterResults extends AppCompatActivity {
             case R.id.action_playing:
                 Intent intent5 = new Intent(FilterResults.this, NowPlayingDisplay.class);
                 startActivity(intent5);
+                return true;
+
+            case R.id.action_trending:
+                Intent intent6 = new Intent(FilterResults.this, TrendingDisplay.class);
+                startActivity(intent6);
                 return true;
 
             default:

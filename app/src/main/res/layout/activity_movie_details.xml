@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,9 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <LinearLayout
                 android:id="@+id/detailsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,22 +40,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <Button
+                    android:id="@+id/trailer_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/play_trailer"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/trailer_button"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/play_trailer"
-                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/rate_btn"
@@ -68,7 +65,20 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/rate"
                         android:textStyle="bold" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="false"
+                        android:numStars="5"
+                        android:rating="0"
+                        android:stepSize="1.0"
+                        android:transformPivotX="0dp"
+                        android:transformPivotY="0dp" />
+
                 </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -76,8 +86,8 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
                     android:text="@string/similar_movies"
+                    android:textAllCaps="true"
                     android:textColor="@color/colorMovieDBgreen"
                     android:textSize="36sp"
                     android:textStyle="bold" />
@@ -96,6 +106,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:text="@string/movie_info"
+                    android:textAllCaps="true"
                     android:textColor="@color/colorMovieDBgreen"
                     android:textSize="36sp"
                     android:textStyle="bold" />
@@ -259,8 +270,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
                         android:text="@string/overview"
+                        android:textAllCaps="true"
                         android:textColor="@color/colorMovieDBgreen"
                         android:textSize="36sp"
                         android:textStyle="bold" />
@@ -284,10 +295,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="2dp"
                     android:text="@string/cast"
+                    android:textAllCaps="true"
                     android:textColor="@color/colorMovieDBgreen"
                     android:textSize="36sp"
                     android:textStyle="bold" />

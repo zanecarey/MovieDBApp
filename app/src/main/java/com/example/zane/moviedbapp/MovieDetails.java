@@ -1,6 +1,5 @@
 package com.example.zane.moviedbapp;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,7 +7,6 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +40,6 @@ import com.example.zane.moviedbapp.model.TrailerResults;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -130,6 +127,8 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     TextView genreBaseTextView;
     @BindView(R.id.overviewBase_textView)
     TextView overviewBaseTextView;
+    @BindView(R.id.ratingBar)
+    RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,7 +227,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                     Toast.makeText(MovieDetails.this, "No results", Toast.LENGTH_SHORT).show();
                 } else {
                     for (int i = 0; i < results.size(); i++) {
-                        if(i > 12) break;
+                        if (i > 12) break;
                         actors.add(results.get(i).getName());
                         characters.add(results.get(i).getCharacter());
                         profile_pics.add(MainActivity.IMAGE_URL + results.get(i).getProfile_path());
@@ -287,7 +286,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
     private void setInfo() {
 
         taglineTextView.setText(tagline);
-        runtimeTextView.setText(String.valueOf(runtime)+" minutes");
+        runtimeTextView.setText(String.valueOf(runtime) + " minutes");
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
         String budgetAsString = numberFormat.format(budget);
@@ -353,7 +352,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                     .show();
         } else {
             dbHelper.addRating(movieID, title, poster_path, rating);
-            Snackbar.make(detailsLayout, "ADDED MOVIE", Snackbar.LENGTH_LONG)
+            Snackbar.make(detailsLayout, "RATED MOVIE", Snackbar.LENGTH_LONG)
                     .setAction("GO TO", snackbarListenerRating)
                     .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
                     .show();
@@ -426,28 +425,10 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 saveToWatchList();
                 break;
             case R.id.rate_btn:
-
-//                numberPicker.setMinValue(1);
-//                numberPicker2.setMaxValue(10);
-//                numberPicker2.setWrapSelectorWheel(true);
-//                numberPicker2.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-                final NumberPicker numberPicker = new NumberPicker(this);
-                numberPicker.setMinValue(1);
-                numberPicker.setMaxValue(10);
-                numberPicker.setWrapSelectorWheel(true);
-                numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
-                builder.setView(numberPicker);
-                builder.setTitle("Rate Movie 1-10");
-                builder.setPositiveButton("Rate", (dialogInterface, i) ->{
-
-                    rating = numberPicker.getValue();
-                    saveToRatings();
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                rating = (int)ratingBar.getRating();
+                saveToRatings();
                 break;
+
             case R.id.trailer_button:
                 youtubeFragment.initialize(YOUTUBE_KEY, MovieDetails.this);
         }

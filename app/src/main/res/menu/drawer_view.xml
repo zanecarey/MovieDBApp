@@ -25,5 +25,9 @@
             android:id="@+id/nav_playing"
             android:icon="@drawable/playing"
             android:title="@string/playing" />
+        <item
+            android:id="@+id/nav_trending"
+            android:icon="@drawable/ic_whatshot_black_48dp"
+            android:title="@string/trending" />
     </group>
 </menu>

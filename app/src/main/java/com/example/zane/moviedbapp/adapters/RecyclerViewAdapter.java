@@ -88,7 +88,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if(ratings.isEmpty()){
             viewHolder.imageName.setText(titles.get(i));
         } else {
-            viewHolder.imageName.setText(titles.get(i) + " " + ratings.get(i) + "/10");
+            viewHolder.imageName.setText(titles.get(i) + " " + ratings.get(i) + "/5");
         }
 
         viewHolder.parentLayout.setOnClickListener(view -> {

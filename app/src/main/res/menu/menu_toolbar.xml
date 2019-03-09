@@ -48,6 +48,13 @@
                 android:title="@string/playing"
                 app:showAsAction="ifRoom"
                 />
+
+            <item
+                android:id="@+id/action_trending"
+                android:icon="@drawable/ic_whatshot_black_48dp"
+                android:title="@string/trending"
+                app:showAsAction="ifRoom"
+                />
         </menu>
     </item>
 </menu>

@@ -35,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/known_for"
-                android:textColor="@android:color/black"
+                android:textAllCaps="true"
+                android:textColor="@color/colorMovieDBgreen"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
@@ -161,7 +162,8 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:text="@string/bio"
-                    android:textColor="#000"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorMovieDBgreen"
                     android:textSize="36sp"
                     android:textStyle="bold" />
 

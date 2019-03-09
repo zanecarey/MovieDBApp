@@ -88,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent5 = new Intent(MainActivity.this, NowPlayingDisplay.class);
                             startActivity(intent5);
                             return true;
+                        case R.id.nav_trending:
+                            Intent intent6 = new Intent(MainActivity.this, TrendingDisplay.class);
+                            startActivity(intent6);
+                            return true;
                         default:
                             return true;
                     }
@@ -122,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent5);
 
                 break;
+            case R.id.trending_cardview:
+                Intent intent6 = new Intent(MainActivity.this, TrendingDisplay.class);
+                startActivity(intent6);
         }
     }
 
@@ -161,6 +168,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_playing:
                 Intent intent5 = new Intent(MainActivity.this, NowPlayingDisplay.class);
                 startActivity(intent5);
+                return true;
+
+            case R.id.action_trending:
+                Intent intent6 = new Intent(MainActivity.this, TrendingDisplay.class);
+                startActivity(intent6);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

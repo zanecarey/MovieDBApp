@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -81,6 +82,10 @@ public class FilterResults extends AppCompatActivity {
     RadioButton beforeRadio;
     @BindView(R.id.after_radio)
     RadioButton afterRadio;
+    @BindView(R.id.filterLayout)
+    RelativeLayout filterLayout;
+    @BindView(R.id.hide_button)
+    Button hideButton;
 
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> posters = new ArrayList<>();
@@ -153,7 +158,7 @@ public class FilterResults extends AppCompatActivity {
 
     @OnClick(R.id.filterSearch_btn)
     public void onFindIDClicked() {
-        if(!searchEditText.getText().toString().equals("")){
+        if (!searchEditText.getText().toString().equals("")) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://api.themoviedb.org/3/search/person/")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -198,7 +203,7 @@ public class FilterResults extends AppCompatActivity {
         }
     }
 
-    public void getMovies(){
+    public void getMovies() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/discover/movie/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -405,14 +410,14 @@ public class FilterResults extends AppCompatActivity {
         recyclerViewStarted = true;
 
         //Create an adapter for our recyclerview
-        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1,this);
+        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1, this);
 
         //set adapter to recyclerview
         filterRecyclerView.setAdapter(adapter);
         //set the layout mode to LinearLayout
         filterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -468,5 +473,13 @@ public class FilterResults extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    @OnClick(R.id.hide_button)
+    public void hideFilters() {
+        filterLayout.animate().translationY(-filterLayout.getHeight());
+        filterRecyclerView.animate().translationY(-filterLayout.getHeight());
+        hideButton.animate().translationY(-filterLayout.getHeight());
+
     }
 }

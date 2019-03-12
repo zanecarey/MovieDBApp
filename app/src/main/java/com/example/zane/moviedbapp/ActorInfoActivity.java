@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class ActorInfoActivity extends AppCompatActivity {
 
     int actorID;
     String birth, death, name, birthPlace, profile_path, biography;
+    @BindView(R.id.deathLinearLayout)
+    LinearLayout deathLinearLayout;
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> posters = new ArrayList<>();
     private ArrayList<Integer> movieIDs = new ArrayList<>();
@@ -125,7 +128,7 @@ public class ActorInfoActivity extends AppCompatActivity {
     }
 
     //get the actors movie credits
-    private void getCredits(int id){
+    private void getCredits(int id) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -139,7 +142,7 @@ public class ActorInfoActivity extends AppCompatActivity {
             public void onResponse(Call<Credits> call, Response<Credits> response) {
                 ArrayList<CreditResults> results = response.body().getCreditResults();
 
-                for(int i = 0; i < results.size(); i++){
+                for (int i = 0; i < results.size(); i++) {
                     titles.add(results.get(i).getTitle());
                     posters.add(MainActivity.IMAGE_URL + results.get(i).getPoster_path());
                     movieIDs.add(results.get(i).getId());
@@ -160,7 +163,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         actorNameTextView.setText(name);
         birthTextView.setText(birth);
         if (death == null) {
-            deathTextView.setText("N/A");
+            deathLinearLayout.setVisibility(View.GONE);
         } else {
             deathTextView.setText(death);
         }
@@ -189,7 +192,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         } else return 0;
     }
 
-    private void initCreditRecyclerView(){
+    private void initCreditRecyclerView() {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 2, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         knownForRecyclerView.setLayoutManager(layoutManager);

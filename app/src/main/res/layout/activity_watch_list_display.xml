@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Watchlist"
+            android:textAllCaps="true"
             android:textColor="@android:color/black"
             android:textSize="36sp" />
 

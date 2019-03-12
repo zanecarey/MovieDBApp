@@ -23,9 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Your Ratings"
+            android:text="@string/your_ratings"
+            android:textAllCaps="true"
             android:textColor="@android:color/black"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +39,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="120dp"></android.support.v7.widget.RecyclerView>
+            tools:layout_editor_absoluteY="120dp">
+
+        </android.support.v7.widget.RecyclerView>
 
         <TextView
             android:layout_width="match_parent"

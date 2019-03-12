@@ -37,4 +37,6 @@
     <string name="playing">Playing</string>
     <string name="now_playing">Now Playing</string>
     <string name="trending">Trending</string>
+    <string name="your_ratings">Your Ratings</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
 </resources>

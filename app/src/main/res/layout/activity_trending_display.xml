@@ -24,8 +24,10 @@
                 layout="@layout/my_toolbar" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/ic_whatshot_black_48dp"
                 android:gravity="center"
                 android:text="@string/trending"
                 android:textAllCaps="true"

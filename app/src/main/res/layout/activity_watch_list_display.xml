@@ -20,8 +20,10 @@
             layout="@layout/my_toolbar"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/watchlist"
             android:gravity="center"
             android:text="Watchlist"
             android:textAllCaps="true"

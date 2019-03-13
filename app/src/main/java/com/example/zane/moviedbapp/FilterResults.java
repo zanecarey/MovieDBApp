@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -47,6 +49,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FilterResults extends AppCompatActivity {
+
+    private boolean hideButtonFlag = true;
 
     private final int SORT_BY_SPINNER = 1;
     private final int RATING_SPINNER = 2;
@@ -475,11 +479,24 @@ public class FilterResults extends AppCompatActivity {
         }
     }
 
+    //hide button will move the filters out of the way to allow better visiblity of recycler view
     @OnClick(R.id.hide_button)
     public void hideFilters() {
-        filterLayout.animate().translationY(-filterLayout.getHeight());
-        filterRecyclerView.animate().translationY(-filterLayout.getHeight());
-        hideButton.animate().translationY(-filterLayout.getHeight());
+        if(hideButtonFlag){
+            filterLayout.animate().translationY(-filterLayout.getHeight());
+            filterRecyclerView.animate().translationY(-filterLayout.getHeight());
+            hideButton.animate().translationY(-filterLayout.getHeight());
+            adapter.notifyDataSetChanged();
+            //LinearLayout.LayoutParams lpView = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            //filterRecyclerView.setLayoutParams(lpView);
+            hideButtonFlag = false;
+        } else { //return to original positions
 
+
+            filterLayout.animate().translationY(0);
+            filterRecyclerView.animate().translationY(0);
+            hideButton.animate().translationY(0);
+            hideButtonFlag = true;
+        }
     }
 }

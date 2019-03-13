@@ -7,154 +7,153 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <ScrollView
-        android:id="@+id/details_scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<ScrollView-->
+        <!--android:id="@+id/details_scrollview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/filter_toolbar"
+            layout="@layout/my_toolbar" />
+
+        <RelativeLayout
+            android:id="@+id/filterLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            tools:context=".DisplayResults"
+            tools:layout_editor_absoluteY="25dp">
 
-            <include
-                android:id="@+id/filter_toolbar"
-                layout="@layout/my_toolbar" />
 
-            <RelativeLayout
-                android:id="@+id/filterLayout"
+            <Spinner
+                android:id="@+id/sortBy_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".DisplayResults"
-                tools:layout_editor_absoluteY="25dp">
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="start" />
 
+            <Spinner
+                android:id="@+id/rating_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/sortBy_spinner"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
-                <Spinner
-                    android:id="@+id/sortBy_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="start" />
-
-                <Spinner
-                    android:id="@+id/rating_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_below="@id/sortBy_spinner"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp" />
-
-                <Spinner
-                    android:id="@+id/genre_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_below="@id/rating_spinner"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp" />
-
-
-                <Button
-                    android:id="@+id/filterSearch_btn"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/search_edit_text"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/search" />
-
-
-
-                <!--<TextView-->
-                <!--android:id="@+id/border2"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_below="@+id/filterRecyclerView"-->
-                <!--android:background="@color/colorMovieDBgreen" />-->
-
-                <Button
-                    android:id="@+id/empty_btn"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/search_edit_text"
-                    android:layout_alignTop="@+id/filterSearch_btn"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="0dp"
-                    android:text="@string/reset" />
-
-                <EditText
-                    android:id="@+id/search_edit_text"
-                    android:layout_width="222dp"
-                    android:layout_height="54dp"
-                    android:layout_below="@+id/year_edit_text"
-                    android:layout_marginStart="8dp"
-                    android:ems="10"
-                    android:hint="@string/enter_actor_name"
-                    android:inputType="textPersonName" />
-
-                <EditText
-                    android:id="@+id/year_edit_text"
-                    android:layout_width="120dp"
-                    android:layout_height="45dp"
-                    android:layout_below="@id/genre_spinner"
-                    android:layout_marginStart="8dp"
-                    android:ems="10"
-                    android:hint="@string/enter_year" />
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/genre_spinner"
-                    android:layout_toEndOf="@id/year_edit_text"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/before_radio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/before" />
-
-                    <RadioButton
-                        android:id="@+id/after_radio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/after" />
-                </RadioGroup>
-
-            </RelativeLayout>
+            <Spinner
+                android:id="@+id/genre_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/rating_spinner"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
 
             <Button
-                android:id="@+id/hide_button"
+                android:id="@+id/filterSearch_btn"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hide" />
+                android:layout_below="@+id/search_edit_text"
+                android:layout_centerHorizontal="true"
+                android:text="@string/search" />
 
-            <TextView
-                android:id="@+id/border1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/filterSearch_btn"
-                android:background="@color/colorMovieDBgreen" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/filterRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!--<TextView-->
+            <!--android:id="@+id/border2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_below="@+id/filterRecyclerView"-->
+            <!--android:background="@color/colorMovieDBgreen" />-->
 
-            <TextView
-                android:id="@+id/border2"
+            <Button
+                android:id="@+id/empty_btn"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/search_edit_text"
+                android:layout_alignTop="@+id/filterSearch_btn"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:text="@string/reset" />
+
+            <EditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="222dp"
+                android:layout_height="54dp"
+                android:layout_below="@+id/year_edit_text"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:hint="@string/enter_actor_name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/year_edit_text"
+                android:layout_width="120dp"
+                android:layout_height="45dp"
+                android:layout_below="@id/genre_spinner"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:hint="@string/enter_year" />
+
+            <RadioGroup
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/filterSearch_btn"
-                android:background="@color/colorMovieDBgreen" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/genre_spinner"
+                android:layout_toEndOf="@id/year_edit_text"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/before_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/before" />
+
+                <RadioButton
+                    android:id="@+id/after_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/after" />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/hide_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hide" />
+
+        <TextView
+            android:id="@+id/border1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            android:background="@color/colorMovieDBgreen" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/filterRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/border2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            android:background="@color/colorMovieDBgreen" />
+    </LinearLayout>
+
+    <!--</ScrollView>-->
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navView"

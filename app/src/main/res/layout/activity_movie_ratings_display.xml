@@ -20,14 +20,15 @@
             layout="@layout/my_toolbar" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/rate"
             android:gravity="center"
             android:text="@string/your_ratings"
             android:textAllCaps="true"
             android:textColor="@android:color/black"
-            android:textSize="36sp"
-            />
+            android:textSize="36sp" />
 
         <TextView
             android:layout_width="match_parent"

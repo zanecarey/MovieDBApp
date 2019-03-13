@@ -12,9 +12,9 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent">-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <include
@@ -25,8 +25,10 @@
             android:id="@+id/filterLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/filter_toolbar"
             tools:context=".DisplayResults"
-            tools:layout_editor_absoluteY="25dp">
+            tools:layout_editor_absoluteY="25dp"
+            android:animateLayoutChanges="true">
 
 
             <Spinner
@@ -56,31 +58,23 @@
 
             <Button
                 android:id="@+id/filterSearch_btn"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/search_edit_text"
                 android:layout_centerHorizontal="true"
+                android:background="@color/colorMovieDBgreen"
                 android:text="@string/search" />
-
-
-            <!--<TextView-->
-            <!--android:id="@+id/border2"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_below="@+id/filterRecyclerView"-->
-            <!--android:background="@color/colorMovieDBgreen" />-->
 
             <Button
                 android:id="@+id/empty_btn"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/search_edit_text"
                 android:layout_alignTop="@+id/filterSearch_btn"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="8dp"
-                android:text="@string/reset" />
+                android:text="@string/reset"
+                android:background="@color/colorMovieDBgreen"/>
 
             <EditText
                 android:id="@+id/search_edit_text"
@@ -127,31 +121,43 @@
         </RelativeLayout>
 
 
-        <Button
+        <android.support.v7.widget.CardView
             android:id="@+id/hide_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hide" />
-
-        <TextView
-            android:id="@+id/border1"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/filterLayout"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="2dp"
+            app:cardBackgroundColor="@color/colorMovieDBgreen">
 
-            android:background="@color/colorMovieDBgreen" />
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_arrow_drop_up_black_24dp" />
+        </android.support.v7.widget.CardView>
+
+        <!--<TextView-->
+        <!--android:id="@+id/border1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+
+        <!--android:background="@color/colorMovieDBgreen" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/filterRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hide_button" />
 
-        <TextView
-            android:id="@+id/border2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
+        <!--<TextView-->
+        <!--android:id="@+id/border2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
 
-            android:background="@color/colorMovieDBgreen" />
-    </LinearLayout>
+        <!--android:background="@color/colorMovieDBgreen" />-->
+    </RelativeLayout>
 
     <!--</ScrollView>-->
 

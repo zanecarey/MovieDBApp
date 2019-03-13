@@ -1,5 +1,6 @@
 package com.example.zane.moviedbapp;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,10 +8,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -49,6 +50,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FilterResults extends AppCompatActivity {
+
 
     private boolean hideButtonFlag = true;
 
@@ -89,7 +91,9 @@ public class FilterResults extends AppCompatActivity {
     @BindView(R.id.filterLayout)
     RelativeLayout filterLayout;
     @BindView(R.id.hide_button)
-    Button hideButton;
+    CardView hideButton;
+    @BindView(R.id.arrow)
+    ImageView arrow;
 
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> posters = new ArrayList<>();
@@ -482,20 +486,15 @@ public class FilterResults extends AppCompatActivity {
     //hide button will move the filters out of the way to allow better visiblity of recycler view
     @OnClick(R.id.hide_button)
     public void hideFilters() {
-        if(hideButtonFlag){
-            filterLayout.animate().translationY(-filterLayout.getHeight());
-            filterRecyclerView.animate().translationY(-filterLayout.getHeight());
-            hideButton.animate().translationY(-filterLayout.getHeight());
-            adapter.notifyDataSetChanged();
-            //LinearLayout.LayoutParams lpView = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            //filterRecyclerView.setLayoutParams(lpView);
-            hideButtonFlag = false;
-        } else { //return to original positions
+        if (hideButtonFlag) {//set filters layout to invisible
+            filterLayout.getLayoutTransition().enableTransitionType(LayoutTransition.DISAPPEARING);
+            filterLayout.setVisibility(View.GONE);
 
-
-            filterLayout.animate().translationY(0);
-            filterRecyclerView.animate().translationY(0);
-            hideButton.animate().translationY(0);
+            arrow.setImageResource(R.drawable.ic_arrow_drop_down_black_24dp);
+                    hideButtonFlag = false;
+        } else { //set back to visible
+            arrow.setImageResource(R.drawable.ic_arrow_drop_up_black_24dp);
+            filterLayout.setVisibility(View.VISIBLE);
             hideButtonFlag = true;
         }
     }

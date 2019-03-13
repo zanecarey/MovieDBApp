@@ -15,12 +15,12 @@
         android:layout_width="252dp"
         android:layout_height="248dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_movie_black_24dp" />
+        app:srcCompat="@drawable/ic_movie_white_48dp" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="174dp"
-        android:layout_height="98dp"
+        android:layout_width="157dp"
+        android:layout_height="66dp"
         android:layout_gravity="center_horizontal"
         app:srcCompat="@drawable/ic_logo2" />
 

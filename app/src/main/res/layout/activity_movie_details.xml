@@ -79,13 +79,16 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorMovieDBgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
                     android:text="@string/similar_movies"
                     android:textAllCaps="true"
                     android:textColor="@color/colorMovieDBgreen"
@@ -260,6 +263,12 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/colorMovieDBgreen" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -292,6 +301,11 @@
                 </LinearLayout>
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorMovieDBgreen" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -304,8 +318,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorMovieDBgreen"
-                    />
+                    android:layout_marginTop="2dp"
+                    android:background="@color/colorMovieDBgreen" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/details_recyclerView"

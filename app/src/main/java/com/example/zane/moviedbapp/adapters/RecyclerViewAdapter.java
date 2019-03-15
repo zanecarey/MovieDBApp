@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -78,16 +79,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo);
 
-        Glide.with(context)
-                .asBitmap()
-                .load(posters.get(i))
-                .apply(options)
-                .into(viewHolder.image);
+        if(type==1){
+            Glide.with(context)
+                    .asBitmap()
+                    .load(posters.get(i))
+                    .apply(options)
+                    .into(viewHolder.image);
+        } else {
+            Glide.with(context)
+                    .asBitmap()
+                    .load(posters.get(i))
+                    .apply(options)
+                    .into(viewHolder.image2);
+        }
 
         //determine if the adapter is called from ratings activity or not, based off ratings arraylist
-        if(ratings.isEmpty()){
+        if(ratings.isEmpty() && type==1){
             viewHolder.imageName.setText(titles.get(i));
-        } else {
+        } else if(!ratings.isEmpty()) {
             viewHolder.imageName.setText(titles.get(i) + " " + ratings.get(i) + "/5");
         }
 
@@ -139,6 +148,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         CircleImageView image;
+        ImageView image2;
         TextView imageName;
         RelativeLayout parentLayout;
 
@@ -150,12 +160,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 parentLayout = itemView.findViewById(R.id.parentLayout);
                 imageName = itemView.findViewById(R.id.imageName);
             } else {
-                image = itemView.findViewById(R.id.poster_imageView);
+                image2 = itemView.findViewById(R.id.poster_imageView);
                 parentLayout = itemView.findViewById(R.id.rec_layout);
-                imageName = itemView.findViewById(R.id.rec_textView);
+                //imageName = itemView.findViewById(R.id.rec_textView);
             }
-
-
         }
     }
 }

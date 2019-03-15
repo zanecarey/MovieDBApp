@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -100,10 +102,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             viewHolder.imageName.setText(titles.get(i) + " " + ratings.get(i) + "/5");
         }
 
+        //on click for a list item, expand to allow user to do various things like add, view, rate
         viewHolder.parentLayout.setOnClickListener(view -> {
-            Intent intent = new Intent(context, MovieDetails.class);
-            intent.putExtra("movie_id", movieIDs.get(i));
-            context.startActivity(intent);
+
+            if(viewHolder.isExpanded){
+                Toast.makeText(context, "Close", Toast.LENGTH_SHORT).show();
+                viewHolder.isExpanded = false;
+                viewHolder.itemLayout.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(context, "Open", Toast.LENGTH_SHORT).show();
+
+                viewHolder.isExpanded = true;
+                viewHolder.itemLayout.setVisibility(View.VISIBLE);
+            }
+//            Intent intent = new Intent(context, MovieDetails.class);
+//            intent.putExtra("movie_id", movieIDs.get(i));
+//            context.startActivity(intent);
         });
 
         viewHolder.parentLayout.setOnLongClickListener(view -> {
@@ -151,7 +165,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView image2;
         TextView imageName;
         RelativeLayout parentLayout;
-
+        boolean isExpanded = false;
+        LinearLayout itemLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -159,6 +174,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 image = itemView.findViewById(R.id.circularImageView);
                 parentLayout = itemView.findViewById(R.id.parentLayout);
                 imageName = itemView.findViewById(R.id.imageName);
+                itemLayout = itemView.findViewById(R.id.item_layout);
+
             } else {
                 image2 = itemView.findViewById(R.id.poster_imageView);
                 parentLayout = itemView.findViewById(R.id.rec_layout);

@@ -44,6 +44,39 @@
                 android:text="@string/test"
                 android:textColor="#000"
                 android:textSize="18sp" />
+
+            <LinearLayout
+                android:id="@+id/item_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/circularImageView"
+                android:visibility="gone"
+                android:layout_marginStart="40dp">
+
+                <TextView
+                    android:id="@+id/details_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/add_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:text="Add"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/rate_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:text="Rate"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

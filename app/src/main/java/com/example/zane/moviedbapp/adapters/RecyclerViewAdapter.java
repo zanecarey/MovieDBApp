@@ -5,13 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +28,7 @@ import com.example.zane.moviedbapp.MovieDetails;
 import com.example.zane.moviedbapp.R;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,16 +43,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private int type;
     private Context context;
 
-    DataBaseAdapter dbHelper;
+    private Animation animationUp, animationDown;
 
+
+    private DataBaseAdapter dbHelper;
+
+    //normal constructor
     public RecyclerViewAdapter(ArrayList<Integer> movieIDs, ArrayList<String> titles, ArrayList<String> posters, int type, Context context) {
         this.movieIDs = movieIDs;
         this.titles = titles;
         this.posters = posters;
         this.context = context;
         this.type = type;
+        animationUp = AnimationUtils.loadAnimation(this.context, R.anim.slide_up);
+        animationDown = AnimationUtils.loadAnimation(this.context, R.anim.slide_down);
     }
 
+    //rating constructor
     public RecyclerViewAdapter(ArrayList<Integer> movieIDs, ArrayList<String> titles, ArrayList<String> posters, int type, Context context, ArrayList<Integer> ratings) {
         this.movieIDs = movieIDs;
         this.titles = titles;
@@ -55,6 +67,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.context = context;
         this.type = type;
         this.ratings = ratings;
+        animationUp = AnimationUtils.loadAnimation(this.context, R.anim.slide_up);
+        animationDown = AnimationUtils.loadAnimation(this.context, R.anim.slide_down);
     }
 
     @NonNull
@@ -68,9 +82,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recommendation_listitem,
                     viewGroup, false);
         }
-        ViewHolder viewHolder = new ViewHolder(view);
 
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -87,39 +100,78 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     .load(posters.get(i))
                     .apply(options)
                     .into(viewHolder.image);
+            //determine if the adapter is called from ratings activity or not, based off ratings arraylist
+            if(ratings.isEmpty()){
+                viewHolder.imageName.setText(titles.get(i));
+            } else {
+                viewHolder.imageName.setText(titles.get(i) + " " + ratings.get(i) + "/5");
+            }
+            //on click for a list item, expand to allow user to do various things like add, view, rate
+            viewHolder.parentLayout.setOnClickListener(view -> {
+
+                if(viewHolder.isExpanded){
+                    viewHolder.itemLayout.startAnimation(animationUp);
+                    CountDownTimer timer = new CountDownTimer(100, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            viewHolder.itemLayout.setVisibility(View.GONE);
+                        }
+                    };
+                    timer.start();
+
+                    viewHolder.isExpanded = false;
+
+                    //view button
+                    viewHolder.viewTextView.setOnClickListener(v -> {
+                        Intent intent = new Intent(context, MovieDetails.class);
+                        intent.putExtra("movie_id", movieIDs.get(i));
+                        context.startActivity(intent);
+                    });
+                    //add button
+                    viewHolder.addTextView.setOnClickListener(v -> Toast.makeText(context, "Add", Toast.LENGTH_SHORT).show());
+                    //rate button
+                    viewHolder.rateTextView.setOnClickListener(v -> {
+                        Toast.makeText(context, "Rate", Toast.LENGTH_SHORT).show();
+                    });
+
+                } else {
+                    viewHolder.itemLayout.startAnimation(animationDown);
+                    CountDownTimer timer = new CountDownTimer(100, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            viewHolder.itemLayout.setVisibility(View.VISIBLE);
+                        }
+                    };
+                    timer.start();
+
+                    viewHolder.isExpanded = true;
+                }
+            });
         } else {
             Glide.with(context)
                     .asBitmap()
                     .load(posters.get(i))
                     .apply(options)
                     .into(viewHolder.image2);
+
+            viewHolder.parentLayout.setOnClickListener(v -> {
+                Intent intent = new Intent(context, MovieDetails.class);
+                intent.putExtra("movie_id", movieIDs.get(i));
+                context.startActivity(intent);
+            });
         }
 
-        //determine if the adapter is called from ratings activity or not, based off ratings arraylist
-        if(ratings.isEmpty() && type==1){
-            viewHolder.imageName.setText(titles.get(i));
-        } else if(!ratings.isEmpty()) {
-            viewHolder.imageName.setText(titles.get(i) + " " + ratings.get(i) + "/5");
-        }
-
-        //on click for a list item, expand to allow user to do various things like add, view, rate
-        viewHolder.parentLayout.setOnClickListener(view -> {
-
-            if(viewHolder.isExpanded){
-                Toast.makeText(context, "Close", Toast.LENGTH_SHORT).show();
-                viewHolder.isExpanded = false;
-                viewHolder.itemLayout.setVisibility(View.GONE);
-            } else {
-                Toast.makeText(context, "Open", Toast.LENGTH_SHORT).show();
-
-                viewHolder.isExpanded = true;
-                viewHolder.itemLayout.setVisibility(View.VISIBLE);
-            }
-//            Intent intent = new Intent(context, MovieDetails.class);
-//            intent.putExtra("movie_id", movieIDs.get(i));
-//            context.startActivity(intent);
-        });
-
+        //long click listener for list items, if long click, display dialog to remove from list
         viewHolder.parentLayout.setOnLongClickListener(view -> {
 
             //launch alert dialog, ask if want to remove from watchlist
@@ -167,6 +219,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         RelativeLayout parentLayout;
         boolean isExpanded = false;
         LinearLayout itemLayout;
+        TextView viewTextView, addTextView, rateTextView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -175,6 +228,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 parentLayout = itemView.findViewById(R.id.parentLayout);
                 imageName = itemView.findViewById(R.id.imageName);
                 itemLayout = itemView.findViewById(R.id.item_layout);
+                viewTextView = itemView.findViewById(R.id.view_textview);
+                addTextView = itemView.findViewById(R.id.add_textview);
+                rateTextView = itemView.findViewById(R.id.rate_textview);
 
             } else {
                 image2 = itemView.findViewById(R.id.poster_imageView);

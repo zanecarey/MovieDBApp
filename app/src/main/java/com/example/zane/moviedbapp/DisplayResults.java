@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -63,6 +64,8 @@ public class DisplayResults extends AppCompatActivity {
 
     DrawerLayout mDrawerLayout;
 
+    LayoutAnimationController animation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,9 @@ public class DisplayResults extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.display_drawer_layout);
+
+        int resID = R.anim.layout_animation_fall_down;
+        animation = AnimationUtils.loadLayoutAnimation(this, resID);
 
         NavigationView navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(
@@ -206,6 +212,10 @@ public class DisplayResults extends AppCompatActivity {
 
         //set adapter to recyclerview
         recyclerView.setAdapter(adapter);
+
+        //set animation for recyclerview
+        recyclerView.setLayoutAnimation(animation);
+
         //set the layout mode to LinearLayout
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

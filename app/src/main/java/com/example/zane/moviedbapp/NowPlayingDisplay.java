@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
 import com.example.zane.moviedbapp.interfaces.MovieDBInterface;
@@ -53,6 +55,8 @@ public class NowPlayingDisplay extends AppCompatActivity {
     @BindView(R.id.upcoming_recyclerview)
     RecyclerView upcomingRecyclerview;
 
+    LayoutAnimationController animation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,9 @@ public class NowPlayingDisplay extends AppCompatActivity {
         getSupportActionBar().setTitle("MovieDBApp");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        int resID = R.anim.layout_animation_fall_down;
+        animation = AnimationUtils.loadLayoutAnimation(this, resID);
 
         playingNavView.setNavigationItemSelectedListener(menuItem -> {
             // set item as selected to persist highlight
@@ -173,7 +180,7 @@ public class NowPlayingDisplay extends AppCompatActivity {
         adapterPlaying = new RecyclerViewAdapter(movieIDsPlaying, titlesPlaying, postersPlaying, 1, this);
 
         playingRecyclerview.setAdapter(adapterPlaying);
-
+        playingRecyclerview.setLayoutAnimation(animation);
         playingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -181,7 +188,7 @@ public class NowPlayingDisplay extends AppCompatActivity {
         adapterUpcoming = new RecyclerViewAdapter(movieIDsUpcoming, titlesUpcoming, postersUpcoming, 1, this);
 
         upcomingRecyclerview.setAdapter(adapterUpcoming);
-
+        upcomingRecyclerview.setLayoutAnimation(animation);
         upcomingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 

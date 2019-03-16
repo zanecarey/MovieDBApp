@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -101,6 +103,8 @@ public class FilterResults extends AppCompatActivity {
 
     DrawerLayout mDrawerLayout;
 
+    LayoutAnimationController animation;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +116,9 @@ public class FilterResults extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.filter_drawer_layout);
+
+        int resID = R.anim.layout_animation_fall_down;
+        animation = AnimationUtils.loadLayoutAnimation(this, resID);
 
         NavigationView navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(
@@ -422,6 +429,10 @@ public class FilterResults extends AppCompatActivity {
 
         //set adapter to recyclerview
         filterRecyclerView.setAdapter(adapter);
+
+        //add animation
+        filterRecyclerView.setLayoutAnimation(animation);
+
         //set the layout mode to LinearLayout
         filterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

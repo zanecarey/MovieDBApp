@@ -39,4 +39,6 @@
     <string name="trending">Trending</string>
     <string name="your_ratings">Your Ratings</string>
     <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="view">View</string>
+    <string name="add">Add</string>
 </resources>

@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:drawableStart="@drawable/watchlist"
             android:gravity="center"
-            android:text="Watchlist"
+            android:text="@string/watchlist"
             android:textAllCaps="true"
             android:textColor="@android:color/black"
             android:textSize="36sp" />
@@ -38,7 +38,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/watch_list_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layoutAnimation="@anim/layout_animation_fall_down">
 
         </android.support.v7.widget.RecyclerView>
 

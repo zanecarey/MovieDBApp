@@ -40,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="120dp">
+            tools:layout_editor_absoluteY="120dp"
+            android:layoutAnimation="@anim/layout_animation_fall_down">
 
         </android.support.v7.widget.RecyclerView>
 

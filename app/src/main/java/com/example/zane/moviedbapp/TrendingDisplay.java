@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ScrollView;
 
 import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
@@ -49,6 +51,7 @@ public class TrendingDisplay extends AppCompatActivity {
     @BindView(R.id.trending_drawer_layout)
     DrawerLayout trendingDrawerLayout;
 
+    LayoutAnimationController animation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,8 @@ public class TrendingDisplay extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
 
+        int resID = R.anim.layout_animation_fall_down;
+        animation = AnimationUtils.loadLayoutAnimation(this, resID);
         trendingNavView.setNavigationItemSelectedListener(menuItem -> {
             menuItem.setChecked(true);
 
@@ -135,7 +140,7 @@ public class TrendingDisplay extends AppCompatActivity {
         adapterTrending = new RecyclerViewAdapter(movieIDsTrending, titlesTrending, postersTrending, 1, this);
 
         trendingRecyclerview.setAdapter(adapterTrending);
-
+        trendingRecyclerview.setLayoutAnimation(animation);
         trendingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 

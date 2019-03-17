@@ -18,9 +18,11 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="1dp"
-        card_view:cardUseCompatPadding="false">
+        card_view:cardUseCompatPadding="false"
+        >
 
         <RelativeLayout
+            android:id="@+id/list_relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -49,15 +51,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/circularImageView"
-                android:visibility="gone"
-                android:layout_marginStart="40dp">
+                android:layout_marginStart="29dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toEndOf="@+id/circularImageView"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/view_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/view"
-                    android:textSize="18sp" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/add_textview"
@@ -65,7 +71,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:text="@string/add"
-                    android:textSize="18sp" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/rate_textview"
@@ -73,7 +81,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:text="@string/rate"
-                    android:textSize="18sp" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="24sp" />
             </LinearLayout>
 
         </RelativeLayout>

@@ -113,7 +113,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 ratingBar.setIsIndicator(true);
                 ratingBar.setScaleX(0.5f);
                 ratingBar.setScaleY(0.5f);
-
+                ratingBar.setPivotX(0);
                 switch (ratings.get(i)) {
                     case 1:
                         ratingBar.setRating(1);
@@ -137,7 +137,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.BELOW, R.id.imageName);
                 params.addRule(RelativeLayout.END_OF, R.id.circularImageView);
-                //params.setMargins(0,0,0,8);
+                //params.addRule(RelativeLayout.ABoVE, R.id.item_layout);
+                //params.setMargins(100,0,0,);
                 ratingBar.setLayoutParams(params);
                 //ratingBar.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 // ratingBar.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.BELOW, R.id.imageName));

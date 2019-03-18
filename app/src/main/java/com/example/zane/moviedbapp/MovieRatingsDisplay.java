@@ -111,7 +111,13 @@ public class MovieRatingsDisplay extends AppCompatActivity {
             while (results.moveToNext()) {
                 movieIDs.add(results.getInt(1));
                 titles.add(results.getString(2));
-                posters.add(MainActivity.IMAGE_URL + results.getString(3));
+
+                if(results.getString(3).contains(MainActivity.IMAGE_URL)){
+                    posters.add(results.getString(3));
+                } else {
+                    posters.add(MainActivity.IMAGE_URL + results.getString(3));
+                }
+
                 movieRatings.add(results.getInt(4));
             }
         }

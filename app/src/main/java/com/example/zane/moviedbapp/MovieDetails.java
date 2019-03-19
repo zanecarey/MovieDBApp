@@ -138,7 +138,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
 
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
 
         enableNavView();
 

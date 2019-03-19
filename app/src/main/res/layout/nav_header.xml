@@ -15,7 +15,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_movie_black_24dp" />
+        app:srcCompat="@drawable/ic_movie_white_48dp" />
 
     <TextView
         android:layout_width="match_parent"

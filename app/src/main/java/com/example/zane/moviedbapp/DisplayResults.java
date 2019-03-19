@@ -1,5 +1,6 @@
 package com.example.zane.moviedbapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -75,7 +77,7 @@ public class DisplayResults extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Search");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         mDrawerLayout = findViewById(R.id.display_drawer_layout);
 
         int resID = R.anim.layout_animation_fall_down;
@@ -147,6 +149,9 @@ public class DisplayResults extends AppCompatActivity {
 
     @OnClick(R.id.search_Btn)
     public void onSearchBtnClicked() {
+
+        hideSoftKeyboard(this);
+
 
         //Make sure the search field is empty or not
         if (movieSearchEditText.getText().toString().equals("")) {
@@ -274,5 +279,11 @@ public class DisplayResults extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    //hide keyboard after search button his clicked
+    public void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 }

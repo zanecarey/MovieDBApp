@@ -1,8 +1,10 @@
 package com.example.zane.moviedbapp;
 
 import android.animation.LayoutTransition;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,8 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -106,6 +110,8 @@ public class FilterResults extends AppCompatActivity {
 
     LayoutAnimationController animation;
 
+    private Animation animationUp, animationDown;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,12 +121,19 @@ public class FilterResults extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Discover");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         mDrawerLayout = findViewById(R.id.filter_drawer_layout);
 
         //prevent keyboard popup
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+        //animation for moving the filters
+        animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        animationUp.setDuration(200);
+        animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        animationDown.setDuration(200);
+
+        //animation for recyclerview
         int resID = R.anim.layout_animation_fall_down;
         animation = AnimationUtils.loadLayoutAnimation(this, resID);
 
@@ -177,6 +190,9 @@ public class FilterResults extends AppCompatActivity {
 
     @OnClick(R.id.filterSearch_btn)
     public void onFindIDClicked() {
+
+        hideSoftKeyboard(this);
+
         if (!searchEditText.getText().toString().equals("")) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://api.themoviedb.org/3/search/person/")
@@ -502,15 +518,48 @@ public class FilterResults extends AppCompatActivity {
     @OnClick(R.id.hide_button)
     public void hideFilters() {
         if (hideButtonFlag) {//set filters layout to invisible
-            filterLayout.getLayoutTransition().enableTransitionType(LayoutTransition.DISAPPEARING);
-            filterLayout.setVisibility(View.GONE);
+            //filterLayout.getLayoutTransition().enableTransitionType(LayoutTransition.DISAPPEARING);
+            filterLayout.startAnimation(animationUp);
+            CountDownTimer timer = new CountDownTimer(200, 16) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    filterLayout.setVisibility(View.GONE);
+                }
+            };
+            timer.start();
 
             arrow.setImageResource(R.drawable.ic_arrow_drop_down_black_24dp);
-                    hideButtonFlag = false;
+            hideButtonFlag = false;
+
         } else { //set back to visible
+
+            filterLayout.startAnimation(animationDown);
+
+            CountDownTimer timer = new CountDownTimer(200, 16) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    filterLayout.setVisibility(View.VISIBLE);
+                }
+            };
+            timer.start();
             arrow.setImageResource(R.drawable.ic_arrow_drop_up_black_24dp);
-            filterLayout.setVisibility(View.VISIBLE);
             hideButtonFlag = true;
         }
+    }
+
+    //hide keyboard after search button his clicked
+    public void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 }

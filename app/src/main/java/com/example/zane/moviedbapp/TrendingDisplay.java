@@ -61,7 +61,7 @@ public class TrendingDisplay extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("MovieDBApp");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
 
         int resID = R.anim.layout_animation_fall_down;
         animation = AnimationUtils.loadLayoutAnimation(this, resID);

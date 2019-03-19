@@ -50,7 +50,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("MovieDBApp");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         mDrawerLayout = findViewById(R.id.ratings_drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.navView);

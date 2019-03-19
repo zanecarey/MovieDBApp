@@ -137,8 +137,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.BELOW, R.id.imageName);
                 params.addRule(RelativeLayout.END_OF, R.id.circularImageView);
-                //params.addRule(RelativeLayout.ABoVE, R.id.item_layout);
-                //params.setMargins(100,0,0,);
+                //params.addRule(RelativeLayout.ABOVE, R.id.item_layout);
+                params.setMargins(100,0,0,0);
                 ratingBar.setLayoutParams(params);
                 //ratingBar.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 // ratingBar.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.BELOW, R.id.imageName));

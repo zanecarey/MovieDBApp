@@ -13,18 +13,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
-import com.example.zane.moviedbapp.interfaces.MovieDBInterface;
 import com.example.zane.moviedbapp.model.Feed;
 import com.example.zane.moviedbapp.model.Results;
+import com.example.zane.moviedbapp.model.TVFeed;
+import com.example.zane.moviedbapp.model.TVResults;
 
 import java.util.ArrayList;
 
@@ -34,8 +37,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DisplayResults extends AppCompatActivity {
     private static final String TAG = "DisplayResults";
@@ -51,13 +52,23 @@ public class DisplayResults extends AppCompatActivity {
     Button emptyBtn;
     @BindView(R.id.recyclerView)
     RecyclerView displayRecyclerView;
+    @BindView(R.id.tvRecyclerView)
+    RecyclerView tvDisplayRecyclerView;
+    @BindView(R.id.displayMoviesTextView)
+    TextView displayMoviesTextView;
+    @BindView(R.id.displayTVTextView)
+    TextView displayTVTextView;
 
     //ArrayLists to store the titles and posters which we insert into the recycler view
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> posters = new ArrayList<>();
     private ArrayList<Integer> movieIDs = new ArrayList<>();
 
-    RecyclerViewAdapter adapter;
+    private ArrayList<String> tvTitles = new ArrayList<>();
+    private ArrayList<String> tvPosters = new ArrayList<>();
+    private ArrayList<Integer> tvIDs = new ArrayList<>();
+
+    RecyclerViewAdapter movieAdapter, tvAdapter;
 
     String movieTitle;
 
@@ -139,7 +150,7 @@ public class DisplayResults extends AppCompatActivity {
             titles.clear();
             posters.clear();
             movieIDs.clear();
-            adapter.notifyDataSetChanged();
+            movieAdapter.notifyDataSetChanged();
         } else {
             Animation shake = AnimationUtils.loadAnimation(DisplayResults.this, R.anim.shake);
             emptyBtn.startAnimation(shake);
@@ -162,6 +173,9 @@ public class DisplayResults extends AppCompatActivity {
 
             Toast.makeText(DisplayResults.this, "No title entered!", Toast.LENGTH_SHORT).show();
         } else {
+            //enable our label textViews\
+            displayMoviesTextView.setVisibility(View.VISIBLE);
+            displayTVTextView.setVisibility(View.VISIBLE);
 
             Toast.makeText(DisplayResults.this, "Searching!", Toast.LENGTH_SHORT).show();
             //Get the title from edit text
@@ -169,15 +183,10 @@ public class DisplayResults extends AppCompatActivity {
             //modify the string to make it HTTP standard
             movieTitle = movieTitle.replaceAll("\\s+", "%20");
 
+            //Find Movie Results
             String url = MainActivity.SEARCH_BASE_URL + movieTitle;
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(MainActivity.SEARCH_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            MovieDBInterface movieDBAPI = retrofit.create(MovieDBInterface.class);
-            Call<Feed> call = movieDBAPI.getData(url);
+            Call<Feed> call = RetrofitInstance.getMovieSearchService().getData(url);
 
             call.enqueue(new Callback<Feed>() {
                 @Override
@@ -199,30 +208,65 @@ public class DisplayResults extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Feed> call, Throwable t) {
                     Log.e(TAG, "onFailure: FAIL" + t.getMessage());
-                    Toast.makeText(DisplayResults.this, "", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            //Find TV results
+            String urlTV = RetrofitInstance.SEARCH_BASE_URL_TV + movieTitle;
+            Call<TVFeed> callTV = RetrofitInstance.getTVSearchService().getData(urlTV);
+
+            callTV.enqueue(new Callback<TVFeed>() {
+                @Override
+                public void onResponse(Call<TVFeed> call, Response<TVFeed> response) {
+                    if (response.body().getResults().size() > 0) {
+
+                        ArrayList<TVResults> resultsArrayList = response.body().getResults();
+
+                        for (int i = 0; i < resultsArrayList.size(); i++) {
+                            //Add the title and image for RecyclerView
+                            tvTitles.add(resultsArrayList.get(i).getTitle());
+                            tvPosters.add(MainActivity.IMAGE_URL + resultsArrayList.get(i).getPoster_path());
+                            tvIDs.add(resultsArrayList.get(i).getId());
+                        }
+                        initTVRecyclerView();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TVFeed> call, Throwable t) {
+
                 }
             });
         }
     }
 
     private void initRecyclerView() {
-        Log.d(TAG, "initRecyclerView: init recyclerView");
 
         //set flag to true so our empty button doesn't cause crash
         recyclerViewStarted = true;
-        //Create our recyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
         //Create an adapter for our recyclerview
-        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1,this);
+        movieAdapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1, this);
 
         //set adapter to recyclerview
-        recyclerView.setAdapter(adapter);
+        displayRecyclerView.setAdapter(movieAdapter);
 
         //set animation for recyclerview
-        recyclerView.setLayoutAnimation(animation);
+        displayRecyclerView.setLayoutAnimation(animation);
 
         //set the layout mode to LinearLayout
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        displayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void initTVRecyclerView() {
+
+        tvAdapter = new RecyclerViewAdapter(tvIDs, tvTitles, tvPosters, 3, this);
+
+        tvDisplayRecyclerView.setAdapter(tvAdapter);
+
+        tvDisplayRecyclerView.setLayoutAnimation(animation);
+
+        tvDisplayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

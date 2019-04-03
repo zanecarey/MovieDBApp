@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.MovieDetails;
 import com.example.zane.moviedbapp.R;
+import com.example.zane.moviedbapp.TVDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -78,7 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view;
-        if (type == 1) {
+        if (type == 1 || type == 3) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem,
                     viewGroup, false);
         } else {
@@ -97,7 +98,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo);
 
-        if (type == 1) {
+        if (type == 1 || type == 3) {
             Glide.with(context)
                     .asBitmap()
                     .load(posters.get(i))
@@ -168,9 +169,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     //view button
                     viewHolder.viewTextView.setOnClickListener(v -> {
-                        Intent intent = new Intent(context, MovieDetails.class);
-                        intent.putExtra("movie_id", movieIDs.get(i));
-                        context.startActivity(intent);
+                        if(type == 1){
+                            Intent intent = new Intent(context, MovieDetails.class);
+                            intent.putExtra("movie_id", movieIDs.get(i));
+                            context.startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(context, TVDetailsActivity.class);
+                            intent.putExtra("tv_id", movieIDs.get(i));
+                            context.startActivity(intent);
+                        }
+
                     });
 
 
@@ -306,7 +314,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            if (type == 1) {
+            if (type == 1 || type == 3) {
                 image = itemView.findViewById(R.id.circularImageView);
                 parentLayout = itemView.findViewById(R.id.parentLayout);
                 imageName = itemView.findViewById(R.id.imageName);

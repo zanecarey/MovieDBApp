@@ -8,4 +8,11 @@
         <item>R</item>
         <item>NC-17</item>
     </string-array>
+    <string-array name="show_ratings">
+        <item>Select Rating</item>
+        <item>TV-G</item>
+        <item>TV-PG</item>
+        <item>TV-14</item>
+        <item>TV-MA</item>
+    </string-array>
 </resources>

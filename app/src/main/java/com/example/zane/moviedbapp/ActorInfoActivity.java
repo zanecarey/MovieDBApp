@@ -133,7 +133,7 @@ public class ActorInfoActivity extends AppCompatActivity {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        String url = BASE_URL + id + "/movie_credits" + KEY;
+        String url = BASE_URL + id + "/combined_credits" + KEY;
         CreditsInterface creditsInterface = retrofit.create(CreditsInterface.class);
         Call<Credits> call = creditsInterface.getData(url);
 

@@ -17,63 +17,69 @@
             android:id="@+id/watch_list_toolbar"
             layout="@layout/my_toolbar"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableStart="@drawable/watchlist"
-            android:gravity="center"
-            android:text="@string/watchlist"
-            android:textAllCaps="true"
-            android:textColor="@android:color/black"
-            android:textSize="36sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorMovieDBgreen" />
-
-        <TextView
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/movies"
-            android:textColor="@android:color/black"
-            android:textSize="36sp" />
+            android:elevation="6dp"
+            android:layout_margin="4dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/watch_list_recyclerView"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorMovieDBgreen"
+                    android:gravity="center"
+                    android:text="@string/movies"
+                    android:textColor="@android:color/white"
+                    android:textSize="36sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/watch_list_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutAnimation="@anim/layout_animation_fall_down">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layoutAnimation="@anim/layout_animation_fall_down">
+            android:elevation="6dp"
+            android:layout_margin="4dp">
 
-        </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorMovieDBgreen" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorMovieDBgreen"
+                    android:gravity="center"
+                    android:text="@string/tv_shows"
+                    android:textColor="@android:color/white"
+                    android:textSize="36sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tv_shows"
-            android:textColor="@android:color/black"
-            android:textSize="36sp" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/watch_list_shows_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutAnimation="@anim/layout_animation_fall_down">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/watch_list_shows_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layoutAnimation="@anim/layout_animation_fall_down">
+                </android.support.v7.widget.RecyclerView>
 
-        </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorMovieDBgreen" />
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

@@ -20,11 +20,13 @@ public class DataBaseAdapter extends SQLiteOpenHelper {
     
     //Database Info
     private static final String DATABASE_NAME = "WatchListDataBase";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     //Table Name
     private static final String TABLE_MOVIES = "movies";
     private static final String TABLE_MOVIES_RATED = "movies_rated";
+    private static final String TABLE_SHOWS = "shows";
+    private static final String TABLE_SHOWS_RATED = "shows_rated";
 
     //Movie Table Columns
     static final String KEY_ID = "id";
@@ -61,8 +63,27 @@ public class DataBaseAdapter extends SQLiteOpenHelper {
                 KEY_RATING + " INTEGER" +
                 ")";
 
+        String CREATE_SHOWS_TABLE = "CREATE TABLE " + TABLE_SHOWS +
+                "(" +
+                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                KEY_MOVIE_ID + " INTEGER," +
+                KEY_TITLE + " TEXT, " +
+                KEY_POSTER + " TEXT" +
+                ")";
+
+        String CREATE_SHOWS_TABLE_RATED = "CREATE TABLE " + TABLE_SHOWS_RATED +
+                "(" +
+                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                KEY_MOVIE_ID + " INTEGER," +
+                KEY_TITLE + " TEXT, " +
+                KEY_POSTER + " TEXT, " +
+                KEY_RATING + " INTEGER" +
+                ")";
+
         sqLiteDatabase.execSQL(CREATE_MOVIES_TABLE);
         sqLiteDatabase.execSQL(CREATE_MOVIES_TABLE_RATED);
+        sqLiteDatabase.execSQL(CREATE_SHOWS_TABLE);
+        sqLiteDatabase.execSQL(CREATE_SHOWS_TABLE_RATED);
     }
 
     @Override
@@ -70,6 +91,8 @@ public class DataBaseAdapter extends SQLiteOpenHelper {
         Log.d(TAG, "onUpgrade: Database upgrading");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_MOVIES);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_MOVIES_RATED);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOWS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOWS_RATED);
         onCreate(sqLiteDatabase);
     }
 
@@ -102,6 +125,39 @@ public class DataBaseAdapter extends SQLiteOpenHelper {
         values.put(KEY_RATING, rating);
 
         db.insert(TABLE_MOVIES_RATED, null, values);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    //add show for watchlist
+    public void addShow(int showID, String title, String poster){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_MOVIE_ID, showID);
+        values.put(KEY_TITLE, title);
+        values.put(KEY_POSTER, poster);
+
+        db.insert(TABLE_SHOWS, null, values);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    //add movie rating
+    public void addShowRating(int movieID, String title, String poster, int rating){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_MOVIE_ID, movieID);
+        values.put(KEY_TITLE, title);
+        values.put(KEY_POSTER, poster);
+        values.put(KEY_RATING, rating);
+
+        db.insert(TABLE_SHOWS_RATED, null, values);
         db.setTransactionSuccessful();
         db.endTransaction();
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.zane.moviedbapp.adapters.CastRecyclerView;
+import com.example.zane.moviedbapp.adapters.DataBaseAdapter;
 import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
 import com.example.zane.moviedbapp.interfaces.CastInterface;
 import com.example.zane.moviedbapp.interfaces.RecommendationsInterface;
@@ -90,9 +92,10 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
     @BindView(R.id.tv_drawerLayout)
     DrawerLayout tvDrawerLayout;
 
+    DataBaseAdapter dbHelper;
 
     YouTubePlayerSupportFragment youtubeFragment;
-    int tvID, numEpisodes, numSeasons;
+    int tvID, numEpisodes, numSeasons, rating;
 
     String created_by, name, genre, firstAired, lastAired, overview, poster_path, youtubeTrailer;
 
@@ -298,17 +301,71 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_FAButton:
-                //saveToWatchList();
+                saveToWatchList();
                 break;
             case R.id.tv_rate_btn:
-                //rating = (int)ratingBar.getRating();
-                //saveToRatings();
+                rating = (int)tvRatingBar.getRating();
+                saveToRatings();
                 break;
 
             case R.id.tv_trailer_button:
                 youtubeFragment.initialize(RetrofitInstance.YOUTUBE_KEY, TVDetailsActivity.this);
         }
     }
+
+    //check if show is already in watchlist, if not, add it, then display snackbar message
+    public void saveToWatchList() {
+
+        dbHelper = new DataBaseAdapter(this);
+
+        if (dbHelper.alreadyInDatabase(tvID, "shows")) {
+            Snackbar.make(tvDetailsLayout, "ALREADY IN WATCHLIST", Snackbar.LENGTH_LONG)
+                    .setAction("GO TO", snackbarListenerWatchList)
+                    .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
+                    .show();
+        } else {
+            dbHelper.addShow(tvID, name, poster_path);
+            Snackbar.make(tvDetailsLayout, "ADDED MOVIE", Snackbar.LENGTH_LONG)
+                    .setAction("GO TO", snackbarListenerWatchList)
+                    .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
+                    .show();
+        }
+    }
+
+    //save a show rating to our database
+    public void saveToRatings() {
+        dbHelper = new DataBaseAdapter(this);
+
+        if (dbHelper.alreadyInDatabase(tvID, "shows_rated")) {
+            Snackbar.make(tvDetailsLayout, "ALREADY RATED", Snackbar.LENGTH_LONG)
+                    .setAction("GO TO", snackbarListenerRating)
+                    .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
+                    .show();
+        } else {
+            dbHelper.addShowRating(tvID, name, poster_path, rating);
+            Snackbar.make(tvDetailsLayout, "RATED MOVIE", Snackbar.LENGTH_LONG)
+                    .setAction("GO TO", snackbarListenerRating)
+                    .setActionTextColor(getResources().getColor(R.color.colorMovieDBgreen))
+                    .show();
+        }
+    }
+
+
+
+
+    // Listener for our watchlist snackbar
+    View.OnClickListener snackbarListenerWatchList = v -> {
+        Intent intent = new Intent(TVDetailsActivity.this, WatchListDisplay.class);
+        startActivity(intent);
+    };
+
+    // Listener for our movie rating snackbar
+    View.OnClickListener snackbarListenerRating = v -> {
+        Intent intent = new Intent(TVDetailsActivity.this, MovieRatingsDisplay.class);
+        startActivity(intent);
+    };
+
+
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {

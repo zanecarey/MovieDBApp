@@ -26,18 +26,25 @@ public class MovieRatingsDisplay extends AppCompatActivity {
 
 
     DataBaseAdapter dbHelper;
-
+    //lists for movies
     ArrayList<String> titles = new ArrayList<>();
     ArrayList<String> posters = new ArrayList<>();
     ArrayList<Integer> movieIDs = new ArrayList<>();
     ArrayList<Integer> movieRatings = new ArrayList<>();
+    //lists for shows
+    ArrayList<String> showTitles = new ArrayList<>();
+    ArrayList<String> showPosters = new ArrayList<>();
+    ArrayList<Integer> showIDs = new ArrayList<>();
+    ArrayList<Integer> showRatings = new ArrayList<>();
 
     @BindView(R.id.ratings_toolbar)
     Toolbar myToolbar;
     @BindView(R.id.rating_recyclerview)
     RecyclerView ratingRecyclerview;
+    @BindView(R.id.show_rating_recyclerview)
+    RecyclerView showRatingRecyclerview;
 
-    RecyclerViewAdapter adapter;
+    RecyclerViewAdapter adapter,showAdapter;
     DrawerLayout mDrawerLayout;
 
     @Override
@@ -105,7 +112,9 @@ public class MovieRatingsDisplay extends AppCompatActivity {
 
         //get the ratings data from database
         Cursor results = dbHelper.getAllData("movies_rated");
-        if (results.getCount() == 0) {
+        Cursor showResults = dbHelper.getAllData("shows_rated");
+
+        if (results.getCount() == 0 && showResults.getCount() == 0) {
             Toast.makeText(this, "Ratings List Empty!", Toast.LENGTH_SHORT).show();
         } else {
             while (results.moveToNext()) {
@@ -120,8 +129,19 @@ public class MovieRatingsDisplay extends AppCompatActivity {
 
                 movieRatings.add(results.getInt(4));
             }
+            while (showResults.moveToNext()) {
+                showIDs.add(showResults.getInt(1));
+                showTitles.add(showResults.getString(2));
+                if(showResults.getString(3).contains(MainActivity.IMAGE_URL)){
+                    showPosters.add(showResults.getString(3));
+                } else {
+                    showPosters.add(MainActivity.IMAGE_URL + showResults.getString(3));
+                }
+                showRatings.add(showResults.getInt(4));
+            }
         }
         initRecyclerView();
+        initShowRecyclerView();
     }
 
     public void initRecyclerView() {
@@ -133,6 +153,15 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         ratingRecyclerview.setAdapter(adapter);
         //set the layout mode to LinearLayout
         ratingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void initShowRecyclerView() {
+        //Create an adapter for our show recyclerview
+        showAdapter = new RecyclerViewAdapter(showIDs, showTitles, showPosters, 3,this, showRatings);
+
+        showRatingRecyclerview.setAdapter(showAdapter);
+
+        showRatingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

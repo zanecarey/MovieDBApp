@@ -187,11 +187,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                         //add movie to watchlist
                         dbHelper = new DataBaseAdapter(context);
-                        if (dbHelper.alreadyInDatabase(movieIDs.get(i), "movies")) {
-                            Toast.makeText(context, "Already in watchlist", Toast.LENGTH_SHORT).show();
+                        if(type==1){
+                            if (dbHelper.alreadyInDatabase(movieIDs.get(i), "movies")) {
+                                Toast.makeText(context, "Already in watchlist", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
+                                dbHelper.addMovie(movieIDs.get(i), titles.get(i), posters.get(i));
+                            }
                         } else {
-                            Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
-                            dbHelper.addMovie(movieIDs.get(i), titles.get(i), posters.get(i));
+                            if (dbHelper.alreadyInDatabase(movieIDs.get(i), "shows")) {
+                                Toast.makeText(context, "Already in watchlist", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
+                                dbHelper.addShow(movieIDs.get(i), titles.get(i), posters.get(i));
+                            }
                         }
                     });
 
@@ -209,11 +218,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         builder.setPositiveButton("Rate", ((dialog, which) -> {
                             dbHelper = new DataBaseAdapter(context);
                             int rating = (int) ratingBar.getRating();
-                            if (dbHelper.alreadyInDatabase(movieIDs.get(i), "movies_rated")) {
-                                Toast.makeText(context, "Already Rated", Toast.LENGTH_SHORT).show();
+                            if(type ==1){
+                                if (dbHelper.alreadyInDatabase(movieIDs.get(i), "movies_rated")) {
+                                    Toast.makeText(context, "Already Rated", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Rated", Toast.LENGTH_SHORT).show();
+                                    dbHelper.addRating(movieIDs.get(i), titles.get(i), posters.get(i), rating);
+                                }
                             } else {
-                                Toast.makeText(context, "Rated", Toast.LENGTH_SHORT).show();
-                                dbHelper.addRating(movieIDs.get(i), titles.get(i), posters.get(i), rating);
+                                if (dbHelper.alreadyInDatabase(movieIDs.get(i), "shows_rated")) {
+                                    Toast.makeText(context, "Already Rated", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Rated", Toast.LENGTH_SHORT).show();
+                                    dbHelper.addShowRating(movieIDs.get(i), titles.get(i), posters.get(i), rating);
+                                }
                             }
                         }));
 
@@ -253,9 +271,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     .into(viewHolder.image2);
 
             viewHolder.parentLayout.setOnClickListener(v -> {
-                Intent intent = new Intent(context, MovieDetails.class);
-                intent.putExtra("movie_id", movieIDs.get(i));
-                context.startActivity(intent);
+                if(type == 1){
+                    Intent intent = new Intent(context, MovieDetails.class);
+                    intent.putExtra("movie_id", movieIDs.get(i));
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, TVDetailsActivity.class);
+                    intent.putExtra("tv_id", movieIDs.get(i));
+                    context.startActivity(intent);
+                }
+
             });
         }
 

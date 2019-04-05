@@ -30,16 +30,24 @@ public class WatchListDisplay extends AppCompatActivity {
 
     DataBaseAdapter dbHelper;
 
+    //lists for movies
     ArrayList<String> titles = new ArrayList<>();
     ArrayList<String> posters = new ArrayList<>();
     ArrayList<Integer> movieIDs = new ArrayList<>();
+
+    //lists for shows
+    ArrayList<String> showTitles = new ArrayList<>();
+    ArrayList<String> showPosters = new ArrayList<>();
+    ArrayList<Integer> showIDs = new ArrayList<>();
 
     @BindView(R.id.watch_list_toolbar)
     Toolbar myToolbar;
     @BindView(R.id.watch_list_recyclerView)
     RecyclerView watchListRecyclerView;
+    @BindView(R.id.watch_list_shows_recyclerView)
+    RecyclerView showWatchListRecyclerView;
 
-    RecyclerViewAdapter adapter;
+    RecyclerViewAdapter adapter, showAdapter;
     DrawerLayout mDrawerLayout;
 
     @Override
@@ -102,13 +110,16 @@ public class WatchListDisplay extends AppCompatActivity {
                 });
 
         dbHelper = new DataBaseAdapter(this);
+
         //get the watchlist data
         Cursor results = dbHelper.getAllData("movies");
-        if (results.getCount() == 0) {
+        Cursor showResults = dbHelper.getAllData("shows");
+
+        if (results.getCount() == 0 && showResults.getCount() == 0) {
             Toast.makeText(this, "Watchlist Empty!", Toast.LENGTH_SHORT).show();
         } else {
             while (results.moveToNext()) {
-                Log.d(TAG, "DATABASE ENTRY IDS: " + results.getInt(0));
+
                 movieIDs.add(results.getInt(1));
                 titles.add(results.getString(2));
                 if(results.getString(3).contains(MainActivity.IMAGE_URL)){
@@ -117,8 +128,18 @@ public class WatchListDisplay extends AppCompatActivity {
                     posters.add(MainActivity.IMAGE_URL + results.getString(3));
                 }
             }
+            while (showResults.moveToNext()) {
+                showIDs.add(showResults.getInt(1));
+                showTitles.add(showResults.getString(2));
+                if(showResults.getString(3).contains(MainActivity.IMAGE_URL)){
+                    showPosters.add(showResults.getString(3));
+                } else {
+                    showPosters.add(MainActivity.IMAGE_URL + showResults.getString(3));
+                }
+            }
         }
         initRecyclerView();
+        initShowRecyclerView();
     }
 
     public void initRecyclerView() {
@@ -130,6 +151,15 @@ public class WatchListDisplay extends AppCompatActivity {
 
         //set the layout mode to LinearLayout
         watchListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void initShowRecyclerView() {
+        //Create an adapter for our show recyclerview
+        showAdapter = new RecyclerViewAdapter(showIDs, showTitles, showPosters, 3,this);
+
+        showWatchListRecyclerView.setAdapter(showAdapter);
+
+        showWatchListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

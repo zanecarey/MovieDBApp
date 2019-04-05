@@ -35,8 +35,44 @@
             android:layout_height="1dp"
             android:background="@color/colorMovieDBgreen" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/movies"
+            android:textColor="@android:color/black"
+            android:textSize="36sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorMovieDBgreen" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rating_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="120dp"
+            android:layoutAnimation="@anim/layout_animation_fall_down">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tv_shows"
+            android:textColor="@android:color/black"
+            android:textSize="36sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorMovieDBgreen" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/show_rating_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="0dp"

@@ -34,10 +34,13 @@ import android.widget.Toast;
 
 import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
 import com.example.zane.moviedbapp.interfaces.MovieDBInterface;
+import com.example.zane.moviedbapp.interfaces.MovieDBTVInterface;
 import com.example.zane.moviedbapp.interfaces.NameSearchInterface;
 import com.example.zane.moviedbapp.model.Feed;
 import com.example.zane.moviedbapp.model.NameResults;
 import com.example.zane.moviedbapp.model.Results;
+import com.example.zane.moviedbapp.model.TVFeed;
+import com.example.zane.moviedbapp.model.TVResults;
 
 import java.util.ArrayList;
 
@@ -64,10 +67,13 @@ public class FilterResults extends AppCompatActivity {
     private final int SORT_BY_SPINNER = 1;
     private final int RATING_SPINNER = 2;
     private final int GENRE_SPINNER = 3;
+    private final int TYPE_SPINNER = 4;
 
     String sortBy_value, rating_value;
     int with_genre_value = 0;
     int searchNameID;
+
+    String returnType = "Movie";
 
     RecyclerViewAdapter adapter;
 
@@ -75,6 +81,8 @@ public class FilterResults extends AppCompatActivity {
 
     @BindView(R.id.filter_toolbar)
     Toolbar myToolbar;
+    @BindView(R.id.type_spinner)
+    Spinner typeSpinner;
     @BindView(R.id.sortBy_spinner)
     Spinner sortBySpinner;
     @BindView(R.id.rating_spinner)
@@ -183,6 +191,7 @@ public class FilterResults extends AppCompatActivity {
                             return true;
                     }
                 });
+
         addItemsToSpinners();
         addListenerToSpinners();
 
@@ -240,39 +249,71 @@ public class FilterResults extends AppCompatActivity {
 
     public void getMovies() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/discover/movie/")
+                .baseUrl("https://api.themoviedb.org/3/discover/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        String url = MainActivity.DISCOVER_BASE_URL + createUrl();
+        //check if set to movie or show
+        if (returnType.equals("Movie")) {
+            String url = MainActivity.DISCOVER_BASE_URL + createUrl();
 
-        MovieDBInterface movieDBAPI = retrofit.create(MovieDBInterface.class);
-        Call<Feed> call = movieDBAPI.getData(url);
+            MovieDBInterface movieDBAPI = retrofit.create(MovieDBInterface.class);
+            Call<Feed> call = movieDBAPI.getData(url);
 
-        call.enqueue(new Callback<Feed>() {
-            @Override
-            public void onResponse(Call<Feed> call, Response<Feed> response) {
+            call.enqueue(new Callback<Feed>() {
+                @Override
+                public void onResponse(Call<Feed> call, Response<Feed> response) {
 
-                if (response.body().getResults().size() == 0)
-                    Toast.makeText(FilterResults.this, "No Results", Toast.LENGTH_SHORT).show();
-                ArrayList<Results> resultsArrayList = response.body().getResults();
+                    if (response.body().getResults().size() == 0) {
+                        Toast.makeText(FilterResults.this, "No Results", Toast.LENGTH_SHORT).show();
+                    }
+                    ArrayList<Results> resultsArrayList = response.body().getResults();
 
-                for (int i = 0; i < resultsArrayList.size(); i++) {
-                    //Add the title and image for RecyclerView
-                    titles.add(resultsArrayList.get(i).getTitle());
-                    posters.add(MainActivity.IMAGE_URL + resultsArrayList.get(i).getPoster_path());
-                    movieIDs.add(resultsArrayList.get(i).getId());
+                    for (int i = 0; i < resultsArrayList.size(); i++) {
+                        //Add the title and image for RecyclerView
+                        titles.add(resultsArrayList.get(i).getTitle());
+                        posters.add(MainActivity.IMAGE_URL + resultsArrayList.get(i).getPoster_path());
+                        movieIDs.add(resultsArrayList.get(i).getId());
+                    }
+                    initRecyclerView();
                 }
-                initRecyclerView();
-            }
 
-            @Override
-            public void onFailure(Call<Feed> call, Throwable t) {
-                Toast.makeText(FilterResults.this, "FAILURE", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Feed> call, Throwable t) {
+                    Toast.makeText(FilterResults.this, "FAILURE", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            String url = RetrofitInstance.TV_DISCOVER_BASE + createUrl();
+
+            MovieDBTVInterface tvAPI = retrofit.create(MovieDBTVInterface.class);
+            Call<TVFeed> call = tvAPI.getData(url);
+
+            call.enqueue(new Callback<TVFeed>() {
+                @Override
+                public void onResponse(Call<TVFeed> call, Response<TVFeed> response) {
+                    ArrayList<TVResults> results = response.body().getResults();
+
+                    for (int i = 0; i < results.size(); i++) {
+                        //Add the title and image for RecyclerView
+                        titles.add(results.get(i).getTitle());
+                        posters.add(MainActivity.IMAGE_URL + results.get(i).getPoster_path());
+                        movieIDs.add(results.get(i).getId());
+                    }
+                    initRecyclerView();
+                }
+
+                @Override
+                public void onFailure(Call<TVFeed> call, Throwable t) {
+
+                }
+            });
+        }
+
     }
+
 
     @OnClick(R.id.empty_btn)
     public void onEmptyBtnClicked() {
@@ -288,6 +329,14 @@ public class FilterResults extends AppCompatActivity {
 
     //populate our spinners with the appropriate values
     public void addItemsToSpinners() {
+        //type spinner
+        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(this,
+                R.array.type, android.R.layout.simple_spinner_item);
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        typeSpinner.setAdapter(adapterType);
+
+
         //sortby spinner
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
                 R.array.sort_by_values, android.R.layout.simple_spinner_item);
@@ -308,10 +357,27 @@ public class FilterResults extends AppCompatActivity {
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         genreSpinner.setAdapter(adapter3);
+
     }
 
     //set listeners to each of our spinners
     private void addListenerToSpinners() {
+
+        //type spinner
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemSelectedInSpinner = parent.getItemAtPosition(position).toString();
+
+                setValue(TYPE_SPINNER, itemSelectedInSpinner);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         //sortby spinner
         sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -358,21 +424,59 @@ public class FilterResults extends AppCompatActivity {
 
             }
         });
+
     }
 
     //Set our filter values based upon the spinner items chosen
     public void setValue(int spinnerNumber, String value) {
         //sortBy spinner
-        if (spinnerNumber == 1) {
+        if (spinnerNumber == SORT_BY_SPINNER) {
             sortBy_value = sortByTranslate(value);
         }
         //rating spinner
-        else if (spinnerNumber == 2) {
+        else if (spinnerNumber == RATING_SPINNER) {
             rating_value = value;
         }
         //genre spinner
-        else {
+        else if (spinnerNumber == GENRE_SPINNER) {
             with_genre_value = getGenreValue(value);
+        } else {
+            if (value.equals("Movie")) {
+
+                //change filter options to movie options
+                ArrayAdapter<CharSequence> movieTypeAdapter = ArrayAdapter.createFromResource(this,
+                        R.array.sort_by_values, android.R.layout.simple_spinner_item);
+                movieTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                sortBySpinner.setAdapter(movieTypeAdapter);
+
+                //change items to movie ratings
+                ArrayAdapter<CharSequence> movieAdapter = ArrayAdapter.createFromResource(this,
+                        R.array.ratings, android.R.layout.simple_spinner_item);
+                movieAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                ratingSpinner.setAdapter(movieAdapter);
+
+                returnType = "Movie";
+
+            } else {
+
+                //change filter options to show options
+                ArrayAdapter<CharSequence> tvTypeAdapter = ArrayAdapter.createFromResource(this,
+                        R.array.tv_sort_by_values, android.R.layout.simple_spinner_item);
+                tvTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                sortBySpinner.setAdapter(tvTypeAdapter);
+
+                //change items to show ratings
+                ArrayAdapter<CharSequence> ratingAdapter = ArrayAdapter.createFromResource(this,
+                        R.array.show_ratings, android.R.layout.simple_spinner_item);
+                ratingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                ratingSpinner.setAdapter(ratingAdapter);
+
+                returnType = "TV Show";
+            }
         }
     }
 
@@ -445,7 +549,13 @@ public class FilterResults extends AppCompatActivity {
         recyclerViewStarted = true;
 
         //Create an adapter for our recyclerview
-        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1, this);
+        if(returnType.equals("Movie")){
+            adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1, this);
+
+        } else {
+            adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 3, this);
+
+        }
 
         //set adapter to recyclerview
         filterRecyclerView.setAdapter(adapter);

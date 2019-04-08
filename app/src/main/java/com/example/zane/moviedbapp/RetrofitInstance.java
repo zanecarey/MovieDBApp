@@ -24,7 +24,8 @@ public class RetrofitInstance {
     public static final String SEARCH_NAME_BASE_URL = "https://api.themoviedb.org/3/search/person/?api_key=06ebf26c054d40dfaecf1f1b0e0965f8&language=en-US&page=1&include_adult=false&query=";
     public static final String TV_DETAILS_BASE_URL = "https://api.themoviedb.org/3/tv/";
     public static final String YOUTUBE_KEY = "AIzaSyBpl-8D7BLWaBV6wqKoa6Y08lKdXBKeKUE";
-    private static final String CREDITS_BASE_URL = "https://api.themoviedb.org/3/person/";
+    public static final String CREDITS_BASE_URL = "https://api.themoviedb.org/3/person/";
+    public static final String TV_DISCOVER_BASE = "https://api.themoviedb.org/3/discover/tv?api_key=06ebf26c054d40dfaecf1f1b0e0965f8&language=en-US&page=1&include_adult=false&";
 
     public static MovieDBInterface getMovieSearchService() {
 

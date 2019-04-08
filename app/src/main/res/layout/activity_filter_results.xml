@@ -32,11 +32,20 @@
 
 
             <Spinner
+                android:id="@+id/type_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="start" />
+
+            <Spinner
                 android:id="@+id/sortBy_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_below="@id/type_spinner"
                 android:gravity="start" />
 
             <Spinner

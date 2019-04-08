@@ -8,4 +8,15 @@
         <item>Oldest</item>
         <item>Revenue</item>
     </string-array>
+    <string-array name="type">
+        <item>Movie</item>
+        <item>TV Show</item>
+    </string-array>
+    <string-array name="tv_sort_by_values">
+        <item>Select Filter Method</item>
+        <item>Most Popular</item>
+        <item>Least Popular</item>
+        <item>Newest</item>
+        <item>Oldest</item>
+    </string-array>
 </resources>

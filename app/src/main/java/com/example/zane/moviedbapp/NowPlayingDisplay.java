@@ -11,8 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.TextView;
 
 import com.example.zane.moviedbapp.adapters.RecyclerViewAdapter;
 import com.example.zane.moviedbapp.interfaces.MovieDBInterface;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +59,12 @@ public class NowPlayingDisplay extends AppCompatActivity {
     RecyclerView upcomingRecyclerview;
 
     LayoutAnimationController animation;
+    @BindView(R.id.nowPlayingTextView)
+    TextView nowPlayingTextView;
+    @BindView(R.id.upcomingTextView)
+    TextView upcomingTextView;
+
+    Boolean playingExpanded = true, upcomingExpanded = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,6 +251,29 @@ public class NowPlayingDisplay extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @OnClick({R.id.nowPlayingTextView, R.id.upcomingTextView})
+    public void onViewClicked(View view) {
+        switch(view.getId()) {
+            case R.id.nowPlayingTextView:
+                if(playingExpanded) {
+                    playingRecyclerview.setVisibility(View.GONE);
+                    playingExpanded = false;
+                } else {
+                    playingRecyclerview.setVisibility(View.VISIBLE);
+                    playingExpanded = true;
+                }
+                break;
+            case R.id.upcomingTextView:
+                if(upcomingExpanded) {
+                    upcomingRecyclerview.setVisibility(View.GONE);
+                    upcomingExpanded = false;
+                } else {
+                    upcomingRecyclerview.setVisibility(View.VISIBLE);
+                    upcomingExpanded = true;
+                }
         }
     }
 }

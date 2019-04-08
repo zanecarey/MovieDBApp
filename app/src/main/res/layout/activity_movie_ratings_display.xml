@@ -32,6 +32,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/movieRatingsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorMovieDBgreen"
@@ -64,6 +65,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/showRatingsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorMovieDBgreen"

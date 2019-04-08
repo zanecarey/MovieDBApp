@@ -9,11 +9,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zane.moviedbapp.adapters.DataBaseAdapter;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class WatchListDisplay extends AppCompatActivity {
 
@@ -46,9 +47,15 @@ public class WatchListDisplay extends AppCompatActivity {
     RecyclerView watchListRecyclerView;
     @BindView(R.id.watch_list_shows_recyclerView)
     RecyclerView showWatchListRecyclerView;
+    @BindView(R.id.movieWatchlistTextView)
+    TextView movieWatchListTextView;
 
     RecyclerViewAdapter adapter, showAdapter;
     DrawerLayout mDrawerLayout;
+
+    Boolean movieListExpanded = true, showListExpanded = true;
+    @BindView(R.id.showWatchListTextView)
+    TextView showWatchListTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +129,7 @@ public class WatchListDisplay extends AppCompatActivity {
 
                 movieIDs.add(results.getInt(1));
                 titles.add(results.getString(2));
-                if(results.getString(3).contains(MainActivity.IMAGE_URL)){
+                if (results.getString(3).contains(MainActivity.IMAGE_URL)) {
                     posters.add(results.getString(3));
                 } else {
                     posters.add(MainActivity.IMAGE_URL + results.getString(3));
@@ -131,7 +138,7 @@ public class WatchListDisplay extends AppCompatActivity {
             while (showResults.moveToNext()) {
                 showIDs.add(showResults.getInt(1));
                 showTitles.add(showResults.getString(2));
-                if(showResults.getString(3).contains(MainActivity.IMAGE_URL)){
+                if (showResults.getString(3).contains(MainActivity.IMAGE_URL)) {
                     showPosters.add(showResults.getString(3));
                 } else {
                     showPosters.add(MainActivity.IMAGE_URL + showResults.getString(3));
@@ -144,7 +151,7 @@ public class WatchListDisplay extends AppCompatActivity {
 
     public void initRecyclerView() {
         //Create an adapter for our recyclerview
-        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1,this);
+        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1, this);
 
         //set adapter to recyclerview
         watchListRecyclerView.setAdapter(adapter);
@@ -155,12 +162,13 @@ public class WatchListDisplay extends AppCompatActivity {
 
     private void initShowRecyclerView() {
         //Create an adapter for our show recyclerview
-        showAdapter = new RecyclerViewAdapter(showIDs, showTitles, showPosters, 3,this);
+        showAdapter = new RecyclerViewAdapter(showIDs, showTitles, showPosters, 3, this);
 
         showWatchListRecyclerView.setAdapter(showAdapter);
 
         showWatchListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -216,6 +224,28 @@ public class WatchListDisplay extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @OnClick({R.id.movieWatchlistTextView})
+    public void onViewClicked() {
+        if (movieListExpanded) {
+            watchListRecyclerView.setVisibility(View.GONE);
+            movieListExpanded = false;
+        } else {
+            watchListRecyclerView.setVisibility(View.VISIBLE);
+            movieListExpanded = true;
+        }
+    }
+
+    @OnClick(R.id.showWatchListTextView)
+    public void onViewClicked2() {
+        if(showListExpanded) {
+            showWatchListRecyclerView.setVisibility(View.GONE);
+            showListExpanded = false;
+        } else {
+            showWatchListRecyclerView.setVisibility(View.VISIBLE);
+            showListExpanded = true;
         }
     }
 }

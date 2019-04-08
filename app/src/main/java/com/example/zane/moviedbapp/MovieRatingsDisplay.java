@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zane.moviedbapp.adapters.DataBaseAdapter;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MovieRatingsDisplay extends AppCompatActivity {
 
@@ -44,8 +47,14 @@ public class MovieRatingsDisplay extends AppCompatActivity {
     @BindView(R.id.show_rating_recyclerview)
     RecyclerView showRatingRecyclerview;
 
-    RecyclerViewAdapter adapter,showAdapter;
+    RecyclerViewAdapter adapter, showAdapter;
     DrawerLayout mDrawerLayout;
+    @BindView(R.id.movieRatingsTextView)
+    TextView movieRatingsTextView;
+    @BindView(R.id.showRatingsTextView)
+    TextView showRatingsTextView;
+
+    Boolean movieListExpanded = true, showListExpanded = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +130,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                 movieIDs.add(results.getInt(1));
                 titles.add(results.getString(2));
 
-                if(results.getString(3).contains(MainActivity.IMAGE_URL)){
+                if (results.getString(3).contains(MainActivity.IMAGE_URL)) {
                     posters.add(results.getString(3));
                 } else {
                     posters.add(MainActivity.IMAGE_URL + results.getString(3));
@@ -132,7 +141,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
             while (showResults.moveToNext()) {
                 showIDs.add(showResults.getInt(1));
                 showTitles.add(showResults.getString(2));
-                if(showResults.getString(3).contains(MainActivity.IMAGE_URL)){
+                if (showResults.getString(3).contains(MainActivity.IMAGE_URL)) {
                     showPosters.add(showResults.getString(3));
                 } else {
                     showPosters.add(MainActivity.IMAGE_URL + showResults.getString(3));
@@ -147,7 +156,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
     public void initRecyclerView() {
 
         //Create an adapter for our recyclerview
-        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1,this, movieRatings);
+        adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 1, this, movieRatings);
 
         //set adapter to recyclerview
         ratingRecyclerview.setAdapter(adapter);
@@ -157,7 +166,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
 
     private void initShowRecyclerView() {
         //Create an adapter for our show recyclerview
-        showAdapter = new RecyclerViewAdapter(showIDs, showTitles, showPosters, 3,this, showRatings);
+        showAdapter = new RecyclerViewAdapter(showIDs, showTitles, showPosters, 3, this, showRatings);
 
         showRatingRecyclerview.setAdapter(showAdapter);
 
@@ -216,6 +225,30 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @OnClick({R.id.movieRatingsTextView, R.id.showRatingsTextView})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.movieRatingsTextView:
+                if(movieListExpanded){
+                    ratingRecyclerview.setVisibility(View.GONE);
+                    movieListExpanded = false;
+                } else {
+                    ratingRecyclerview.setVisibility(View.VISIBLE);
+                    movieListExpanded = true;
+                }
+                break;
+            case R.id.showRatingsTextView:
+                if(showListExpanded){
+                    showRatingRecyclerview.setVisibility(View.GONE);
+                    showListExpanded = false;
+                } else {
+                    showRatingRecyclerview.setVisibility(View.VISIBLE);
+                    showListExpanded = true;
+                }
+                break;
         }
     }
 }

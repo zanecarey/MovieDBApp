@@ -3,6 +3,7 @@ package com.example.zane.moviedbapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +60,8 @@ public class WatchListDisplay extends AppCompatActivity {
     @BindView(R.id.showWatchListTextView)
     TextView showWatchListTextView;
 
+    private Animation animationUp, animationDown;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,14 @@ public class WatchListDisplay extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         mDrawerLayout = findViewById(R.id.watch_list_drawer_layout);
+
+
+        //animation for moving the lists
+        animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        animationUp.setDuration(200);
+        animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        animationDown.setDuration(200);
+
 
         NavigationView navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(
@@ -230,10 +243,36 @@ public class WatchListDisplay extends AppCompatActivity {
     @OnClick({R.id.movieWatchlistTextView})
     public void onViewClicked() {
         if (movieListExpanded) {
-            watchListRecyclerView.setVisibility(View.GONE);
+            watchListRecyclerView.startAnimation(animationUp);
+
+            CountDownTimer timer = new CountDownTimer(200, 16) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    watchListRecyclerView.setVisibility(View.GONE);
+                }
+            };
+
+            timer.start();
             movieListExpanded = false;
         } else {
-            watchListRecyclerView.setVisibility(View.VISIBLE);
+            watchListRecyclerView.startAnimation(animationDown);
+            CountDownTimer timer = new CountDownTimer(200, 16) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    watchListRecyclerView.setVisibility(View.VISIBLE);
+                }
+            };
+            timer.start();
             movieListExpanded = true;
         }
     }
@@ -241,10 +280,34 @@ public class WatchListDisplay extends AppCompatActivity {
     @OnClick(R.id.showWatchListTextView)
     public void onViewClicked2() {
         if(showListExpanded) {
-            showWatchListRecyclerView.setVisibility(View.GONE);
+            showWatchListRecyclerView.startAnimation(animationUp);
+            CountDownTimer timer = new CountDownTimer(200, 16) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    showWatchListRecyclerView.setVisibility(View.GONE);
+                }
+            };
+            timer.start();
             showListExpanded = false;
         } else {
-            showWatchListRecyclerView.setVisibility(View.VISIBLE);
+            showWatchListRecyclerView.startAnimation(animationDown);
+            CountDownTimer timer = new CountDownTimer(200, 16) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    showWatchListRecyclerView.setVisibility(View.VISIBLE);
+                }
+            };
+            timer.start();
             showListExpanded = true;
         }
     }

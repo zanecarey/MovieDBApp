@@ -199,8 +199,9 @@ public class FilterResults extends AppCompatActivity {
 
     @OnClick(R.id.filterSearch_btn)
     public void onFindIDClicked() {
-
+        //hide keyboard, filters
         hideSoftKeyboard(this);
+        hideFilters();
 
         if (!searchEditText.getText().toString().equals("")) {
             Retrofit retrofit = new Retrofit.Builder()
@@ -628,7 +629,6 @@ public class FilterResults extends AppCompatActivity {
     @OnClick(R.id.hide_button)
     public void hideFilters() {
         if (hideButtonFlag) {//set filters layout to invisible
-            //filterLayout.getLayoutTransition().enableTransitionType(LayoutTransition.DISAPPEARING);
             filterLayout.startAnimation(animationUp);
             CountDownTimer timer = new CountDownTimer(200, 16) {
                 @Override

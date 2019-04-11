@@ -3,6 +3,7 @@ package com.example.zane.moviedbapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +59,8 @@ public class MovieRatingsDisplay extends AppCompatActivity {
 
     Boolean movieListExpanded = true, showListExpanded = true;
 
+    private Animation animationUp, animationDown;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,12 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_white_24dp);
         mDrawerLayout = findViewById(R.id.ratings_drawer_layout);
+
+        //animation for moving the lists
+        animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        animationUp.setDuration(200);
+        animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        animationDown.setDuration(200);
 
         NavigationView navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(
@@ -233,19 +244,67 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.movieRatingsTextView:
                 if(movieListExpanded){
-                    ratingRecyclerview.setVisibility(View.GONE);
+                    ratingRecyclerview.startAnimation(animationUp);
+                    CountDownTimer timer = new CountDownTimer(200, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            ratingRecyclerview.setVisibility(View.GONE);
+                        }
+                    };
+                    timer.start();
                     movieListExpanded = false;
                 } else {
-                    ratingRecyclerview.setVisibility(View.VISIBLE);
+                    ratingRecyclerview.startAnimation(animationDown);
+                    CountDownTimer timer = new CountDownTimer(200, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            ratingRecyclerview.setVisibility(View.VISIBLE);
+                        }
+                    };
+                    timer.start();
                     movieListExpanded = true;
                 }
                 break;
             case R.id.showRatingsTextView:
                 if(showListExpanded){
-                    showRatingRecyclerview.setVisibility(View.GONE);
+                    showRatingRecyclerview.startAnimation(animationUp);
+                    CountDownTimer timer = new CountDownTimer(200, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            showRatingRecyclerview.setVisibility(View.GONE);
+                        }
+                    };
+                    timer.start();
                     showListExpanded = false;
                 } else {
-                    showRatingRecyclerview.setVisibility(View.VISIBLE);
+                    showRatingRecyclerview.startAnimation(animationDown);
+                    CountDownTimer timer = new CountDownTimer(200, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            showRatingRecyclerview.setVisibility(View.VISIBLE);
+                        }
+                    };
+                    timer.start();
                     showListExpanded = true;
                 }
                 break;

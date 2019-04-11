@@ -2,6 +2,7 @@ package com.example.zane.moviedbapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
@@ -66,6 +68,8 @@ public class NowPlayingDisplay extends AppCompatActivity {
 
     Boolean playingExpanded = true, upcomingExpanded = true;
 
+    private Animation animationUp, animationDown;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,13 @@ public class NowPlayingDisplay extends AppCompatActivity {
 
         int resID = R.anim.layout_animation_fall_down;
         animation = AnimationUtils.loadLayoutAnimation(this, resID);
+
+        //animation for moving the lists
+        animationUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        animationUp.setDuration(200);
+        animationDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        animationDown.setDuration(200);
+
 
         playingNavView.setNavigationItemSelectedListener(menuItem -> {
             // set item as selected to persist highlight
@@ -259,19 +270,67 @@ public class NowPlayingDisplay extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.nowPlayingTextView:
                 if(playingExpanded) {
-                    playingRecyclerview.setVisibility(View.GONE);
+                    playingRecyclerview.startAnimation(animationUp);
+                    CountDownTimer timer = new CountDownTimer(200, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            playingRecyclerview.setVisibility(View.GONE);
+                        }
+                    };
+                    timer.start();
                     playingExpanded = false;
                 } else {
-                    playingRecyclerview.setVisibility(View.VISIBLE);
+                    playingRecyclerview.startAnimation(animationDown);
+                    CountDownTimer timer = new CountDownTimer(200, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            playingRecyclerview.setVisibility(View.VISIBLE);
+                        }
+                    };
+                    timer.start();
                     playingExpanded = true;
                 }
                 break;
             case R.id.upcomingTextView:
                 if(upcomingExpanded) {
-                    upcomingRecyclerview.setVisibility(View.GONE);
+                    upcomingRecyclerview.startAnimation(animationUp);
+                    CountDownTimer timer = new CountDownTimer(200, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            upcomingRecyclerview.setVisibility(View.GONE);
+                        }
+                    };
+                    timer.start();
                     upcomingExpanded = false;
                 } else {
-                    upcomingRecyclerview.setVisibility(View.VISIBLE);
+                    upcomingRecyclerview.startAnimation(animationDown);
+                    CountDownTimer timer = new CountDownTimer(200, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            upcomingRecyclerview.setVisibility(View.VISIBLE);
+                        }
+                    };
+                    timer.start();
                     upcomingExpanded = true;
                 }
         }

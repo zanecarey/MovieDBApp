@@ -39,7 +39,8 @@
                     android:gravity="center"
                     android:text="@string/movie_ratings"
                     android:textColor="@android:color/white"
-                    android:textSize="36sp" />
+                    android:textSize="36sp"
+                    android:drawableStart="@drawable/ic_arrow_drop_down_black_24dp"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rating_recyclerview"
@@ -72,7 +73,8 @@
                     android:gravity="center"
                     android:text="@string/show_ratings"
                     android:textColor="@android:color/white"
-                    android:textSize="36sp" />
+                    android:textSize="36sp"
+                    android:drawableStart="@drawable/ic_arrow_drop_down_black_24dp"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/show_rating_recyclerview"

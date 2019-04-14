@@ -258,6 +258,7 @@ public class WatchListDisplay extends AppCompatActivity {
             };
 
             timer.start();
+            movieWatchListTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_up_black_24dp,0,0,0);
             movieListExpanded = false;
         } else {
             watchListRecyclerView.startAnimation(animationDown);
@@ -273,6 +274,7 @@ public class WatchListDisplay extends AppCompatActivity {
                 }
             };
             timer.start();
+            movieWatchListTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp,0,0,0);
             movieListExpanded = true;
         }
     }
@@ -293,6 +295,7 @@ public class WatchListDisplay extends AppCompatActivity {
                 }
             };
             timer.start();
+            showWatchListTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_up_black_24dp,0,0,0);
             showListExpanded = false;
         } else {
             showWatchListRecyclerView.startAnimation(animationDown);
@@ -308,6 +311,7 @@ public class WatchListDisplay extends AppCompatActivity {
                 }
             };
             timer.start();
+            showWatchListTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp,0,0,0);
             showListExpanded = true;
         }
     }

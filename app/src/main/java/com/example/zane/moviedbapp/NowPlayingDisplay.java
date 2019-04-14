@@ -256,7 +256,6 @@ public class NowPlayingDisplay extends AppCompatActivity {
                 Intent intent5 = new Intent(NowPlayingDisplay.this, TrendingDisplay.class);
                 startActivity(intent5);
                 return true;
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -283,6 +282,7 @@ public class NowPlayingDisplay extends AppCompatActivity {
                         }
                     };
                     timer.start();
+                    nowPlayingTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_up_black_24dp,0,0,0);
                     playingExpanded = false;
                 } else {
                     playingRecyclerview.startAnimation(animationDown);
@@ -298,6 +298,7 @@ public class NowPlayingDisplay extends AppCompatActivity {
                         }
                     };
                     timer.start();
+                    nowPlayingTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp,0,0,0);
                     playingExpanded = true;
                 }
                 break;
@@ -316,6 +317,7 @@ public class NowPlayingDisplay extends AppCompatActivity {
                         }
                     };
                     timer.start();
+                    upcomingTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_up_black_24dp,0,0,0);
                     upcomingExpanded = false;
                 } else {
                     upcomingRecyclerview.startAnimation(animationDown);
@@ -331,6 +333,8 @@ public class NowPlayingDisplay extends AppCompatActivity {
                         }
                     };
                     timer.start();
+                    upcomingTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp,0,0,0);
+
                     upcomingExpanded = true;
                 }
         }

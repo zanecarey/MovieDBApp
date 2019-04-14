@@ -57,6 +57,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
     @BindView(R.id.showRatingsTextView)
     TextView showRatingsTextView;
 
+
     Boolean movieListExpanded = true, showListExpanded = true;
 
     private Animation animationUp, animationDown;
@@ -257,6 +258,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                         }
                     };
                     timer.start();
+                    movieRatingsTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_up_black_24dp,0,0,0);
                     movieListExpanded = false;
                 } else {
                     ratingRecyclerview.startAnimation(animationDown);
@@ -272,6 +274,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                         }
                     };
                     timer.start();
+                    movieRatingsTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp,0,0,0);
                     movieListExpanded = true;
                 }
                 break;
@@ -290,6 +293,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                         }
                     };
                     timer.start();
+                    showRatingsTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_up_black_24dp ,0,0,0);
                     showListExpanded = false;
                 } else {
                     showRatingRecyclerview.startAnimation(animationDown);
@@ -305,6 +309,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
                         }
                     };
                     timer.start();
+                    showRatingsTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp ,0,0,0);
                     showListExpanded = true;
                 }
                 break;

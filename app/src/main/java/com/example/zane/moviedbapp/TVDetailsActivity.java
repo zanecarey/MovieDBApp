@@ -87,8 +87,8 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
     ScrollView tvDetailsScrollview;
     @BindView(R.id.tv_FAButton)
     FloatingActionButton tvFAButton;
-    @BindView(R.id.navView)
-    NavigationView navView;
+    @BindView(R.id.tv_navView)
+    NavigationView tvNavView;
     @BindView(R.id.tv_drawerLayout)
     DrawerLayout tvDrawerLayout;
 
@@ -129,6 +129,47 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
         getCastInfo(tvID);
         getVideo(tvID);
         getRecommendations(tvID);
+
+        tvNavView.setNavigationItemSelectedListener(menuItem -> {
+            // set item as selected to persist highlight
+            menuItem.setChecked(true);
+            // close drawer when item is tapped
+            tvDrawerLayout.closeDrawers();
+
+            switch (menuItem.getItemId()) {
+                case R.id.nav_home:
+                    Intent intent = new Intent(TVDetailsActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    return true;
+
+                case R.id.nav_search:
+                    Intent intent1 = new Intent(TVDetailsActivity.this, DisplayResults.class);
+                    startActivity(intent1);
+                    return true;
+
+                case R.id.nav_discover:
+                    Intent intent2 = new Intent(TVDetailsActivity.this, FilterResults.class);
+                    startActivity(intent2);
+                    return true;
+
+                case R.id.nav_watchlist:
+                    Intent intent3 = new Intent(TVDetailsActivity.this, WatchListDisplay.class);
+                    startActivity(intent3);
+                    return true;
+
+                case R.id.nav_ratings:
+                    Intent intent4 = new Intent(TVDetailsActivity.this, MovieRatingsDisplay.class);
+                    startActivity(intent4);
+                    return true;
+
+                case R.id.nav_trending:
+                    Intent intent5 = new Intent(TVDetailsActivity.this, TrendingDisplay.class);
+                    startActivity(intent5);
+                    return true;
+                default:
+                    return true;
+            }
+        });
     }
 
     //check if our intent data exists before trying to retrieve it

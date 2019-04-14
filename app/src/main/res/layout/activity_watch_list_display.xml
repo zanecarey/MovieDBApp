@@ -36,7 +36,8 @@
                     android:gravity="center"
                     android:text="@string/movies"
                     android:textColor="@android:color/white"
-                    android:textSize="36sp" />
+                    android:textSize="36sp"
+                    android:drawableStart="@drawable/ic_arrow_drop_down_black_24dp"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/watch_list_recyclerView"
@@ -69,7 +70,8 @@
                     android:gravity="center"
                     android:text="@string/tv_shows"
                     android:textColor="@android:color/white"
-                    android:textSize="36sp" />
+                    android:textSize="36sp"
+                    android:drawableStart="@drawable/ic_arrow_drop_down_black_24dp"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/watch_list_shows_recyclerView"

@@ -265,7 +265,6 @@ public class FilterResults extends AppCompatActivity {
             call.enqueue(new Callback<Feed>() {
                 @Override
                 public void onResponse(Call<Feed> call, Response<Feed> response) {
-
                     if (response.body().getResults().size() == 0) {
                         Toast.makeText(FilterResults.this, "No Results", Toast.LENGTH_SHORT).show();
                     }
@@ -496,7 +495,6 @@ public class FilterResults extends AppCompatActivity {
         int genreID = 0;
         switch (value) {
             case "Select Genre":
-                genreID = 0;
                 break;
             case "Action":
                 genreID = 28;

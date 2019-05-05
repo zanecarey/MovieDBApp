@@ -667,6 +667,9 @@ public class FilterResults extends AppCompatActivity {
     //hide keyboard after search button his clicked
     public void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        View focusedView = activity.getCurrentFocus();
+        if(focusedView != null){
+            inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }

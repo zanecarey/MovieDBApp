@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorMovieDBgreen"
             android:orientation="vertical"
-            tools:context=".ActorInfoActivity">
+            tools:context="my.app.zane.moviedbapp.ActorInfoActivity">
 
             <include
                 android:id="@+id/actorInfo_toolbar"

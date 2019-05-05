@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.zane.moviedbapp">
+    package="my.app.zane.moviedbapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name="my.app.zane.moviedbapp.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_white_film"
         android:label="@string/app_name"
@@ -13,12 +13,12 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TVDetailsActivity"></activity>
-        <activity android:name=".TrendingDisplay" />
-        <activity android:name=".NowPlayingDisplay" />
-        <activity android:name=".MainActivity"
+        <activity android:name="my.app.zane.moviedbapp.TVDetailsActivity"></activity>
+        <activity android:name="my.app.zane.moviedbapp.TrendingDisplay" />
+        <activity android:name="my.app.zane.moviedbapp.NowPlayingDisplay" />
+        <activity android:name="my.app.zane.moviedbapp.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".SplashScreen">
+        <activity android:name="my.app.zane.moviedbapp.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,26 +26,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FilterResults"
-            android:parentActivityName=".MainActivity"
+            android:name="my.app.zane.moviedbapp.FilterResults"
+            android:parentActivityName="my.app.zane.moviedbapp.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".DisplayResults"
-            android:parentActivityName=".MainActivity"
+            android:name="my.app.zane.moviedbapp.DisplayResults"
+            android:parentActivityName="my.app.zane.moviedbapp.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".MovieDetails"
-            android:parentActivityName=".MainActivity" />
+            android:name="my.app.zane.moviedbapp.MovieDetails"
+            android:parentActivityName="my.app.zane.moviedbapp.MainActivity" />
         <activity
-            android:name=".WatchListDisplay"
-            android:parentActivityName=".MainActivity" />
+            android:name="my.app.zane.moviedbapp.WatchListDisplay"
+            android:parentActivityName="my.app.zane.moviedbapp.MainActivity" />
         <activity
-            android:name=".MovieRatingsDisplay"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".BaseActivity" />
+            android:name="my.app.zane.moviedbapp.MovieRatingsDisplay"
+            android:parentActivityName="my.app.zane.moviedbapp.MainActivity" />
+        <activity android:name="my.app.zane.moviedbapp.BaseActivity" />
         <activity
-            android:name=".ActorInfoActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="my.app.zane.moviedbapp.ActorInfoActivity"
+            android:parentActivityName="my.app.zane.moviedbapp.MainActivity" />
     </application>
 
 </manifest>

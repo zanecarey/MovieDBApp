@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TVDetailsActivity"
+    tools:context="my.app.zane.moviedbapp.TVDetailsActivity"
     android:fitsSystemWindows="true"
     android:id="@+id/tv_drawerLayout">
 

@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorMovieDBgreen"
                 android:orientation="vertical"
-                tools:context=".MovieDetails">
+                tools:context="my.app.zane.moviedbapp.MovieDetails">
 
                 <include
                     android:id="@+id/details_toolbar"

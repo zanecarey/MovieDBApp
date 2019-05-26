@@ -163,6 +163,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     viewHolder.isExpanded = false;
 
+
+                } else {
+
+                    viewHolder.itemLayout.startAnimation(animationDown);
+                    CountDownTimer timer = new CountDownTimer(100, 16) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            viewHolder.itemLayout.setVisibility(View.VISIBLE);
+                            viewHolder.listRelativeLayout.setBackgroundColor(Color.parseColor("#beefd0"));
+                        }
+                    };
+                    timer.start();
+
+                    viewHolder.isExpanded = true;
+
                     //view button
                     viewHolder.viewTextView.setOnClickListener(v -> {
                         if(type == 1){
@@ -235,28 +255,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         dialog.show();
 
                     });
-                } else {
-
-                    viewHolder.itemLayout.startAnimation(animationDown);
-                    CountDownTimer timer = new CountDownTimer(100, 16) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            viewHolder.itemLayout.setVisibility(View.VISIBLE);
-                            //grey
-//                            viewHolder.listRelativeLayout.setBackgroundColor(Color.parseColor("#ededed"));
-                            //light green
-                            viewHolder.listRelativeLayout.setBackgroundColor(Color.parseColor("#beefd0"));
-
-                        }
-                    };
-                    timer.start();
-
-                    viewHolder.isExpanded = true;
                 }
             });
         } else {

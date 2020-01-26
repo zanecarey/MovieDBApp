@@ -35,6 +35,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
+/*
+* This activity is to display the movies in theaters
+* Shows a list of currently airing movies, and movies coming to theaters soon
+*/
 public class NowPlayingDisplay extends AppCompatActivity {
 
     public static final String NOW_PLAYING = "https://api.themoviedb.org/3/movie/";

@@ -159,6 +159,7 @@ public class DisplayResults extends AppCompatActivity {
         }
     }
 
+    //Initiate the search for movie results using RetroFit
     @OnClick(R.id.search_Btn)
     public void onSearchBtnClicked() {
 
@@ -174,7 +175,7 @@ public class DisplayResults extends AppCompatActivity {
 
             Toast.makeText(DisplayResults.this, "No title entered!", Toast.LENGTH_SHORT).show();
         } else {
-            //enable our label textViews\
+            //enable our label textViews
             displayMoviesTextView.setVisibility(View.VISIBLE);
             displayTVTextView.setVisibility(View.VISIBLE);
 

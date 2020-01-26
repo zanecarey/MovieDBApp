@@ -55,6 +55,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/*
+ * MovieDetails - This activity displays the details of the chosen Movie
+ * Provides cast info, recommended movies, movie info, etc.
+ * Allows movie to be added to watchlist or to be rated
+ */
 public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
 
     private static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
@@ -152,6 +157,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         youtubeFragment = (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtube_fragment2);
     }
 
+    //Initiate query to get Recommended movies using current movie ID
     private void getRecommendations(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -183,6 +189,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         });
     }
 
+    //Initiate query to aquire the YouTube link for the current movie
     private void getVideo(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -211,6 +218,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         });
     }
 
+    //Initiate query to get the Cast data for the current movie
     private void getCastInfo(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -245,6 +253,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         });
     }
 
+    //Initiate query to get the basic data for the current movie
     private void getMovieInfo(int movieID) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -493,6 +502,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
                 });
     }
 
+    //Initialize our recycler view for the cast data
     private void initCastRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.details_recyclerView);
 
@@ -503,6 +513,7 @@ public class MovieDetails extends AppCompatActivity implements YouTubePlayer.OnI
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    //Initialize our recycler view for the Recommended movies data
     private void initRecRecyclerView() {
         RecyclerView recRecyclerView = findViewById(R.id.details_recRecyclerView);
         recAdapter = new RecyclerViewAdapter(recIDs, recTitles, recPosters, 2, this);

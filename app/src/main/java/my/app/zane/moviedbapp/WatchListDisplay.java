@@ -30,6 +30,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/*
+* WatchListDisplay - This activity displays all of the movies
+* that the user has added to their watchlist
+*/
 public class WatchListDisplay extends AppCompatActivity {
 
     private static final String TAG = "WatchListDisplay";

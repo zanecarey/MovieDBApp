@@ -47,6 +47,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/*
+* TVDetailsActivity - This activity displays the details of the chosen TV show
+* Provides cast info, recommended shows, show info, etc.
+* Allows show to be added to watchlist or to be rated
+ */
 public class TVDetailsActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener{
 
     @BindView(R.id.tvDetails_toolbar)
@@ -245,6 +250,7 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
         });
     }
 
+    //Intitiae query to get Youtube video using current show ID
     private void getVideo(int tvID) {
 
         String url = RetrofitInstance.TV_DETAILS_BASE_URL + tvID + "/videos" + RetrofitInstance.KEY;
@@ -269,6 +275,7 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
         });
     }
 
+    //Intitiae query to get recommended movies using current show ID
     private void getRecommendations(int tvID) {
         String url = RetrofitInstance.TV_DETAILS_BASE_URL + tvID + "/recommendations" + RetrofitInstance.KEY;
 
@@ -294,6 +301,7 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
         });
     }
 
+    //Put all of our info into the correct textViews
     private void setInfo(){
         createdByTextView.setText(created_by);
         firstDateTextView.setText(firstAired);
@@ -315,6 +323,7 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
                 .into(tvPoster);
     }
 
+    //Initialize our cast recycler view
     private void initCastRecyclerView() {
 
         castAdapter = new CastRecyclerView(actors, characters, profile_pics, actorIDs, this);
@@ -324,6 +333,7 @@ public class TVDetailsActivity extends AppCompatActivity implements YouTubePlaye
         tvDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    //Initialize our recommended shows recycler view
     private void initRecRecyclerView(){
         similarAdapter = new RecyclerViewAdapter(recIDs, recTitles, recPosters, 4, this);
 

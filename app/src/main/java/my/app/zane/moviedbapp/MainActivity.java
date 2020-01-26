@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    //Set on clicks for all the available options on the main activity menu
     @OnClick({R.id.search_cardview, R.id.discover_cardview, R.id.watchlist_cardview, R.id.ratings_cardview, R.id.nowplaying_cardview, R.id.trending_cardview})
     public void onViewClicked(View view) {
         switch (view.getId()) {

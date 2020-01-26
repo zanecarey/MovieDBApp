@@ -166,6 +166,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         initShowRecyclerView();
     }
 
+    //Initialize our recommended movies recycler view
     public void initRecyclerView() {
 
         //Create an adapter for our recyclerview
@@ -177,6 +178,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         ratingRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    //Initialize our recommended shows recycler view
     private void initShowRecyclerView() {
         //Create an adapter for our show recyclerview
         showAdapter = new RecyclerViewAdapter(showIDs, showTitles, showPosters, 3, this, showRatings);
@@ -241,6 +243,7 @@ public class MovieRatingsDisplay extends AppCompatActivity {
         }
     }
 
+    //Set on clicks to handle the animations and drawable changes when clicking the textviews
     @OnClick({R.id.movieRatingsTextView, R.id.showRatingsTextView})
     public void onViewClicked(View view) {
         switch (view.getId()) {

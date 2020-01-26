@@ -5,7 +5,10 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-
+/*
+* SplashScreen - This activity is just a splash screen which loads when the app is launched.
+* Lasts for 4 seconds
+*/
 public class SplashScreen extends AppCompatActivity {
 
     //The time for the splash screen to be visible, 4 seconds

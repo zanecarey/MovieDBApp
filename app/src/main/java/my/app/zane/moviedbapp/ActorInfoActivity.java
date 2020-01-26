@@ -100,7 +100,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         getCredits(actorID);
     }
 
-    //get the actors information using retrofit
+    //Get the actors information using retrofit
     private void getActorInfo(int id) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -129,7 +129,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         });
     }
 
-    //get the actors movie credits
+    //Get the actors movie credits using retrofit
     private void getCredits(int id) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -159,9 +159,10 @@ public class ActorInfoActivity extends AppCompatActivity {
         });
     }
 
-    //Display all of our info
+    //Display all of our info into our layout
     private void setActorInfo() {
 
+        //Assign all info to actor text views
         actorNameTextView.setText(name);
         birthTextView.setText(birth);
         if (death == null) {
@@ -173,11 +174,13 @@ public class ActorInfoActivity extends AppCompatActivity {
         biographyTextView.setText(biography);
 
 
+        //Assign a default picture in case of no actor picture data
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo)
                 .fitCenter();
 
+        //Load actor picture into ImageView
         Glide.with(this)
                 .asBitmap()
                 .load(MainActivity.IMAGE_URL + profile_path)
@@ -185,7 +188,7 @@ public class ActorInfoActivity extends AppCompatActivity {
                 .into(actorImage);
     }
 
-    //check if our intent data exists before trying to retrieve it
+    //Check if our intent data exists before trying to retrieve it
     private int getID() {
 
         if (getIntent().hasExtra("actor_id")) {
@@ -194,6 +197,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         } else return 0;
     }
 
+    //Initialize the Actors Movie Credits recycler view with the data retreived with retrofit
     private void initCreditRecyclerView() {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(movieIDs, titles, posters, 2, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -201,6 +205,8 @@ public class ActorInfoActivity extends AppCompatActivity {
         knownForRecyclerView.setAdapter(adapter);
     }
 
+
+    //Set up the onClick for the Navigation Drawer
     private void enableNavView() {
         navView.setNavigationItemSelectedListener(
                 menuItem -> {
@@ -258,6 +264,7 @@ public class ActorInfoActivity extends AppCompatActivity {
         return true;
     }
 
+    //Setup our menu item buttons
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

@@ -63,6 +63,7 @@ public class FilterResults extends AppCompatActivity {
 
     private boolean hideButtonFlag = true;
 
+    //values for determining the type of spinner
     private final int SORT_BY_SPINNER = 1;
     private final int RATING_SPINNER = 2;
     private final int GENRE_SPINNER = 3;
@@ -196,18 +197,21 @@ public class FilterResults extends AppCompatActivity {
 
     }
 
+    //Initiate the query to aquire the actor's movieID in order to properly use filters
     @OnClick(R.id.filterSearch_btn)
     public void onFindIDClicked() {
         //hide keyboard, filters
         hideSoftKeyboard(this);
         hideFilters();
 
+        //Check if the edit text has a name inputted, otherwise the search is not done
         if (!searchEditText.getText().toString().equals("")) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://api.themoviedb.org/3/search/person/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
+
 
             String name = searchEditText.getText().toString();
             name = name.replaceAll("\\s+", "%20");
@@ -247,6 +251,7 @@ public class FilterResults extends AppCompatActivity {
         }
     }
 
+    //Initiate query to get the movie results using the current set filters
     public void getMovies() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/discover/")
@@ -314,6 +319,7 @@ public class FilterResults extends AppCompatActivity {
     }
 
 
+    //Empty the recyclerview
     @OnClick(R.id.empty_btn)
     public void onEmptyBtnClicked() {
         if (recyclerViewStarted) {

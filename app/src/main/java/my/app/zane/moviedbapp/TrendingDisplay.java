@@ -32,6 +32,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/*
+* TrendingDisplay - An activity which lists the movies that are currently "trending" according
+* to TheMovieDB
+* */
 public class TrendingDisplay extends AppCompatActivity {
 
     public static final String TRENDING = "https://api.themoviedb.org/3/trending/movie/";
@@ -109,6 +113,7 @@ public class TrendingDisplay extends AppCompatActivity {
         getTrendingMovies();
     }
 
+    //Initiate the query to acquire the data on "trending" movies
     private void getTrendingMovies(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(TRENDING)
@@ -138,6 +143,7 @@ public class TrendingDisplay extends AppCompatActivity {
         });
     }
 
+    //Initialize our recyclerview
     private void initRecyclerView(){
         adapterTrending = new RecyclerViewAdapter(movieIDsTrending, titlesTrending, postersTrending, 1, this);
 
